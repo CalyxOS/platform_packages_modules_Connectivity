@@ -352,6 +352,11 @@ public class ConnectivitySettingsManager {
     public static final int PRIVATE_DNS_MODE_OFF = ConnectivitySettingsUtils.PRIVATE_DNS_MODE_OFF;
 
     /**
+     * @hide
+     */
+    public static final String PRIVATE_DNS_MODE_CLOUDFLARE = "cloudflare";
+
+    /**
      * One of the private DNS modes that indicates the private DNS mode is automatic, which
      * will try to use the current DNS as private DNS.
      */
@@ -365,6 +370,13 @@ public class ConnectivitySettingsManager {
      */
     public static final int PRIVATE_DNS_MODE_PROVIDER_HOSTNAME =
             ConnectivitySettingsUtils.PRIVATE_DNS_MODE_PROVIDER_HOSTNAME;
+
+    /**
+     * @hide
+     * Alternative: 1dot1dot1dot1.cloudflare-dns.com
+     */
+    public static final String PRIVATE_DNS_SPECIFIER_CLOUDFLARE = "one.one.one.one";
+
 
     /** @hide */
     @Retention(RetentionPolicy.SOURCE)
