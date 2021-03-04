@@ -206,6 +206,7 @@ import android.os.Process;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.os.ServiceSpecificException;
+import android.os.StrictMode;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.UserHandle;
@@ -277,6 +278,7 @@ import java.util.SortedSet;
 import java.util.StringJoiner;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 /**
  * @hide
@@ -3731,6 +3733,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (nai == null) {
             return;
         }
+        try {
+            if (update.validated) {
+                mNMS.setDNSCleartextWhitelist(new String[0]);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Exception setting global cleartext restriction", e);
+        }
         mDnsManager.updatePrivateDnsValidation(update);
         handleUpdateLinkProperties(nai, new LinkProperties(nai.linkProperties));
     }
@@ -7137,6 +7146,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         try {
             mDnsManager.noteDnsServersForNetwork(netId, newLp);
+            mNMS.setDNSCleartextWhitelist(dnses.stream().map(InetAddress::getHostAddress)
+                    .collect(Collectors.toList()).toArray(new String[0]));
             mDnsManager.flushVmDnsCache();
         } catch (Exception e) {
             loge("Exception in setDnsConfigurationForNetwork: " + e);
