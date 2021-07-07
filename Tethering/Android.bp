@@ -48,7 +48,6 @@ java_defaults {
         "net-utils-device-common-netlink",
         "netd-client",
         "tetheringstatsprotos",
-        "org.lineageos.platform.lineagesettings",
     ],
     libs: [
         "framework-connectivity",
