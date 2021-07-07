@@ -40,6 +40,7 @@ import android.net.util.PrefixUtils;
 import android.net.util.SharedLog;
 import android.os.Handler;
 import android.os.Process;
+import android.provider.Settings;
 import android.util.Log;
 import android.util.Range;
 import android.util.SparseIntArray;
@@ -89,6 +90,9 @@ public class UpstreamNetworkMonitor {
     private static final String TAG = UpstreamNetworkMonitor.class.getSimpleName();
     private static final boolean DBG = false;
     private static final boolean VDBG = false;
+
+    // Copied from core/java/android/provider/Settings.java
+    private static final String ALWAYS_ON_VPN_LOCKDOWN = "always_on_vpn_lockdown";
 
     public static final int EVENT_ON_CAPABILITIES   = 1;
     public static final int EVENT_ON_LINKPROPERTIES = 2;
@@ -336,10 +340,14 @@ public class UpstreamNetworkMonitor {
      */
     public UpstreamNetworkState getCurrentPreferredUpstream() {
         // Use VPN upstreams if hotspot settings allow.
-        if (mTetheringUpstreamVpn != null &&
-                LineageSettings.Secure.getInt(mContext.getContentResolver(),
+        if (LineageSettings.Secure.getInt(mContext.getContentResolver(),
                         LineageSettings.Secure.TETHERING_ALLOW_VPN_UPSTREAMS, 0) == 1) {
-            return mNetworkMap.get(mTetheringUpstreamVpn);
+            if (mTetheringUpstreamVpn != null) {
+                return mNetworkMap.get(mTetheringUpstreamVpn);
+            } else if (Settings.Secure.getInt(mContext.getContentResolver(),
+                    ALWAYS_ON_VPN_LOCKDOWN, 0) == 1) {
+                return null;
+            }
         }
         final UpstreamNetworkState dfltState = (mDefaultInternetNetwork != null)
                 ? mNetworkMap.get(mDefaultInternetNetwork)
