@@ -1086,4 +1086,48 @@ public class ConnectivitySettingsManager {
         Settings.Global.putString(context.getContentResolver(), UIDS_ALLOWED_ON_RESTRICTED_NETWORKS,
                 uids);
     }
+
+    /**
+     * Add a new uid(from {@link Settings}) that is allowed to use restricted networks.
+     *
+     * @param context The {@link Context} to set the setting.
+     * @param uid A uids that is allowed to use restricted networks.
+     */
+    public static void addUidAllowedOnRestrictedNetworks(@NonNull Context context,
+            @NonNull int uid) {
+        final boolean calledFromSystem = isCallingFromSystem();
+        if (!calledFromSystem) {
+            // Enforce NETWORK_SETTINGS check if it's debug build. This is for MTS test only.
+            if (!Build.isDebuggable()) {
+                throw new SecurityException("Only system can set this setting.");
+            }
+            context.enforceCallingOrSelfPermission(android.Manifest.permission.NETWORK_SETTINGS,
+                    "Requires NETWORK_SETTINGS permission");
+        }
+        Set<Integer> uids = getUidsAllowedOnRestrictedNetworks(context);
+        uids.add(uid);
+        setUidsAllowedOnRestrictedNetworks(context, uids);
+    }
+
+    /**
+     * Removes a uid(from {@link Settings}) that is allowed to use restricted networks.
+     *
+     * @param context The {@link Context} to set the setting.
+     * @param uid A uid that is not allowed to use restricted networks.
+     */
+    public static void removeUidAllowedOnRestrictedNetworks(@NonNull Context context,
+            @NonNull int uid) {
+        final boolean calledFromSystem = isCallingFromSystem();
+        if (!calledFromSystem) {
+            // Enforce NETWORK_SETTINGS check if it's debug build. This is for MTS test only.
+            if (!Build.isDebuggable()) {
+                throw new SecurityException("Only system can set this setting.");
+            }
+            context.enforceCallingOrSelfPermission(android.Manifest.permission.NETWORK_SETTINGS,
+                    "Requires NETWORK_SETTINGS permission");
+        }
+        Set<Integer> uids = getUidsAllowedOnRestrictedNetworks(context);
+        uids.remove(uid);
+        setUidsAllowedOnRestrictedNetworks(context, uids);
+    }
 }
