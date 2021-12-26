@@ -398,6 +398,14 @@ public class ConnectivitySettingsManager {
             "uids_allowed_on_restricted_networks";
 
     /**
+     * A list of uids that is denied to use restricted networks.
+     *
+     * @hide
+     */
+    public static final String UIDS_DENIED_ON_RESTRICTED_NETWORKS =
+            "uids_denied_on_restricted_networks";
+
+    /**
      * Get mobile data activity timeout from {@link Settings}.
      *
      * @param context The {@link Context} to query the setting.
@@ -1056,6 +1064,23 @@ public class ConnectivitySettingsManager {
         return getUidSetFromString(uidList);
     }
 
+    /**
+     * Get the list of uids (from {@link Settings}) denied to use restricted networks.
+     *
+     * This is opposite to the allowlist {@link UIDS_ALLOWED_ON_RESTRICTED_NETWORKS}
+     * Mainly used for migration and backup/restore
+     *
+     * @param context The {@link Context} to query the setting.
+     * @return A list of uids that is denied to use restricted networks or null if no setting
+     *         value.
+     */
+    @NonNull
+    public static Set<Integer> getUidsDeniedOnRestrictedNetworks(@NonNull Context context) {
+        final String uidList = Settings.Global.getString(
+                context.getContentResolver(), UIDS_DENIED_ON_RESTRICTED_NETWORKS);
+        return getUidSetFromString(uidList);
+    }
+
     private static boolean isCallingFromSystem() {
         final int uid = Binder.getCallingUid();
         final int pid = Binder.getCallingPid();
@@ -1129,5 +1154,73 @@ public class ConnectivitySettingsManager {
         Set<Integer> uids = getUidsAllowedOnRestrictedNetworks(context);
         uids.remove(uid);
         setUidsAllowedOnRestrictedNetworks(context, uids);
+    }
+
+
+
+    /**
+     * Set the list of uids(from {@link Settings}) that is denied to use restricted networks.
+     *
+     * @param context The {@link Context} to set the setting.
+     * @param uidList A list of uids that is denied to use restricted networks.
+     */
+    public static void setUidsDeniedOnRestrictedNetworks(@NonNull Context context,
+            @NonNull Set<Integer> uidList) {
+        final boolean calledFromSystem = isCallingFromSystem();
+        if (!calledFromSystem) {
+            // Enforce NETWORK_SETTINGS check if it's debug build. This is for MTS test only.
+            if (!Build.isDebuggable()) {
+                throw new SecurityException("Only system can set this setting.");
+            }
+            context.enforceCallingOrSelfPermission(android.Manifest.permission.NETWORK_SETTINGS,
+                    "Requires NETWORK_SETTINGS permission");
+        }
+        final String uids = getUidStringFromSet(uidList);
+        Settings.Global.putString(context.getContentResolver(), UIDS_DENIED_ON_RESTRICTED_NETWORKS,
+                uids);
+    }
+
+    /**
+     * Add a new uid(from {@link Settings}) that is denied to use restricted networks.
+     *
+     * @param context The {@link Context} to set the setting.
+     * @param uid A uids that is denied to use restricted networks.
+     */
+    public static void addUidDeniedOnRestrictedNetworks(@NonNull Context context,
+            @NonNull int uid) {
+        final boolean calledFromSystem = isCallingFromSystem();
+        if (!calledFromSystem) {
+            // Enforce NETWORK_SETTINGS check if it's debug build. This is for MTS test only.
+            if (!Build.isDebuggable()) {
+                throw new SecurityException("Only system can set this setting.");
+            }
+            context.enforceCallingOrSelfPermission(android.Manifest.permission.NETWORK_SETTINGS,
+                    "Requires NETWORK_SETTINGS permission");
+        }
+        Set<Integer> uids = getUidsDeniedOnRestrictedNetworks(context);
+        uids.add(uid);
+        setUidsDeniedOnRestrictedNetworks(context, uids);
+    }
+
+    /**
+     * Removes a uid(from {@link Settings}) that is denied to use restricted networks.
+     *
+     * @param context The {@link Context} to set the setting.
+     * @param uid A uid that is not denied to use restricted networks.
+     */
+    public static void removeUidDeniedOnRestrictedNetworks(@NonNull Context context,
+            @NonNull int uid) {
+        final boolean calledFromSystem = isCallingFromSystem();
+        if (!calledFromSystem) {
+            // Enforce NETWORK_SETTINGS check if it's debug build. This is for MTS test only.
+            if (!Build.isDebuggable()) {
+                throw new SecurityException("Only system can set this setting.");
+            }
+            context.enforceCallingOrSelfPermission(android.Manifest.permission.NETWORK_SETTINGS,
+                    "Requires NETWORK_SETTINGS permission");
+        }
+        Set<Integer> uids = getUidsDeniedOnRestrictedNetworks(context);
+        uids.remove(uid);
+        setUidsDeniedOnRestrictedNetworks(context, uids);
     }
 }

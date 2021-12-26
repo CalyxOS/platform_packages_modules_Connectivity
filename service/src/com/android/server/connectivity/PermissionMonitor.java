@@ -25,6 +25,7 @@ import static android.content.pm.PackageInfo.REQUESTED_PERMISSION_GRANTED;
 import static android.content.pm.PackageManager.GET_PERMISSIONS;
 import static android.content.pm.PackageManager.MATCH_ANY_USER;
 import static android.net.ConnectivitySettingsManager.UIDS_ALLOWED_ON_RESTRICTED_NETWORKS;
+import static android.net.ConnectivitySettingsManager.UIDS_DENIED_ON_RESTRICTED_NETWORKS;
 import static android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK;
 import static android.os.Process.INVALID_UID;
 import static android.os.Process.SYSTEM_UID;
@@ -116,6 +117,11 @@ public class PermissionMonitor {
     // netd system permission to these uids which is listed in UIDS_ALLOWED_ON_RESTRICTED_NETWORKS.
     @GuardedBy("this")
     private final Set<Integer> mUidsAllowedOnRestrictedNetworks = new ArraySet<>();
+
+    // A set of uids which are denied to use restricted networks. This is the opposite of the
+    // allow list above, mainly needed for migration and backup / restore.
+    @GuardedBy("this")
+    private final Set<Integer> mUidsDeniedOnRestrictedNetworks = new ArraySet<>();
 
     private BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
         @Override
@@ -220,9 +226,25 @@ public class PermissionMonitor {
                     }
                 });
 
+        // Register UIDS_DENIED_ON_RESTRICTED_NETWORKS setting observer
+        mDeps.registerContentObserver(
+                userAllContext,
+                Settings.Global.getUriFor(UIDS_DENIED_ON_RESTRICTED_NETWORKS),
+                false /* notifyForDescendants */,
+                new ContentObserver(null) {
+                    @Override
+                    public void onChange(boolean selfChange) {
+                        onSettingChanged();
+                    }
+                });
+
         // Read UIDS_ALLOWED_ON_RESTRICTED_NETWORKS setting and update
         // mUidsAllowedOnRestrictedNetworks.
         updateUidsAllowedOnRestrictedNetworks(mDeps.getUidsAllowedOnRestrictedNetworks(mContext));
+
+        // Read UIDS_DENIED_ON_RESTRICTED_NETWORKS setting and update
+        // mUidsDeniedOnRestrictedNetworks.
+        updateUidsDeniedOnRestrictedNetworks(mDeps.getUidsDeniedOnRestrictedNetworks(mContext));
 
         List<PackageInfo> apps = mPackageManager.getInstalledPackages(GET_PERMISSIONS
                 | MATCH_ANY_USER);
@@ -292,6 +314,14 @@ public class PermissionMonitor {
     }
 
     @VisibleForTesting
+    synchronized void updateUidsDeniedOnRestrictedNetworks(final Set<Integer> uids) {
+        mUidsDeniedOnRestrictedNetworks.clear();
+        for (int uid : uids) {
+            mUidsDeniedOnRestrictedNetworks.add(UserHandle.getAppId(uid));
+        }
+    }
+
+    @VisibleForTesting
     static boolean isVendorApp(@NonNull ApplicationInfo appInfo) {
         return appInfo.isVendor() || appInfo.isOem() || appInfo.isProduct();
     }
@@ -311,6 +341,13 @@ public class PermissionMonitor {
         // Check whether package's uid is in allowed on restricted networks uid list. If so, this
         // uid can have netd system permission.
         return mUidsAllowedOnRestrictedNetworks.contains(UserHandle.getAppId(appInfo.uid));
+    }
+
+    @VisibleForTesting
+    synchronized boolean isUidDeniedOnRestrictedNetworks(final ApplicationInfo appInfo) {
+        if (appInfo == null) return false;
+        // Check whether package's uid is in denied on restricted networks uid list.
+        return mUidsDeniedOnRestrictedNetworks.contains(UserHandle.getAppId(appInfo.uid));
     }
 
     @VisibleForTesting
@@ -809,6 +846,7 @@ public class PermissionMonitor {
         // update.
         final Set<Integer> uidsToUpdate = new ArraySet<>(mUidsAllowedOnRestrictedNetworks);
         updateUidsAllowedOnRestrictedNetworks(mDeps.getUidsAllowedOnRestrictedNetworks(mContext));
+        updateUidsDeniedOnRestrictedNetworks(mDeps.getUidsDeniedOnRestrictedNetworks(mContext));
         uidsToUpdate.addAll(mUidsAllowedOnRestrictedNetworks);
 
         final Map<Integer, Boolean> updatedUids = new HashMap<>();
@@ -819,7 +857,8 @@ public class PermissionMonitor {
             final Boolean permission = highestUidNetworkPermission(uid);
 
             final int appId = UserHandle.getAppId(uid);
-            if (null == permission) {
+            // Also remove any uids present in the denylist
+            if (null == permission || mUidsDeniedOnRestrictedNetworks.contains(appId)) {
                 removedUids.put(appId, NETWORK); // Doesn't matter which permission is set here.
                 mApps.remove(appId);
             } else {
