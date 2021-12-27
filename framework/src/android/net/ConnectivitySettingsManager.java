@@ -1056,10 +1056,13 @@ public class ConnectivitySettingsManager {
         return getUidSetFromString(uidList);
     }
 
-    private static boolean isCallingFromSystem() {
+    private static boolean isCallingFromSystemOrFirewallApp() {
         final int uid = Binder.getCallingUid();
         final int pid = Binder.getCallingPid();
         if (uid == Process.SYSTEM_UID && pid == Process.myPid()) {
+            return true;
+        }
+        if (uid == Process.FIREWALL_APP_UID && pid == Process.myPid()) {
             return true;
         }
         return false;
@@ -1073,8 +1076,8 @@ public class ConnectivitySettingsManager {
      */
     public static void setUidsAllowedOnRestrictedNetworks(@NonNull Context context,
             @NonNull Set<Integer> uidList) {
-        final boolean calledFromSystem = isCallingFromSystem();
-        if (!calledFromSystem) {
+        final boolean calledFromSystemOrFirewallApp = isCallingFromSystemOrFirewallApp();
+        if (!calledFromSystemOrFirewallApp) {
             // Enforce NETWORK_SETTINGS check if it's debug build. This is for MTS test only.
             if (!Build.isDebuggable()) {
                 throw new SecurityException("Only system can set this setting.");
