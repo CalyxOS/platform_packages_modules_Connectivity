@@ -16,6 +16,24 @@
       "message": "Should be abandoned I think given https://review.calyxos.org/c/CalyxOS/platform_packages_modules_Connectivity/+/7247",
       "revId": "1ce8394b096feb0d89e8becac207e6f63d74f631",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2529a510_71d0d615",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-01-03T12:54:58Z",
+      "side": 1,
+      "message": "That commit does not include this AFAICT.\n\nThis is a downstream patch.",
+      "parentUuid": "403f8b41_304779c1",
+      "revId": "1ce8394b096feb0d89e8becac207e6f63d74f631",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
