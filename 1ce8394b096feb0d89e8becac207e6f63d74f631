@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "403f8b41_304779c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2022-01-03T10:08:50Z",
+      "side": 1,
+      "message": "Should be abandoned I think given https://review.calyxos.org/c/CalyxOS/platform_packages_modules_Connectivity/+/7247",
+      "revId": "1ce8394b096feb0d89e8becac207e6f63d74f631",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
