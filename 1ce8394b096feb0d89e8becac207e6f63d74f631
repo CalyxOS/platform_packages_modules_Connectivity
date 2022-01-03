@@ -34,6 +34,24 @@
       "parentUuid": "403f8b41_304779c1",
       "revId": "1ce8394b096feb0d89e8becac207e6f63d74f631",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f6b88af_ea4be964",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2022-01-03T12:56:53Z",
+      "side": 1,
+      "message": "Thought it was squashed for some reason. All good. Better to keep them separate anyway. Will test it now then",
+      "parentUuid": "2529a510_71d0d615",
+      "revId": "1ce8394b096feb0d89e8becac207e6f63d74f631",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
