@@ -1192,6 +1192,7 @@ public class ConnectivityManager {
      */
     @RequiresPermission(android.Manifest.permission.NETWORK_STACK)
     @Nullable
+    @SystemApi(client = MODULE_LIBRARIES)
     public Network getActiveNetworkForUid(int uid) {
         return getActiveNetworkForUid(uid, false);
     }
