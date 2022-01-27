@@ -1207,6 +1207,17 @@ public class ConnectivityManager {
         }
     }
 
+    /** {@hide} */
+    @Nullable
+    @SystemApi(client = MODULE_LIBRARIES)
+    public Network getNetworkForNetId(int netId) {
+        try {
+            return mService.getNetworkForNetId(netId);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
     /**
      * Adds or removes a requirement for given UID ranges to use the VPN.
      *

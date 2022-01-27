@@ -1883,6 +1883,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
+    public Network getNetworkForNetId(int netId) {
+        synchronized (mNetworkForNetId) {
+            NetworkAgentInfo nai = mNetworkForNetId.get(netId);
+            return nai != null ? nai.network() : null;
+        }
+    }
+
+    @Override
     public Network getNetworkForType(int networkType) {
         enforceAccessPermission();
         if (!mLegacyTypeTracker.isTypeSupported(networkType)) {

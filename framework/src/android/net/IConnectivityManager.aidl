@@ -62,6 +62,7 @@ interface IConnectivityManager
     @UnsupportedAppUsage(maxTargetSdk = 28)
     NetworkInfo getNetworkInfo(int networkType);
     NetworkInfo getNetworkInfoForUid(in Network network, int uid, boolean ignoreBlocked);
+    Network getNetworkForNetId(int netId);
     @UnsupportedAppUsage
     NetworkInfo[] getAllNetworkInfo();
     Network getNetworkForType(int networkType);
