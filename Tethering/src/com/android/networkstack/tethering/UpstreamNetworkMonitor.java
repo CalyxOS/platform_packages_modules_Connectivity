@@ -339,7 +339,7 @@ public class UpstreamNetworkMonitor {
     public UpstreamNetworkState getCurrentPreferredUpstream() {
         // Use VPN upstreams if hotspot settings allow.
         if (LineageSettings.Secure.getInt(mContext.getContentResolver(),
-                        LineageSettings.Secure.TETHERING_ALLOW_VPN_UPSTREAMS, 0) == 1) {
+                        LineageSettings.Secure.TETHERING_ALLOW_VPN_UPSTREAMS, 1) == 1) {
             if (mVpnInternetNetwork != null) {
                 return mNetworkMap.get(mVpnInternetNetwork);
             } else if (Settings.Secure.getInt(mContext.getContentResolver(),
