@@ -39,6 +39,7 @@ import android.net.NetworkRequest;
 import android.net.util.PrefixUtils;
 import android.net.util.SharedLog;
 import android.os.Handler;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.Log;
 import android.util.SparseIntArray;
@@ -678,8 +679,9 @@ public class UpstreamNetworkMonitor {
     }
 
     private static boolean isVpnInternetNetwork(NetworkCapabilities nc) {
-        return (nc != null) && !nc.hasCapability(NET_CAPABILITY_NOT_VPN) &&
-                nc.hasCapability(NET_CAPABILITY_INTERNET);
+        return (nc != null) && UserHandle.getUserId(nc.getOwnerUid()) == UserHandle.USER_SYSTEM
+                && !nc.hasCapability(NET_CAPABILITY_NOT_VPN)
+                && nc.hasCapability(NET_CAPABILITY_INTERNET);
     }
 
     private static UpstreamNetworkState findFirstDunNetwork(
