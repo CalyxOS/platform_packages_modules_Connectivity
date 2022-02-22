@@ -39,6 +39,7 @@ import android.net.NetworkRequest;
 import android.net.util.PrefixUtils;
 import android.net.util.SharedLog;
 import android.os.Handler;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.Log;
 import android.util.SparseIntArray;
@@ -142,8 +143,8 @@ public class UpstreamNetworkMonitor {
     private Network mDefaultInternetNetwork;
     // The current upstream network used for tethering.
     private Network mTetheringUpstreamNetwork;
-    // Set if the Internet is considered reachable via a VPN network
-    private Network mVpnInternetNetwork;
+    // Set if the Internet is considered reachable via the main user's VPN network
+    private Network mTetheringUpstreamVpn;
 
     public UpstreamNetworkMonitor(Context ctx, StateMachine tgt, SharedLog log, int what) {
         mContext = ctx;
@@ -205,7 +206,7 @@ public class UpstreamNetworkMonitor {
         mListenAllCallback = null;
 
         mTetheringUpstreamNetwork = null;
-        mVpnInternetNetwork = null;
+        mTetheringUpstreamVpn = null;
         mNetworkMap.clear();
     }
 
@@ -340,8 +341,8 @@ public class UpstreamNetworkMonitor {
         // Use VPN upstreams if hotspot settings allow.
         if (LineageSettings.Secure.getInt(mContext.getContentResolver(),
                         LineageSettings.Secure.TETHERING_ALLOW_VPN_UPSTREAMS, 0) == 1) {
-            if (mVpnInternetNetwork != null) {
-                return mNetworkMap.get(mVpnInternetNetwork);
+            if (mTetheringUpstreamVpn != null) {
+                return mNetworkMap.get(mTetheringUpstreamVpn);
             } else if (Settings.Secure.getInt(mContext.getContentResolver(),
                     ALWAYS_ON_VPN_LOCKDOWN, 0) == 1) {
                 return null;
@@ -388,7 +389,7 @@ public class UpstreamNetworkMonitor {
     }
 
     private void handleNetCap(Network network, NetworkCapabilities newNc) {
-        if (isVpnInternetNetwork(newNc)) mVpnInternetNetwork = network;
+        if (isSystemVpnUsable(newNc)) mTetheringUpstreamVpn = network;
         final UpstreamNetworkState prev = mNetworkMap.get(network);
         if (prev == null || newNc.equals(prev.networkCapabilities)) {
             // Ignore notifications about networks for which we have not yet
@@ -453,8 +454,8 @@ public class UpstreamNetworkMonitor {
         //     - deletes the entry from the map only when the LISTEN_ALL
         //       callback gets notified.
 
-        if (network.equals(mVpnInternetNetwork)) {
-            mVpnInternetNetwork = null;
+        if (network.equals(mTetheringUpstreamVpn)) {
+            mTetheringUpstreamVpn = null;
         }
 
         if (!mNetworkMap.containsKey(network)) {
@@ -677,9 +678,10 @@ public class UpstreamNetworkMonitor {
                && !isCellular(ns.networkCapabilities);
     }
 
-    private static boolean isVpnInternetNetwork(NetworkCapabilities nc) {
-        return (nc != null) && !nc.hasCapability(NET_CAPABILITY_NOT_VPN) &&
-                nc.hasCapability(NET_CAPABILITY_INTERNET);
+    private static boolean isSystemVpnUsable(NetworkCapabilities nc) {
+        return (nc != null) && UserHandle.getUserId(nc.getOwnerUid()) == UserHandle.USER_SYSTEM
+                && !nc.hasCapability(NET_CAPABILITY_NOT_VPN)
+                && nc.hasCapability(NET_CAPABILITY_INTERNET);
     }
 
     private static UpstreamNetworkState findFirstDunNetwork(
