@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9dc3503a_df5fd525",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-02-22T22:28:59Z",
+      "side": 1,
+      "message": "Can\u0027t find getUserId nor USER_SYSTEM",
+      "revId": "cf618d21305da0c6c32b6e99b66dc561c9749ab0",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
