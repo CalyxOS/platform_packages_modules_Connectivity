@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c88e633_fc64630c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-02-24T12:04:39Z",
+      "side": 1,
+      "message": "Before:\nuser 0: riseup vpn\nuser 10: calyx vpn (work profile)\nhotspot on, target ends up using calyx vpn\n\nAfter:\nuser 0: riseup vpn\nuser 10: calyx vpn (work profile)\nhotspot on, target ends up using riseup vpn\n\nAll good till here, however, now:\nuser 0: no vpn\nuser 10: calyx vpn (work profile)\nhotspot on, target ends up using calyx vpn\n\n",
+      "revId": "396c5c33a3e16000955ee91be357c9902988edd1",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
