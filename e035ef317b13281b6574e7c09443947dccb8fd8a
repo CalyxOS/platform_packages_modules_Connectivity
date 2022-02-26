@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50680676_48562fd3",
+        "filename": "framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-02-26T11:42:00Z",
+      "side": 1,
+      "message": "Do we want to add a @RequiresPermission here like above?",
+      "revId": "e035ef317b13281b6574e7c09443947dccb8fd8a",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
