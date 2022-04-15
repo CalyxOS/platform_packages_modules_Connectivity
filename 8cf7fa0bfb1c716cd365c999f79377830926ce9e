@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a17379d1_a1db7af7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-04-15T01:23:57Z",
+      "side": 1,
+      "message": "For migration I\u0027m thinking we can add a step to SDK, bump db version and have that write AOSP setting if Lineage setting exists.\n\n",
+      "revId": "8cf7fa0bfb1c716cd365c999f79377830926ce9e",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
