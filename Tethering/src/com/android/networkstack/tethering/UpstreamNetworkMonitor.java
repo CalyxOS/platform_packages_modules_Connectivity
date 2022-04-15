@@ -58,8 +58,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import lineageos.providers.LineageSettings;
-
 
 /**
  * A class to centralize all the network and link properties information
@@ -92,6 +90,7 @@ public class UpstreamNetworkMonitor {
 
     // Copied from core/java/android/provider/Settings.java
     private static final String ALWAYS_ON_VPN_LOCKDOWN = "always_on_vpn_lockdown";
+    private static final String TETHERING_ALLOW_VPN_UPSTREAMS = "tethering_allow_vpn_upstreams";
 
     public static final int EVENT_ON_CAPABILITIES   = 1;
     public static final int EVENT_ON_LINKPROPERTIES = 2;
@@ -335,8 +334,8 @@ public class UpstreamNetworkMonitor {
      */
     public UpstreamNetworkState getCurrentPreferredUpstream() {
         // Use VPN upstreams if hotspot settings allow.
-        if (LineageSettings.Secure.getInt(mContext.getContentResolver(),
-                        LineageSettings.Secure.TETHERING_ALLOW_VPN_UPSTREAMS, 0) == 1) {
+        if (Settings.Secure.getInt(mContext.getContentResolver(),
+                        TETHERING_ALLOW_VPN_UPSTREAMS, 0) == 1) {
             if (mTetheringUpstreamVpn != null) {
                 return mNetworkMap.get(mTetheringUpstreamVpn);
             } else if (Settings.Secure.getInt(mContext.getContentResolver(),
