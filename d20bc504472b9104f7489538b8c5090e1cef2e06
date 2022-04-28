@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a8829e2_03e6424a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-04-28T17:02:51Z",
+      "side": 1,
+      "message": "Let\u0027s do this",
+      "revId": "d20bc504472b9104f7489538b8c5090e1cef2e06",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
