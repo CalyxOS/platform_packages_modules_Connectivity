@@ -16,6 +16,24 @@
       "message": "Oliver, could you handle the frameworks side of this?\n\nAfter that I think we\u0027re ready, since all other packages/modules/ changes should be easy to apply in AOSP, and conflicts if any shouldn\u0027t be too hard to resolve.",
       "revId": "df15f371699fd89bd4013984e58b323ea8a10ae8",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d0235bf_9a5f6f1c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2022-05-11T18:04:57Z",
+      "side": 1,
+      "message": "https://review.calyxos.org/c/CalyxOS/platform_frameworks_base/+/10975",
+      "parentUuid": "7e1a0ef6_f839c90a",
+      "revId": "df15f371699fd89bd4013984e58b323ea8a10ae8",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
