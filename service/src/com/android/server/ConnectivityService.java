@@ -8578,6 +8578,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 state == NetworkInfo.State.SUSPENDED)) {
             mLegacyTypeTracker.update(networkAgent);
         }
+
+        if (networkAgent.isVPN()) {
+            // Notify NetworkPolicyManagerService about the change.
+            mPolicyManager.updateRestrictedModeAllowlist();
+        }
     }
 
     private void updateNetworkScore(@NonNull final NetworkAgentInfo nai, final NetworkScore score) {
