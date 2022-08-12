@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "375787c9_83e41c8f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-08-12T02:31:39Z",
+      "side": 1,
+      "message": "This may not be best way to solve this, but it works.\n\nThere is another workaround which adds a updateRestrictedModeAllowlistUL call to updateNetworksInternal within the first synchronized block instead, but it\u0027s indirectly in response to a CONNECTIVITY_ACTION change and not called as early in the process, which may add a (small) window of opportunity for leakage. This change may do the same, but less -- not sure. Either way, it\u0027s not an indefinite leak like pre-patch.\n\nRequires changes to platform_frameworks_base as well.",
+      "revId": "d848d4c30d54b106f3b2b8c4da47df96975c7841",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
