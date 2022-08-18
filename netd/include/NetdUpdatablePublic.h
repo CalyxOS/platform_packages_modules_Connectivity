@@ -58,4 +58,11 @@ int libnetd_updatable_tagSocket(int sockFd, uint32_t tag, uid_t chargeUid,
  */
 int libnetd_updatable_untagSocket(int sockFd);
 
+/*
+ * Query whether networking is allowed for a particular uid.
+ *
+ * Returns 0 if restricted, 1 if allowed, or a negative POSIX error code (see errno.h) on failure.
+ */
+int libnetd_updatable_getNetworkingAllowedForUid(uid_t uid);
+
 __END_DECLS
