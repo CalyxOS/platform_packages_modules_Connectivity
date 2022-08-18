@@ -53,6 +53,11 @@ class BpfHandler {
      */
     int untagSocket(int sockFd);
 
+    /*
+     * Query whether networking is allowed for a particular uid.
+     */
+    int getNetworkingAllowedForUid(uid_t uid);
+
   private:
     // For testing
     BpfHandler(uint32_t perUidLimit, uint32_t totalLimit);
@@ -65,6 +70,7 @@ class BpfHandler {
     BpfMapRO<StatsKey, StatsValue> mStatsMapB;
     BpfMapRO<uint32_t, uint32_t> mConfigurationMap;
     BpfMap<uint32_t, uint8_t> mUidPermissionMap;
+    BpfMapRO<uint32_t, UidOwnerValue> mUidOwnerMap;
 
     std::mutex mMutex;
 

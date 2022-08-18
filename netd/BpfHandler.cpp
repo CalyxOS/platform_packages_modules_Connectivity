@@ -111,6 +111,7 @@ Status BpfHandler::initMaps() {
     RETURN_IF_NOT_OK(mStatsMapB.init(STATS_MAP_B_PATH));
     RETURN_IF_NOT_OK(mConfigurationMap.init(CONFIGURATION_MAP_PATH));
     RETURN_IF_NOT_OK(mUidPermissionMap.init(UID_PERMISSION_MAP_PATH));
+    RETURN_IF_NOT_OK(mUidOwnerMap.init(UID_OWNER_MAP_PATH));
 
     return netdutils::status::ok;
 }
@@ -245,6 +246,28 @@ int BpfHandler::untagSocket(int sockFd) {
         return -res.error().code();
     }
     return 0;
+}
+
+int BpfHandler::getNetworkingAllowedForUid(uid_t uid) {
+    std::lock_guard guard(mMutex);
+    uint32_t key = UID_RULES_CONFIGURATION_KEY;
+    auto configuration = mConfigurationMap.readValue(key);
+    if (!configuration.ok()) {
+        ALOGE("Cannot read the configuration from map: %s",
+            configuration.error().message().c_str());
+        return 1;
+    }
+    // If the restricted firewall chain is disabled, networking is allowed
+    if (!(configuration.value() & RESTRICTED_MATCH)) {
+        return 1;
+    }
+    // If the uid owner map does not contain the uid, networking is disallowed
+    auto uidOwnerValue = mUidOwnerMap.readValue(uid);
+    if (!uidOwnerValue.ok()) {
+        return 0;
+    }
+    // Otherwise, networking is allowed if the uid is allowlisted
+    return (uidOwnerValue.value().rule & RESTRICTED_MATCH) ? 1 : 0;
 }
 
 }  // namespace net

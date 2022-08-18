@@ -22,6 +22,7 @@ LIBNETD_UPDATABLE {
     libnetd_updatable_init; # apex
     libnetd_updatable_tagSocket; # apex
     libnetd_updatable_untagSocket; # apex
+    libnetd_updatable_getNetworkingAllowedForUid; # apex
   local:
     *;
 };
