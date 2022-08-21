@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83f9389d_029c1cd8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-08-21T19:18:03Z",
+      "side": 1,
+      "message": "It builds and runs, and it boots successfully in an emulator, but it has not been verified and it involves more volatile changes than would be ideal. Still, it may be a possible option if a better solution isn\u0027t found. See also https://review.calyxos.org/c/CalyxOS/platform_system_netd/+/12839",
+      "revId": "c33390a4284b30d583a181adb8b88ab8f02619bb",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
