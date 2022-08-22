@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99a7f43f_f238d2c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2022-08-22T15:47:25Z",
+      "side": 1,
+      "message": "I think the intention is not to port this given it requires API updates?",
+      "revId": "403482a2aa28ac9ceed5476feb97f4378c49f6fb",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
