@@ -103,6 +103,24 @@
       "message": "It wants to update ABIs given the changes are made to the public updatable APIs $ANDROID_BUILD_TOP/development/vndk/tools/header-checker/utils/create_reference_dumps.py  -l libnetd_updatable",
       "revId": "c33390a4284b30d583a181adb8b88ab8f02619bb",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f277db1e_1502a801",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2022-08-29T17:58:20Z",
+      "side": 1,
+      "message": "I get the following error when running the command\n```\nFAILED:\nbuild/make/core/Makefile:4710: warning: Neither INSTALLED_KERNEL_TARGET nor INSTALLED_BOOTIMAGE_TARGET is defined when PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS  is true. Information about the updated kernel cannot be built into OTA update package. You can fix this by: (1) setting TARGET_NO_KERNEL to false and installing the built kernel to out/target/product/generic/kernel, so that kernel information will be extracted from the built kernel; or (2) Add a prebuilt boot image and specify it in BOARD_PREBUILT_BOOTIMAGE; or (3) extracting kernel configuration and defining BOARD_KERNEL_CONFIG_FILE and BOARD_KERNEL_VERSION manually; or (4) unsetting PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS manually.\nbuild/make/core/tasks/dex_preopt_check.mk:13: warning:  Missing compilation artifacts. Dexpreopting is not working for some system server jars\nOffending entries:\nsystem/framework/oat/arm/org.lineageos.platform.odex\nsystem/framework/oat/arm/org.lineageos.platform.vdex\nIn file included from build/make/core/main.mk:1454:\nIn file included from build/make/core/Makefile:6938:\nbuild/make/core/tasks/dex_preopt_check.mk:13: error: Build failed.\n19:57:20 ckati failed with: exit status 1\nTraceback (most recent call last):\n  File \"/home/uldiniad/calyx/development/vndk/tools/header-checker/utils/create_reference_dumps.py\", line 211, in \u003cmodule\u003e\n    main()\n  File \"/home/uldiniad/calyx/development/vndk/tools/header-checker/utils/create_reference_dumps.py\", line 202, in main\n    num_processed \u003d create_source_abi_reference_dumps_for_all_products(args)\n  File \"/home/uldiniad/calyx/development/vndk/tools/header-checker/utils/create_reference_dumps.py\", line 148, in create_source_abi_reference_dumps_for_all_products\n    make_libs_for_product(args.libs, product, args.build_variant,\n  File \"/home/uldiniad/calyx/development/vndk/tools/header-checker/utils/create_reference_dumps.py\", line 36, in make_libs_for_product\n    make_libraries(product, variant, vndk_version, targets, libs)\n  File \"/home/uldiniad/calyx/development/vndk/tools/header-checker/utils/utils.py\", line 166, in make_libraries\n    lsdump_paths \u003d read_lsdump_paths(product, variant, vndk_version, targets,\n  File \"/home/uldiniad/calyx/development/vndk/tools/header-checker/utils/utils.py\", line 255, in read_lsdump_paths\n    make_targets(product, variant, [lsdump_paths_file_path])\n  File \"/home/uldiniad/calyx/development/vndk/tools/header-checker/utils/utils.py\", line 156, in make_targets\n    subprocess.check_call(make_cmd, cwd\u003dAOSP_DIR)\n  File \"/usr/lib/python3.10/subprocess.py\", line 369, in check_call\n    raise CalledProcessError(retcode, cmd)\nsubprocess.CalledProcessError: Command \u0027[\u0027build/soong/soong_ui.bash\u0027, \u0027--make-mode\u0027, \u0027-j\u0027, \u0027TARGET_PRODUCT\u003daosp_arm\u0027, \u0027TARGET_BUILD_VARIANT\u003duserdebug\u0027, \u0027out/target/product/generic/lsdump_paths.txt\u0027]\u0027 returned non-zero exit status 1.\n```",
+      "parentUuid": "7231e729_f8de20ad",
+      "revId": "c33390a4284b30d583a181adb8b88ab8f02619bb",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
