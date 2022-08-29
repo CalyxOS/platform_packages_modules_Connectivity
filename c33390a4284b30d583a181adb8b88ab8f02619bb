@@ -50,6 +50,24 @@
       "message": "There\u0027s an open patch to revert this in 12L https://review.calyxos.org/c/CalyxOS/platform_packages_modules_Connectivity/+/10871 since we\u0027d like to support apex module updates and unfortunately updating the API is an incompatible change (from what I understand).",
       "revId": "c33390a4284b30d583a181adb8b88ab8f02619bb",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9be1d79_9f7b38e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-08-29T08:39:01Z",
+      "side": 1,
+      "message": "It\u0027s possible to make this work in theory but in practice we don\u0027t know and it just adds additional complexity, so unless absolutely necessary (which in this case doesn\u0027t look like it), we should avoid changes here.\n\nStill, let\u0027s revisit once everything else is merged.",
+      "parentUuid": "535b54d7_6bae0135",
+      "revId": "c33390a4284b30d583a181adb8b88ab8f02619bb",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
