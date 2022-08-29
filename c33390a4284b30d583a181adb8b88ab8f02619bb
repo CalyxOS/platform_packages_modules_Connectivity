@@ -68,6 +68,24 @@
       "parentUuid": "535b54d7_6bae0135",
       "revId": "c33390a4284b30d583a181adb8b88ab8f02619bb",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5cd12a0_6976e7d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2022-08-29T08:45:30Z",
+      "side": 1,
+      "message": "Sorry, I got confused. This is actually used for the sockets in netd. TrafficController was moved out of netd and we cannot query if a UID\u0027s networking is blocked without this function. Going to have to investigate this.",
+      "parentUuid": "f9be1d79_9f7b38e1",
+      "revId": "c33390a4284b30d583a181adb8b88ab8f02619bb",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
