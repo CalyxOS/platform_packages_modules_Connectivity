@@ -16,6 +16,23 @@
       "message": "I think the intention is not to port this given it requires API updates?",
       "revId": "403482a2aa28ac9ceed5476feb97f4378c49f6fb",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "261f5b7e_7b7059f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2022-08-29T11:17:38Z",
+      "side": 1,
+      "message": "No longer used in PS2 https://review.calyxos.org/c/CalyxOS/platform_frameworks_base/+/12846/1..2",
+      "revId": "403482a2aa28ac9ceed5476feb97f4378c49f6fb",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
