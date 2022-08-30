@@ -139,6 +139,24 @@
       "parentUuid": "f277db1e_1502a801",
       "revId": "c33390a4284b30d583a181adb8b88ab8f02619bb",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57fff395_4e232677",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-08-30T03:52:09Z",
+      "side": 1,
+      "message": "`export DISABLE_DEXPREOPT_CHECK\u003dtrue` should be an ok workaround for now.",
+      "parentUuid": "f35e3dd4_62c204d2",
+      "revId": "c33390a4284b30d583a181adb8b88ab8f02619bb",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
