@@ -121,6 +121,24 @@
       "parentUuid": "7231e729_f8de20ad",
       "revId": "c33390a4284b30d583a181adb8b88ab8f02619bb",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f35e3dd4_62c204d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-08-30T02:16:26Z",
+      "side": 1,
+      "message": "So, I didn\u0027t know this at the time, but that command only worked for me before I included calyx-sdk. To convolute it further, the resulting abi-dumps files continued to be usable after I included calyx-sdk. But now that it\u0027s included, I get the same error if trying to run it again. So, it may be worth finding a different way to address this.\n\nTook some messy notes when thinking of other ways to deal with this that may or may not be useful: https://gitlab.com/-/snippets/2398361\n\nWould be happy to discuss further in dev room or wherever works, if you want. Sorry for not working collaboratively on this initially.",
+      "parentUuid": "f277db1e_1502a801",
+      "revId": "c33390a4284b30d583a181adb8b88ab8f02619bb",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
