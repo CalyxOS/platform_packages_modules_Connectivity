@@ -376,7 +376,7 @@ public class ConnectivitySettingsManager {
      * @hide
      * Alternative: 1dot1dot1dot1.cloudflare-dns.com
      */
-    public static final String PRIVATE_DNS_SPECIFIER_CLOUDFLARE = "one.one.one.one";
+    public static final String PRIVATE_DNS_SPECIFIER_CLOUDFLARE = "cloudflare-dns.com";
 
 
     /** @hide */
