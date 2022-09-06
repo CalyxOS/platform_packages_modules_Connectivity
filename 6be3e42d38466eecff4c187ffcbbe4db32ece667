@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b366b5ca_9886ad3a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-09-06T14:43:02Z",
+      "side": 1,
+      "message": "This would automatically upgrade all users, let\u0027s give it some more thought and time.",
+      "revId": "6be3e42d38466eecff4c187ffcbbe4db32ece667",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
