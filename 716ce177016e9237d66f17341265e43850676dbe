@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b985a218_a8dd07a3",
+        "filename": "Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-09-07T17:01:26Z",
+      "side": 0,
+      "message": "Bad fixup? This is unrelated to this change and should rather be squashed in the original.\n\nOh well, can fix next time.",
+      "revId": "716ce177016e9237d66f17341265e43850676dbe",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
