@@ -34,6 +34,24 @@
       "parentUuid": "d03d5d12_9332ed78",
       "revId": "56f619fff77cd0f51ddb1eb6c0e1082c34eadd31",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "638cfb08_9aec8f2b",
+        "filename": "service/src/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-09-12T12:33:42Z",
+      "side": 0,
+      "message": "That makes sense, let\u0027s just state that in the fw/b comment / commit message then.",
+      "parentUuid": "85d7c24f_f07cdf9c",
+      "revId": "56f619fff77cd0f51ddb1eb6c0e1082c34eadd31",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
