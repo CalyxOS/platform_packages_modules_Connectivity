@@ -16,6 +16,24 @@
       "message": "Also, what about https://review.calyxos.org/c/CalyxOS/platform_frameworks_base/+/12173/11/services/core/java/com/android/server/net/NetworkPolicyManagerService.java\n\nIt\u0027s supposed to be kept in sync with this one. We should update the comment according to what we do to avoid confusion at it being not exactly identical",
       "revId": "56f619fff77cd0f51ddb1eb6c0e1082c34eadd31",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85d7c24f_f07cdf9c",
+        "filename": "service/src/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2022-09-12T12:23:29Z",
+      "side": 0,
+      "message": "Yeah, in this case we will have to keep it out of sync as long as the regression is present and we continue using this feature as a backend",
+      "parentUuid": "d03d5d12_9332ed78",
+      "revId": "56f619fff77cd0f51ddb1eb6c0e1082c34eadd31",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
