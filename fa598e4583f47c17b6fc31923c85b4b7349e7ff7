@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bce205f9_8fca928e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-09-13T13:47:37Z",
+      "side": 1,
+      "message": "Related: https://android-review.googlesource.com/c/platform/packages/modules/Connectivity/+/1767734\n\nDo note:\n\n\u003e strict order of network permissions (SYSTEM \u003e NETWORK \u003e NONE)\n\nSo we definitely don\u0027t want apps to have SYSTEM\n\nTest: adb root; adb shell dumpsys netd\n\nLook for \"Permission of users:\"\n\nThen, `adb shell pm list packages --uid $uid` to verify more",
+      "revId": "fa598e4583f47c17b6fc31923c85b4b7349e7ff7",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
