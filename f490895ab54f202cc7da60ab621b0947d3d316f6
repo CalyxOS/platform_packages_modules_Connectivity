@@ -33,6 +33,40 @@
       "message": "Gone:\n\npackage:com.android.modulemetadata\npackage:com.android.vending\npackage:com.aurora.services\npackage:com.google.android.gsf\npackage:org.fdroid.fdroid.privileged\npackage:org.fdroid.fdroid\npackage:org.fitchfamily.android.dejavu\npackage:org.microg.nlp.backend.nominatim\n",
       "revId": "f490895ab54f202cc7da60ab621b0947d3d316f6",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e19ab93_08d8f8c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-09-13T15:54:49Z",
+      "side": 1,
+      "message": "Shipping given the test",
+      "revId": "f490895ab54f202cc7da60ab621b0947d3d316f6",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e1e92a1_a2e568ba",
+        "filename": "service/src/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-09-13T15:54:49Z",
+      "side": 1,
+      "message": "This is the only user of this method so it should be fine.",
+      "revId": "f490895ab54f202cc7da60ab621b0947d3d316f6",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
