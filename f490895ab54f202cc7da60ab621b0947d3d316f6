@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f9ad95b_789554ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-09-13T15:51:43Z",
+      "side": 1,
+      "message": "coral after this:\n\n```\n    Permission of users:\n      NETWORK: 1002, 10102, 10114, 10126, 10142, 10162, 10174, 20102, 20114, 20126, 20142, 20162, 20174\n      SYSTEM: 1000, 1001, 1073, 2000, 7960, 10057, 10073, 10077, 10088, 10100, 20057, 20073, 20077, 20088, 20100\n```\n\n```\npackage:com.android.localtransport uid:1000\npackage:android uid:1000\npackage:com.android.dynsystem uid:1000\npackage:org.lineageos.lineageparts uid:1000\npackage:com.android.inputdevices uid:1000\npackage:com.android.location.fused uid:1000\npackage:com.android.settings uid:1000\npackage:org.lineageos.lineagesettings uid:1000\npackage:org.lineageos.setupwizard uid:1000\npackage:lineageos.platform uid:1000\npackage:com.android.keychain uid:1000\npackage:com.android.server.telecom uid:1000\npackage:com.android.providers.settings uid:1000\npackage:com.android.wallpaperbackup uid:1000\npackage:com.qualcomm.qcrilmsgtunnel uid:1001\npackage:com.android.ons uid:1001\npackage:com.qti.qualcomm.datastatusnotification uid:1001\npackage:com.android.stk uid:1001\npackage:com.android.mms.service uid:1001\npackage:com.android.providers.telephony uid:1001\npackage:com.android.phone uid:1001\npackage:com.android.service.ims.presence uid:1001\npackage:com.android.service.ims uid:1001\npackage:com.qualcomm.qti.uceShimService uid:1001\npackage:com.android.networkstack uid:1073\npackage:com.android.networkstack.tethering uid:1073\npackage:com.android.cellbroadcastservice uid:1073\npackage:com.android.shell uid:2000\npackage:org.calyxos.datura uid:7960\npackage:com.android.providers.downloads.ui uid:10057\npackage:com.android.providers.media uid:10057\npackage:com.android.soundpicker uid:10057\npackage:com.android.providers.downloads uid:10057\npackage:com.android.mtp uid:10057\npackage:com.android.captiveportallogin uid:10073\npackage:com.android.carrierdefaultapp uid:10077\npackage:com.qualcomm.qti.cne uid:10088\npackage:vendor.qti.hardware.cacert.server uid:10088\npackage:vendor.qti.iwlan uid:10088\npackage:com.android.dialer uid:10100\n```",
+      "revId": "f490895ab54f202cc7da60ab621b0947d3d316f6",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
