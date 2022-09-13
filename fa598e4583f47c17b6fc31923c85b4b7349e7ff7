@@ -16,6 +16,23 @@
       "message": "Related: https://android-review.googlesource.com/c/platform/packages/modules/Connectivity/+/1767734\n\nDo note:\n\n\u003e strict order of network permissions (SYSTEM \u003e NETWORK \u003e NONE)\n\nSo we definitely don\u0027t want apps to have SYSTEM\n\nTest: adb root; adb shell dumpsys netd\n\nLook for \"Permission of users:\"\n\nThen, `adb shell pm list packages --uid $uid` to verify more",
       "revId": "fa598e4583f47c17b6fc31923c85b4b7349e7ff7",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be9ef428_932481e2",
+        "filename": "service/src/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-09-13T13:50:19Z",
+      "side": 1,
+      "message": "F-Droid, microG and friends show up in the list because they return true for this.\n\n\"this is why you update target sdk kids\"",
+      "revId": "fa598e4583f47c17b6fc31923c85b4b7349e7ff7",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
