@@ -16,6 +16,23 @@
       "message": "Still needs wider testing, including on-device as opposed to emulator. Will build for my phone tonight.",
       "revId": "ff5b098c7365fcc1a67207c327e7cc756a1b437d",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "856edd70_6cb8965d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-09-20T22:05:23Z",
+      "side": 1,
+      "message": "Completely breaks VPN in profiles and probably secondary users. V-1000",
+      "revId": "ff5b098c7365fcc1a67207c327e7cc756a1b437d",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
