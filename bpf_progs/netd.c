@@ -51,6 +51,9 @@
 #define TCP_FLAG_OFF 13
 #define RST_OFFSET 2
 
+// Used by bpf_owner_match
+#define IFINDEX_LOOPBACK 1
+
 // For maps netd does not need to access
 #define DEFINE_BPF_MAP_NO_NETD(the_map, TYPE, TypeOfKey, TypeOfValue, num_entries) \
     DEFINE_BPF_MAP_EXT(the_map, TYPE, TypeOfKey, TypeOfValue, num_entries, \
@@ -217,12 +220,22 @@ static __always_inline BpfConfig getConfig(uint32_t configKey) {
     return *config;
 }
 
-static inline int bpf_owner_match(struct __sk_buff* skb, uint32_t uid, int direction) {
-    if (skip_owner_match(skb)) return BPF_PASS;
+// Must be __always_inline or the call from inet_socket_create will crash-reboot the system
+static __always_inline inline int bpf_owner_match(struct __sk_buff* skb, uint32_t uid,
+                                                  int ifindex) {
+    // skb is NULL when called for socket creation checks
+    const bool forSocketCreate = skb == NULL;
+
+    if (skb && skip_owner_match(skb)) return BPF_PASS;
 
     if (is_system_uid(uid)) return BPF_PASS;
 
     BpfConfig enabledRules = getConfig(UID_RULES_CONFIGURATION_KEY);
+
+    // For socket creation checks, we only care about RESTRICTED_MATCH.
+    if (forSocketCreate) {
+        enabledRules &= RESTRICTED_MATCH;
+    }
 
     UidOwnerValue* uidEntry = bpf_uid_owner_map_lookup_elem(&uid);
     uint32_t uidRules = uidEntry ? uidEntry->rule : 0;
@@ -254,7 +267,7 @@ static inline int bpf_owner_match(struct __sk_buff* skb, uint32_t uid, int direc
             return BPF_DROP;
         }
     }
-    if (direction == BPF_INGRESS && skb->ifindex != 1) {
+    if (ifindex != IFINDEX_LOOPBACK) {
         if (uidRules & IIF_MATCH) {
             if (allowed_iif && skb->ifindex != allowed_iif) {
                 // Drops packets not coming from lo nor the allowed interface
@@ -299,7 +312,9 @@ static __always_inline inline int bpf_traffic_account(struct __sk_buff* skb, int
         return BPF_PASS;
     }
 
-    int match = bpf_owner_match(skb, sock_uid, direction);
+    // Provide IFINDEX_LOOPBACK to skip ingress checks for egress packets.
+    const int ifindex = direction == BPF_INGRESS ? skb->ifindex : IFINDEX_LOOPBACK;
+    int match = bpf_owner_match(skb, sock_uid, ifindex);
     if ((direction == BPF_EGRESS) && (match == BPF_DROP)) {
         // If an outbound packet is going to be dropped, we do not count that
         // traffic.
@@ -428,22 +443,26 @@ DEFINE_XTBPF_PROG("skfilter/denylist/xtbpf", AID_ROOT, AID_NET_ADMIN, xt_bpf_den
 DEFINE_BPF_PROG_EXT("cgroupsock/inet/create", AID_ROOT, AID_ROOT, inet_socket_create,
                     KVER(4, 14, 0), KVER_INF, false, "fs_bpf_netd_readonly", "")
 (struct bpf_sock* sk) {
-    uint64_t gid_uid = bpf_get_current_uid_gid();
+    uint32_t uid = (bpf_get_current_uid_gid() & 0xffffffff);
     /*
      * A given app is guaranteed to have the same app ID in all the profiles in
      * which it is installed, and install permission is granted to app for all
      * user at install time so we only check the appId part of a request uid at
      * run time. See UserHandle#isSameApp for detail.
      */
-    uint32_t appId = (gid_uid & 0xffffffff) % AID_USER_OFFSET;  // == PER_USER_RANGE == 100000
+    uint32_t appId = uid % AID_USER_OFFSET;  // == PER_USER_RANGE == 100000
     uint8_t* permissions = bpf_uid_permission_map_lookup_elem(&appId);
-    if (!permissions) {
-        // UID not in map. Default to just INTERNET permission.
-        return 1;
-    }
 
-    // A return value of 1 means allow, everything else means deny.
-    return (*permissions & BPF_PERMISSION_INTERNET) == BPF_PERMISSION_INTERNET;
+    // If UID is in map but missing BPF_PERMISSION_INTERNET, app has no INTERNET permission.
+    if (permissions && ((*permissions & BPF_PERMISSION_INTERNET) != BPF_PERMISSION_INTERNET)) {
+        // Deny.
+        return 0;
+    } else {
+        // Only allow if uid is not restricted.
+        // A return value of 1 means allow, everything else means deny.
+        // We provide IFINDEX_LOOPBACK to indicate this is not ingress.
+        return bpf_owner_match(NULL /* skb */, uid, IFINDEX_LOOPBACK) == BPF_PASS ? 1 : 0;
+    }
 }
 
 LICENSE("Apache 2.0");
