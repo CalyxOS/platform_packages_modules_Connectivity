@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b4d17d8_279ed800",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-09-20T20:24:24Z",
+      "side": 1,
+      "message": "Still needs wider testing, including on-device as opposed to emulator. Will build for my phone tonight.",
+      "revId": "ff5b098c7365fcc1a67207c327e7cc756a1b437d",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
