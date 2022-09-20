@@ -217,9 +217,7 @@ static __always_inline BpfConfig getConfig(uint32_t configKey) {
     return *config;
 }
 
-static inline int bpf_owner_match(struct __sk_buff* skb, uint32_t uid, int direction) {
-    if (skip_owner_match(skb)) return BPF_PASS;
-
+static __always_inline inline int bpf_owner_rule_match(uint32_t uid, int ifindex) {
     if (is_system_uid(uid)) return BPF_PASS;
 
     BpfConfig enabledRules = getConfig(UID_RULES_CONFIGURATION_KEY);
@@ -254,9 +252,9 @@ static inline int bpf_owner_match(struct __sk_buff* skb, uint32_t uid, int direc
             return BPF_DROP;
         }
     }
-    if (direction == BPF_INGRESS && skb->ifindex != 1) {
+    if (ifindex != 1) {
         if (uidRules & IIF_MATCH) {
-            if (allowed_iif && skb->ifindex != allowed_iif) {
+            if (allowed_iif && ifindex != allowed_iif) {
                 // Drops packets not coming from lo nor the allowed interface
                 // allowed interface=0 is a wildcard and does not drop packets
                 return BPF_DROP_UNLESS_DNS;
@@ -268,6 +266,12 @@ static inline int bpf_owner_match(struct __sk_buff* skb, uint32_t uid, int direc
         }
     }
     return BPF_PASS;
+}
+
+static inline int bpf_owner_match(struct __sk_buff* skb, uint32_t uid, int direction) {
+    if (skip_owner_match(skb)) return BPF_PASS;
+
+    return bpf_owner_rule_match(uid, direction == BPF_INGRESS ? skb->ifindex : -1);
 }
 
 static __always_inline inline void update_stats_with_config(struct __sk_buff* skb, int direction,
@@ -428,22 +432,24 @@ DEFINE_XTBPF_PROG("skfilter/denylist/xtbpf", AID_ROOT, AID_NET_ADMIN, xt_bpf_den
 DEFINE_BPF_PROG_EXT("cgroupsock/inet/create", AID_ROOT, AID_ROOT, inet_socket_create,
                     KVER(4, 14, 0), KVER_INF, false, "fs_bpf_netd_readonly", "")
 (struct bpf_sock* sk) {
-    uint64_t gid_uid = bpf_get_current_uid_gid();
+    uint32_t uid = (bpf_get_current_uid_gid() & 0xffffffff);
     /*
      * A given app is guaranteed to have the same app ID in all the profiles in
      * which it is installed, and install permission is granted to app for all
      * user at install time so we only check the appId part of a request uid at
      * run time. See UserHandle#isSameApp for detail.
      */
-    uint32_t appId = (gid_uid & 0xffffffff) % AID_USER_OFFSET;  // == PER_USER_RANGE == 100000
+    uint32_t appId = uid % AID_USER_OFFSET;  // == PER_USER_RANGE == 100000
     uint8_t* permissions = bpf_uid_permission_map_lookup_elem(&appId);
-    if (!permissions) {
-        // UID not in map. Default to just INTERNET permission.
-        return 1;
-    }
 
-    // A return value of 1 means allow, everything else means deny.
-    return (*permissions & BPF_PERMISSION_INTERNET) == BPF_PERMISSION_INTERNET;
+    // If UID is in map but missing BPF_PERMISSION_INTERNET, app has no INTERNET permission.
+    if (permissions && ((*permissions & BPF_PERMISSION_INTERNET) != BPF_PERMISSION_INTERNET)) {
+        return 0; // Deny
+    } else {
+        // Only allow if uid is not restricted.
+        // A return value of 1 means allow, everything else means deny.
+        return bpf_owner_rule_match(uid, -1) == BPF_PASS ? 1 : 0;
+    }
 }
 
 LICENSE("Apache 2.0");
