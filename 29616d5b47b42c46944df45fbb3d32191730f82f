@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4929603_aecad25e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-09-21T05:41:53Z",
+      "side": 1,
+      "message": "Changing those unintentional -1\u0027s to 1\u0027s seems to have fixed the VPN problems in emulator. Will try on device a while.",
+      "revId": "29616d5b47b42c46944df45fbb3d32191730f82f",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
