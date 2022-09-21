@@ -33,6 +33,23 @@
       "message": "Completely breaks VPN in profiles and probably secondary users. V-1000",
       "revId": "ff5b098c7365fcc1a67207c327e7cc756a1b437d",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eee75e13_cfa4c9a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-09-21T03:17:05Z",
+      "side": 1,
+      "message": "This is still not viable.\n\nI was wrong that it breaks VPNs in profiles and secondary users, but there *are* VPN complications. Specifically, Orbot and SagerNet cause apps to act firewall-blocked, regardless of settings for the VPN (neither \"always-on\" nor \"block without\" needs to be set). Calyx VPN and Wireguard don\u0027t have this effect. I\u0027m sure there are other results to be found for other VPNs. And all apps for any user or profile running an affected VPN are impacted. Not sure why this is... Could it be UDP vs TCP? Would need to look.\n\nImpacted terminal apps receive `socket: Operation not supported` for `ping 9.9.9.9` and `ping: unknown host` for `ping calyxos.org`; other apps like DuckDuckGo basically just don\u0027t get online.\n\nFun...",
+      "revId": "ff5b098c7365fcc1a67207c327e7cc756a1b437d",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
