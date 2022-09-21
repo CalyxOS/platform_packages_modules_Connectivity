@@ -33,6 +33,24 @@
       "message": "Broken: When device is in Battery Saver, apps in other profiles can no longer create sockets, even if their Battery usage is set to Unrestricted. This causes e.g. VPN apps to break. Look more closely at the owner matching. There are some potentially relevant chains there. We may also want/need to limit our matching to restricted chain apps only.",
       "revId": "29616d5b47b42c46944df45fbb3d32191730f82f",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d029bec4_6b28f520",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-09-21T17:25:38Z",
+      "side": 1,
+      "message": "I don\u0027t know why I singled-out VPNs except that it was the first thing I noticed. This effectively restricts *all* apps in other profiles.",
+      "parentUuid": "1d681d1e_427f248f",
+      "revId": "29616d5b47b42c46944df45fbb3d32191730f82f",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
