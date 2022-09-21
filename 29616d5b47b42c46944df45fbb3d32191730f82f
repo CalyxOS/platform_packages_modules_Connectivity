@@ -16,6 +16,23 @@
       "message": "Changing those unintentional -1\u0027s to 1\u0027s seems to have fixed the VPN problems in emulator. Will try on device a while.",
       "revId": "29616d5b47b42c46944df45fbb3d32191730f82f",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d681d1e_427f248f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-09-21T17:22:27Z",
+      "side": 1,
+      "message": "Broken: When device is in Battery Saver, apps in other profiles can no longer create sockets, even if their Battery usage is set to Unrestricted. This causes e.g. VPN apps to break. Look more closely at the owner matching. There are some potentially relevant chains there. We may also want/need to limit our matching to restricted chain apps only.",
+      "revId": "29616d5b47b42c46944df45fbb3d32191730f82f",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
