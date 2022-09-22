@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a41a6188_b439eb3e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-09-22T01:18:06Z",
+      "side": 1,
+      "message": "Two things here:\n- The socket check now excludes system UIDs found in other profiles, too.\n- Used `#define` to clarify the values that left me so confused earlier.\n\nThis seems to fix the Battery Saver issue for profiles, but further testing is essential before marking verified.",
+      "revId": "401b620027bd6473861e6e0bbbf6de6c2e8ac586",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
