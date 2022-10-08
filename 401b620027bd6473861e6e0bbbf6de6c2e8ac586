@@ -16,6 +16,24 @@
       "message": "Two things here:\n- The socket check now excludes system UIDs found in other profiles, too.\n- Used `#define` to clarify the values that left me so confused earlier.\n\nThis seems to fix the Battery Saver issue for profiles, but further testing is essential before marking verified.",
       "revId": "401b620027bd6473861e6e0bbbf6de6c2e8ac586",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05f08d80_c8fb7c9c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-08T08:02:01Z",
+      "side": 1,
+      "message": "Not fixed, based on daily driver use with raven for last few weeks. I\u0027m not sure why I thought it was fixed.\n\nAs before, Battery Saver continues to prevent apps from creating sockets (e.g. cannot enable SagerNet, \"operation not permitted\"), regardless of battery restriction settings.\n\nAdditionally, secondary user behavior *in general* would need to be checked more carefully before using this. That showed itself as an issue in regular use which went away after reboot (may have been related to battery saver or other things; unknown).",
+      "parentUuid": "a41a6188_b439eb3e",
+      "revId": "401b620027bd6473861e6e0bbbf6de6c2e8ac586",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
