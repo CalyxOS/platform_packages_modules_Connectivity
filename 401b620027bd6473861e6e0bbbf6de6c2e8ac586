@@ -34,6 +34,24 @@
       "parentUuid": "a41a6188_b439eb3e",
       "revId": "401b620027bd6473861e6e0bbbf6de6c2e8ac586",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ac917a2_64a4646a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-11T09:36:00Z",
+      "side": 1,
+      "message": "For the record, it turns out I am having the same Battery Saver issue after reverting this and other bpf-socket-blocking changes. :/ However, I cannot replicate this on a fresh install of unmodded CalyxOS with bramble, just with existing unofficial raven build. Not sure if multiple work profiles impact it somehow.",
+      "parentUuid": "05f08d80_c8fb7c9c",
+      "revId": "401b620027bd6473861e6e0bbbf6de6c2e8ac586",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
