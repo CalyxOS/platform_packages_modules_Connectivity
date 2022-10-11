@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7323950b_4dfb80fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-11T15:51:54Z",
+      "side": 1,
+      "message": "I want to test this on-device for a while, but so far it seems to resolve my (obscure) problem with Battery Saver breaking connectivity for work apps.",
+      "revId": "fb3a032691b594f87f62e71f4390c499e591adf5",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
