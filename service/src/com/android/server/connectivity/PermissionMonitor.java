@@ -918,9 +918,10 @@ public class PermissionMonitor {
      *              allowed to receive packets on all interfaces.
      * @param rangesToAdd The new UID ranges to be added to the network
      * @param vpnAppUid The uid of the VPN app
+     * @param isolate Whether or not the VPN is isolated
      */
     public synchronized void onVpnUidRangesAdded(@Nullable String iface, Set<UidRange> rangesToAdd,
-            int vpnAppUid) {
+            int vpnAppUid, boolean isolate) {
         // Calculate the list of new app uids under the VPN due to the new UID ranges and update
         // Netd about them. Because mAllApps only contains appIds instead of uids, the result might
         // be an overestimation if an app is not installed on the user on which the VPN is running,
@@ -928,7 +929,7 @@ public class PermissionMonitor {
         // packets to that UID is fine.
         final Set<Integer> changedUids = intersectUids(rangesToAdd, mAllApps);
         removeBypassingUids(changedUids, vpnAppUid);
-        updateVpnUidsInterfaceRules(iface, changedUids, true /* add */);
+        updateVpnUidsInterfaceRules(iface, changedUids, true /* add */, isolate);
         if (mVpnInterfaceUidRanges.containsKey(iface)) {
             mVpnInterfaceUidRanges.get(iface).addAll(rangesToAdd);
         } else {
@@ -1049,6 +1050,10 @@ public class PermissionMonitor {
         uids.removeIf(this::hasRestrictedNetworksPermission);
     }
 
+    private void updateVpnUidsInterfaceRules(String iface, Set<Integer> uids, boolean add) {
+        updateVpnUidsInterfaceRules(iface, uids, add, true /* isolate */);
+    }
+
     /**
      * Update netd about the list of uids that are under an active VPN connection which they cannot
      * bypass.
@@ -1060,14 +1065,18 @@ public class PermissionMonitor {
      * @param iface the interface name of the active VPN connection
      * @param add {@code true} if the uids are to be added to the interface, {@code false} if they
      *        are to be removed from the interface.
+     * @param isolate {@code true} if the uids should have VPN isolation applied now; otherwise, we
+              are simply filling in the interface for later use by LOCKDOWN_VPN_MATCH in BPF.
+              Only relevant for added rules.
      */
-    private void updateVpnUidsInterfaceRules(String iface, Set<Integer> uids, boolean add) {
+    private void updateVpnUidsInterfaceRules(String iface, Set<Integer> uids, boolean add,
+            boolean isolate) {
         if (uids.size() == 0) {
             return;
         }
         try {
             if (add) {
-                mBpfNetMaps.addUidInterfaceRules(iface, toIntArray(uids));
+                mBpfNetMaps.addUidInterfaceRules(iface, toIntArray(uids), isolate);
             } else {
                 mBpfNetMaps.removeUidInterfaceRules(toIntArray(uids));
             }

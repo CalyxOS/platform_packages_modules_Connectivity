@@ -261,9 +261,9 @@ static inline int bpf_owner_match(struct __sk_buff* skb, uint32_t uid, int direc
                 // allowed interface=0 is a wildcard and does not drop packets
                 return BPF_DROP_UNLESS_DNS;
             }
-        } else if (uidRules & LOCKDOWN_VPN_MATCH) {
-            // Drops packets not coming from lo and rule does not have IIF_MATCH but has
-            // LOCKDOWN_VPN_MATCH
+        } else if ((uidRules & LOCKDOWN_VPN_MATCH) && (!allowed_iif || ifindex != allowed_iif)) {
+            // Drops packets not coming from lo nor the allowed interface (VPN).
+            // For uids affected by locked-down VPN, ingress from non-VPN should always be blocked.
             return BPF_DROP_UNLESS_DNS;
         }
     }
