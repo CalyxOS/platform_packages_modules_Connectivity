@@ -16,6 +16,23 @@
       "message": "Still testing.\n\nAs complicated as this may look, the goal of this patch is merely to align the behavior of non-VPN ingress and egress traffic when \"Block connections without VPN\" is enabled, blocking inbound traffic when outbound would be blocked.\n\nIngress traffic from non-VPN interfaces could easily be blocked to all VPNs with the removal of a few lines of code from getVpnIsolationInterface, instead of all this, but sometimes the user may *want* it to be possible. This patch allows for that.",
       "revId": "7dd08ffb2e978f1643944d8e6fd8ca83293f93d1",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8d2ced7_87416393",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8250,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-15T19:12:23Z",
+      "side": 1,
+      "message": "This isn\u0027t used. Should it be...? So far seems fine so maybe not needed.",
+      "revId": "7dd08ffb2e978f1643944d8e6fd8ca83293f93d1",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
