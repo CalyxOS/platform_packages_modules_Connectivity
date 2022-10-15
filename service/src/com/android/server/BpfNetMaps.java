@@ -182,16 +182,18 @@ public class BpfNetMaps {
      * @param ifName the name of the interface on which the filtering rules will allow packets to
      *               be received.
      * @param uids   an array of UIDs which the filtering rules will be set
+     * @param allowAllIngress whether or not ingress should be allowed from outside the interface
      * @throws RemoteException when netd has crashed.
      * @throws ServiceSpecificException in case of failure, with an error code indicating the
      *                                  cause of the failure.
      */
-    public void addUidInterfaceRules(final String ifName, final int[] uids) throws RemoteException {
+    public void addUidInterfaceRules(final String ifName, final int[] uids,
+            final boolean allowAllIngress) throws RemoteException {
         if (USE_NETD) {
-            mNetd.firewallAddUidInterfaceRules(ifName, uids);
+            mNetd.firewallAddUidInterfaceRules(allowAllIngress ? null : ifName, uids);
             return;
         }
-        final int err = native_addUidInterfaceRules(ifName, uids);
+        final int err = native_addUidInterfaceRules(ifName, uids, allowAllIngress);
         maybeThrow(err, "Unable to add uid interface rules");
     }
 
@@ -269,7 +271,8 @@ public class BpfNetMaps {
     private native int native_setChildChain(int childChain, boolean enable);
     private native int native_replaceUidChain(String name, boolean isAllowlist, int[] uids);
     private native int native_setUidRule(int childChain, int uid, int firewallRule);
-    private native int native_addUidInterfaceRules(String ifName, int[] uids);
+    private native int native_addUidInterfaceRules(String ifName, int[] uids,
+            boolean allowAllIngress);
     private native int native_removeUidInterfaceRules(int[] uids);
     private native int native_swapActiveStatsMap();
     private native void native_setPermissionForUids(int permissions, int[] uids);

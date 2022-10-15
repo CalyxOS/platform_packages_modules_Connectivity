@@ -389,18 +389,18 @@ TEST_F(TrafficControllerTest, TestDeleteWrongMatchSilentlyFails) {
 
 TEST_F(TrafficControllerTest, TestAddUidInterfaceFilteringRules) {
     int iif0 = 15;
-    ASSERT_TRUE(isOk(mTc.addUidInterfaceRules(iif0, {1000, 1001})));
+    ASSERT_TRUE(isOk(mTc.addUidInterfaceRules(iif0, {1000, 1001}, false)));
     expectUidOwnerMapValues({1000, 1001}, IIF_MATCH, iif0);
 
     // Add some non-overlapping new uids. They should coexist with existing rules
     int iif1 = 16;
-    ASSERT_TRUE(isOk(mTc.addUidInterfaceRules(iif1, {2000, 2001})));
+    ASSERT_TRUE(isOk(mTc.addUidInterfaceRules(iif1, {2000, 2001}, false)));
     expectUidOwnerMapValues({1000, 1001}, IIF_MATCH, iif0);
     expectUidOwnerMapValues({2000, 2001}, IIF_MATCH, iif1);
 
     // Overwrite some existing uids
     int iif2 = 17;
-    ASSERT_TRUE(isOk(mTc.addUidInterfaceRules(iif2, {1000, 2000})));
+    ASSERT_TRUE(isOk(mTc.addUidInterfaceRules(iif2, {1000, 2000}, false)));
     expectUidOwnerMapValues({1001}, IIF_MATCH, iif0);
     expectUidOwnerMapValues({2001}, IIF_MATCH, iif1);
     expectUidOwnerMapValues({1000, 2000}, IIF_MATCH, iif2);
@@ -409,8 +409,8 @@ TEST_F(TrafficControllerTest, TestAddUidInterfaceFilteringRules) {
 TEST_F(TrafficControllerTest, TestRemoveUidInterfaceFilteringRules) {
     int iif0 = 15;
     int iif1 = 16;
-    ASSERT_TRUE(isOk(mTc.addUidInterfaceRules(iif0, {1000, 1001})));
-    ASSERT_TRUE(isOk(mTc.addUidInterfaceRules(iif1, {2000, 2001})));
+    ASSERT_TRUE(isOk(mTc.addUidInterfaceRules(iif0, {1000, 1001}, false)));
+    ASSERT_TRUE(isOk(mTc.addUidInterfaceRules(iif1, {2000, 2001}, false)));
     expectUidOwnerMapValues({1000, 1001}, IIF_MATCH, iif0);
     expectUidOwnerMapValues({2000, 2001}, IIF_MATCH, iif1);
 
@@ -438,7 +438,7 @@ TEST_F(TrafficControllerTest, TestUidInterfaceFilteringRulesCoexistWithExistingM
 
     // Add some partially-overlapping uid owner rules and check result
     int iif1 = 32;
-    ASSERT_TRUE(isOk(mTc.addUidInterfaceRules(iif1, {10012, 10013, 10014})));
+    ASSERT_TRUE(isOk(mTc.addUidInterfaceRules(iif1, {10012, 10013, 10014}, false)));
     expectUidOwnerMapValues({1000, 1001}, PENALTY_BOX_MATCH, 0);
     expectUidOwnerMapValues({10012}, PENALTY_BOX_MATCH | IIF_MATCH, iif1);
     expectUidOwnerMapValues({10013, 10014}, IIF_MATCH, iif1);
@@ -459,7 +459,7 @@ TEST_F(TrafficControllerTest, TestUidInterfaceFilteringRulesCoexistWithExistingM
 TEST_F(TrafficControllerTest, TestUidInterfaceFilteringRulesCoexistWithNewMatches) {
     int iif1 = 56;
     // Set up existing uid interface rules
-    ASSERT_TRUE(isOk(mTc.addUidInterfaceRules(iif1, {10001, 10002})));
+    ASSERT_TRUE(isOk(mTc.addUidInterfaceRules(iif1, {10001, 10002}, false)));
     expectUidOwnerMapValues({10001, 10002}, IIF_MATCH, iif1);
 
     // Add some partially-overlapping doze rules
@@ -489,19 +489,17 @@ TEST_F(TrafficControllerTest, TestUidInterfaceFilteringRulesCoexistWithNewMatche
     checkEachUidValue({10001, 10002}, IIF_MATCH);
 }
 
-TEST_F(TrafficControllerTest, TestAddUidInterfaceFilteringRulesWithWildcard) {
-    // iif=0 is a wildcard
-    int iif = 0;
-    // Add interface rule with wildcard to uids
-    ASSERT_TRUE(isOk(mTc.addUidInterfaceRules(iif, {1000, 1001})));
+TEST_F(TrafficControllerTest, TestAddUidInterfaceFilteringRulesWithAllowAllIngress) {
+    int iif = 2;
+    // Add interface rule to uids with allowAllIngress=true
+    ASSERT_TRUE(isOk(mTc.addUidInterfaceRules(iif, {1000, 1001}, true)));
     expectUidOwnerMapValues({1000, 1001}, IIF_MATCH, iif);
 }
 
-TEST_F(TrafficControllerTest, TestRemoveUidInterfaceFilteringRulesWithWildcard) {
-    // iif=0 is a wildcard
-    int iif = 0;
-    // Add interface rule with wildcard to two uids
-    ASSERT_TRUE(isOk(mTc.addUidInterfaceRules(iif, {1000, 1001})));
+TEST_F(TrafficControllerTest, TestRemoveUidInterfaceFilteringRulesWithAllowAllIngress) {
+    int iif = 2;
+    // Add interface rule to two uids with allowAllIngress=true
+    ASSERT_TRUE(isOk(mTc.addUidInterfaceRules(iif, {1000, 1001}, true)));
     expectUidOwnerMapValues({1000, 1001}, IIF_MATCH, iif);
 
     // Remove interface rule from one of the uids
@@ -514,29 +512,28 @@ TEST_F(TrafficControllerTest, TestRemoveUidInterfaceFilteringRulesWithWildcard) 
     expectMapEmpty(mFakeUidOwnerMap);
 }
 
-TEST_F(TrafficControllerTest, TestUidInterfaceFilteringRulesWithWildcardAndExistingMatches) {
+TEST_F(TrafficControllerTest,
+       TestUidInterfaceFilteringRulesWithAllowAllIngressAndExistingMatches) {
     // Set up existing DOZABLE_MATCH and POWERSAVE_MATCH rule
     ASSERT_TRUE(isOk(updateUidOwnerMaps({1000}, DOZABLE_MATCH,
                                         TrafficController::IptOpInsert)));
     ASSERT_TRUE(isOk(updateUidOwnerMaps({1000}, POWERSAVE_MATCH,
                                         TrafficController::IptOpInsert)));
 
-    // iif=0 is a wildcard
-    int iif = 0;
-    // Add interface rule with wildcard to the existing uid
-    ASSERT_TRUE(isOk(mTc.addUidInterfaceRules(iif, {1000})));
+    int iif = 2;
+    // Add interface rule to the existing uid with allowAllIngress=true
+    ASSERT_TRUE(isOk(mTc.addUidInterfaceRules(iif, {1000}, true)));
     expectUidOwnerMapValues({1000}, POWERSAVE_MATCH | DOZABLE_MATCH | IIF_MATCH, iif);
 
-    // Remove interface rule with wildcard from the existing uid
+    // Remove interface rule from the existing uid
     ASSERT_TRUE(isOk(mTc.removeUidInterfaceRules({1000})));
     expectUidOwnerMapValues({1000}, POWERSAVE_MATCH | DOZABLE_MATCH, 0);
 }
 
-TEST_F(TrafficControllerTest, TestUidInterfaceFilteringRulesWithWildcardAndNewMatches) {
-    // iif=0 is a wildcard
-    int iif = 0;
-    // Set up existing interface rule with wildcard
-    ASSERT_TRUE(isOk(mTc.addUidInterfaceRules(iif, {1000})));
+TEST_F(TrafficControllerTest, TestUidInterfaceFilteringRulesWithAllowAllIngressAndNewMatches) {
+    int iif = 2;
+    // Set up existing interface rule with allowAllIngress=true
+    ASSERT_TRUE(isOk(mTc.addUidInterfaceRules(iif, {1000}, true)));
 
     // Add DOZABLE_MATCH and POWERSAVE_MATCH rule to the existing uid
     ASSERT_TRUE(isOk(updateUidOwnerMaps({1000}, DOZABLE_MATCH,
