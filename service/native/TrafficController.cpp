@@ -293,13 +293,17 @@ Status TrafficController::removeRule(uint32_t uid, UidOwnerMatchType match) {
 }
 
 Status TrafficController::addRule(uint32_t uid, UidOwnerMatchType match, uint32_t iif) {
-    if (match != IIF_MATCH && iif != 0) {
+    // We also accept NO_MATCH to solely store the ingress interface. See addUidInterfaceRules.
+    if (match != IIF_MATCH && match != NO_MATCH && iif != 0) {
         return statusFromErrno(EINVAL, "Non-interface match must have zero interface index");
     }
     auto oldMatch = mUidOwnerMap.readValue(uid);
     if (oldMatch.ok()) {
+        if ((match != IIF_MATCH) && (match != NO_MATCH || iif == 0)) {
+            iif = oldMatch.value().iif;
+        }
         UidOwnerValue newMatch = {
-                .iif = (match == IIF_MATCH) ? iif : oldMatch.value().iif,
+                .iif = iif,
                 .rule = oldMatch.value().rule | match,
         };
         RETURN_IF_NOT_OK(mUidOwnerMap.writeValue(uid, newMatch, BPF_ANY));
@@ -422,11 +426,16 @@ Status TrafficController::replaceRulesInMap(const UidOwnerMatchType match,
 }
 
 Status TrafficController::addUidInterfaceRules(const int iif,
-                                               const std::vector<int32_t>& uidsToAdd) {
+                                               const std::vector<int32_t>& uidsToAdd,
+                                               bool isolate) {
     std::lock_guard guard(mMutex);
 
     for (auto uid : uidsToAdd) {
-        netdutils::Status result = addRule(uid, IIF_MATCH, iif);
+        // When isolate is false, NO_MATCH is used to store the interface in mUidOwnerMap despite
+        // VPN isolation not being in effect, for example when the VPN is not fully-routed.
+        // This allows LOCKDOWN_VPN_MATCH to consider the interface and perform ingress filtering
+        // when "Block connections without VPN" is enabled, too.
+        netdutils::Status result = addRule(uid, isolate ? IIF_MATCH : NO_MATCH, iif);
         if (!isOk(result)) {
             ALOGW("addRule failed(%d): uid=%d iif=%d", result.code(), uid, iif);
         }

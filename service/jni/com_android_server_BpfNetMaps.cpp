@@ -132,7 +132,7 @@ static jint native_setUidRule(JNIEnv* env, jobject clazz, jint childChain, jint 
 }
 
 static jint native_addUidInterfaceRules(JNIEnv* env, jobject clazz, jstring ifName,
-                                    jintArray jUids) {
+                                    jintArray jUids, jboolean isolate) {
     // Null ifName is a wildcard to allow apps to receive packets on all interfaces and ifIndex is
     // set to 0.
     int ifIndex;
@@ -152,7 +152,7 @@ static jint native_addUidInterfaceRules(JNIEnv* env, jobject clazz, jstring ifNa
     size_t size = uids.size();
     static_assert(sizeof(*(uids.get())) == sizeof(int32_t));
     std::vector<int32_t> data ((int32_t *)&uids[0], (int32_t*)&uids[size]);
-    Status status = mTc.addUidInterfaceRules(ifIndex, data);
+    Status status = mTc.addUidInterfaceRules(ifIndex, data, isolate);
     if (!isOk(status)) {
         ALOGE("%s failed, error code = %d", __func__, status.code());
     }
@@ -225,7 +225,7 @@ static const JNINativeMethod gMethods[] = {
     (void*)native_replaceUidChain},
     {"native_setUidRule", "(III)I",
     (void*)native_setUidRule},
-    {"native_addUidInterfaceRules", "(Ljava/lang/String;[I)I",
+    {"native_addUidInterfaceRules", "(Ljava/lang/String;[IZ)I",
     (void*)native_addUidInterfaceRules},
     {"native_removeUidInterfaceRules", "([I)I",
     (void*)native_removeUidInterfaceRules},
