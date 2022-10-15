@@ -262,9 +262,11 @@ static inline int bpf_owner_match(struct __sk_buff* skb, uint32_t uid, int direc
                 return BPF_DROP_UNLESS_DNS;
             }
         } else if (uidRules & LOCKDOWN_VPN_MATCH) {
-            // Drops packets not coming from lo and rule does not have IIF_MATCH but has
-            // LOCKDOWN_VPN_MATCH
-            return BPF_DROP_UNLESS_DNS;
+            if (skb->ifindex != allowed_iif) {
+                // Drops packets not coming from lo nor the allowed interface (VPN).
+                // allowed interface=0 is unexpected but also drops packets; ifindex is never 0.
+                return BPF_DROP_UNLESS_DNS;
+            }
         }
     }
     return BPF_PASS;
