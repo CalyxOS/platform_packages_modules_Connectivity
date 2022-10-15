@@ -67,8 +67,8 @@ class TrafficController {
     netdutils::Status replaceRulesInMap(UidOwnerMatchType match, const std::vector<int32_t>& uids)
             EXCLUDES(mMutex);
 
-    netdutils::Status addUidInterfaceRules(const int ifIndex, const std::vector<int32_t>& uids)
-            EXCLUDES(mMutex);
+    netdutils::Status addUidInterfaceRules(const int ifIndex, const std::vector<int32_t>& uids,
+                                           bool allowAllIngress) EXCLUDES(mMutex);
     netdutils::Status removeUidInterfaceRules(const std::vector<int32_t>& uids) EXCLUDES(mMutex);
 
     netdutils::Status updateUidOwnerMap(const uint32_t uid,

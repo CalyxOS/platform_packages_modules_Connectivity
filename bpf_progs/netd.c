@@ -51,6 +51,9 @@
 #define TCP_FLAG_OFF 13
 #define RST_OFFSET 2
 
+// Used in bpf_owner_match
+#define IFINDEX_LOOPBACK 1
+
 // For maps netd does not need to access
 #define DEFINE_BPF_MAP_NO_NETD(the_map, TYPE, TypeOfKey, TypeOfValue, num_entries) \
     DEFINE_BPF_MAP_EXT(the_map, TYPE, TypeOfKey, TypeOfValue, num_entries, \
@@ -254,17 +257,25 @@ static inline int bpf_owner_match(struct __sk_buff* skb, uint32_t uid, int direc
             return BPF_DROP;
         }
     }
-    if (direction == BPF_INGRESS && skb->ifindex != 1) {
-        if (uidRules & IIF_MATCH) {
-            if (allowed_iif && skb->ifindex != allowed_iif) {
-                // Drops packets not coming from lo nor the allowed interface
-                // allowed interface=0 is a wildcard and does not drop packets
+    if (direction == BPF_INGRESS && skb->ifindex != IFINDEX_LOOPBACK) {
+        /* IIF_MATCH flag is set for the apps of VPNs whose network characteristics cause
+         * ConnectivityService#shouldVpnAllowAllIngress to return false. Otherwise, it is not set.
+         *
+         * LOCKDOWN_VPN_MATCH flag is set for apps of VPNs configured to
+         * "Block connections without VPN." Otherwise, it is not set. */
+        if ((uidRules & IIF_MATCH) || (uidRules & LOCKDOWN_VPN_MATCH)) {
+            if (skb->ifindex != allowed_iif) {
+                /* Drops packets not coming from lo nor the allowed interface.
+                 *
+                 * If allowed interface=0, the interface is down, so we drop packets.
+                 * (skb->ifindex can never be 0, so this triggers whenever allowed_iif=0.)
+                 * This condition should only be reachable in LOCKDOWN_VPN_MATCH because
+                 * setting iif=0 for IIF_MATCH is no longer supported.
+                 *
+                 * Removal of interface rules (IIF_MATCH rules) always sets iif=0 to
+                 * accommodate the original LOCKDOWN_VPN_MATCH drop-when-down behavior. */
                 return BPF_DROP_UNLESS_DNS;
             }
-        } else if (uidRules & LOCKDOWN_VPN_MATCH) {
-            // Drops packets not coming from lo and rule does not have IIF_MATCH but has
-            // LOCKDOWN_VPN_MATCH
-            return BPF_DROP_UNLESS_DNS;
         }
     }
     return BPF_PASS;
