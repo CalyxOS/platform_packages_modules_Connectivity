@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ded17dab_f3fa4088",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-10-17T15:54:38Z",
+      "side": 1,
+      "message": "Not used, again.\n\nAfter PS2 of 13836: fixup! fw/b: Add support for allowing/disallowing apps on cellular, vpn and wifi networks | https://review.calyxos.org/c/CalyxOS/platform_frameworks_base/+/13836",
+      "revId": "c63a05d27fdeff6c4e5489555cc6f0c89e70a65b",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
