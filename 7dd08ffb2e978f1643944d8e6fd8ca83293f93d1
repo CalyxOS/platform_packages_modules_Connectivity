@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "01c890a7_743efee4",
+        "filename": "service/native/TrafficController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-17T12:11:35Z",
+      "side": 1,
+      "message": "Now we need `dumpsys connectivity trafficcontroller` to also show the interface when LOCKDOWN_VPN_MATCH is set, not just for IIF_MATCH",
+      "revId": "7dd08ffb2e978f1643944d8e6fd8ca83293f93d1",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a8d2ced7_87416393",
         "filename": "service/src/com/android/server/ConnectivityService.java",
         "patchSetId": 1
