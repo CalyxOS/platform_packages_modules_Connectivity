@@ -51,6 +51,24 @@
       "parentUuid": "134cc00b_ab4f6de6",
       "revId": "fb3a032691b594f87f62e71f4390c499e591adf5",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29b40f5c_e8b72597",
+        "filename": "bpf_progs/bpf_shared.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-18T23:05:57Z",
+      "side": 1,
+      "message": "Got it, thanks",
+      "parentUuid": "12e78baa_bacc76c4",
+      "revId": "fb3a032691b594f87f62e71f4390c499e591adf5",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
