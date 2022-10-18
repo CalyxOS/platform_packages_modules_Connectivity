@@ -16,6 +16,24 @@
       "message": "This would definitely be worth sending to AOSP, just to see what they think.\n\nI _think_ Connectivity / networking is developed in the open as well, so master likely won\u0027t be too far off their internal tree",
       "revId": "1b709da9680ee9b82666bae91da3211170079df1",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "957795c9_bf7d4913",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-18T22:27:17Z",
+      "side": 1,
+      "message": "It\u0027s not *too* far off, but they have moved/copied some things from C++ code to Java code (`addUidInterfaceRules`, `addRule` are implemented in both now). This patch also doesn\u0027t fully account for `PRE_T` devices, which they would need to consider if/when deploying any updates to the Connectivity module through Play, but which isn\u0027t relevant for CalyxOS.\n\nThey have also expanded on a comment in `requiresVpnAllowRule`, *possibly* doubling down on the current behavior (why???):\n```\n         // On T and above, allow rules are needed for all VPNs. Allow rule with null iface is a\n         // wildcard to allow apps to receive packets on all interfaces. This is required to accept\n         // incoming traffic in Lockdown mode by overriding the Lockdown blocking rule.\n```\n\nI could still try it though and see what happens!",
+      "parentUuid": "4289c9db_47dbe0ea",
+      "revId": "1b709da9680ee9b82666bae91da3211170079df1",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
