@@ -16,6 +16,23 @@
       "message": "Been working fine for me on Pixel 6 Pro",
       "revId": "0c5307fff6a733f964a21b18338def15ac937537",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4f04240_d831353f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-10-18T14:23:44Z",
+      "side": 1,
+      "message": "Could also maybe send to AOSP if you feel like it.\n\nI don\u0027t see any negatives to the bump",
+      "revId": "0c5307fff6a733f964a21b18338def15ac937537",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
