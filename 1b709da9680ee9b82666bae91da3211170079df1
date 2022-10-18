@@ -34,6 +34,23 @@
       "parentUuid": "4289c9db_47dbe0ea",
       "revId": "1b709da9680ee9b82666bae91da3211170079df1",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a71a141e_03f7ce11",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 7776,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-18T22:30:16Z",
+      "side": 1,
+      "message": "Never mind the \"doubling down\" comment, it was already there but moved. Would be great to know their reasoning though.",
+      "revId": "1b709da9680ee9b82666bae91da3211170079df1",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
