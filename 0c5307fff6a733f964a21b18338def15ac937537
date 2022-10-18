@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a296dae8_05d3241d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-18T14:10:16Z",
+      "side": 1,
+      "message": "Been working fine for me on Pixel 6 Pro",
+      "revId": "0c5307fff6a733f964a21b18338def15ac937537",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
