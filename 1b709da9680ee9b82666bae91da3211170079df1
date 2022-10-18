@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4289c9db_47dbe0ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-10-18T14:12:58Z",
+      "side": 1,
+      "message": "This would definitely be worth sending to AOSP, just to see what they think.\n\nI _think_ Connectivity / networking is developed in the open as well, so master likely won\u0027t be too far off their internal tree",
+      "revId": "1b709da9680ee9b82666bae91da3211170079df1",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
