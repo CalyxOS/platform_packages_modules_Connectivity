@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7d422748_3e6ac3be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-10-19T17:43:36Z",
+      "side": 1,
+      "message": "As you figured out, it was because of 13727: Firewall: Support a greater number of apps/uids | https://review.calyxos.org/c/CalyxOS/platform_packages_modules_Connectivity/+/13727",
+      "parentUuid": "8ac917a2_64a4646a",
+      "revId": "401b620027bd6473861e6e0bbbf6de6c2e8ac586",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b3444a20_6e5f5f47",
         "filename": "bpf_progs/netd.c",
         "patchSetId": 5
