@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11197748_7655ca05",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-24T03:20:25Z",
+      "side": 1,
+      "message": "Found at Google\u0027s Gerrit; looks like it might fix the VPN lockdown issue with clat, but have not yet tested.",
+      "revId": "e1fecb91702ba202072bf75ebba38cad6b30d199",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
