@@ -16,6 +16,24 @@
       "message": "Not yet tested. Wrote this before realizing Google has something that looks like a fix (also not tested); will upload shortly.",
       "revId": "d7d36a71a15b4f165d3c36ce8c212304b408affc",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de62b6a4_05a1f8f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-24T12:50:23Z",
+      "side": 1,
+      "message": "Working for me on NAT64 Wi-Fi, could use other review/testing. Submitted to AOSP.",
+      "parentUuid": "773eaeeb_ba26db90",
+      "revId": "d7d36a71a15b4f165d3c36ce8c212304b408affc",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
