@@ -16,6 +16,23 @@
       "message": "Found at Google\u0027s Gerrit; looks like it might fix the VPN lockdown issue with clat, but have not yet tested.",
       "revId": "e1fecb91702ba202072bf75ebba38cad6b30d199",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab2e5ef6_2386202f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-24T12:34:41Z",
+      "side": 1,
+      "message": "Does not fix NAT64 Wi-Fi test network (but see I4a8ee029) - maybe fixes hotspot or something? It does say \"tethering dun.\"",
+      "revId": "e1fecb91702ba202072bf75ebba38cad6b30d199",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
