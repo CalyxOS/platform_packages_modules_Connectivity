@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "8e9aca1c_f6df569d",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 7745,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-25T18:03:54Z",
+      "side": 0,
+      "message": "See later Gerrit comment for an explanation of why these lines were removed.",
+      "revId": "7b836f778cfea3c83ccb4a2a9e2ee79ecdfc2241",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "23aa142d_88c6283c",
         "filename": "service/src/com/android/server/ConnectivityService.java",
         "patchSetId": 6
