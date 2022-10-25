@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f8104843_e8de611f",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5989,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-25T17:57:39Z",
+      "side": 1,
+      "message": "MUST FIX: We *should* have enough information to at *least* tell whether the network actually covers the VPN that we are updating, here, even if only via the uid ranges. Use the info we have so that we *only* perform the removals and additions from the affected VPN. Otherwise, this is wasteful.",
+      "revId": "c5f175e10b452f690cd22be5057b21fb7cdab1f4",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "50ce7024_234c5c48",
         "filename": "service/src/com/android/server/ConnectivityService.java",
         "patchSetId": 6
