@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d9a426b_addef18a",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5988,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-25T17:49:52Z",
+      "side": 1,
+      "message": "Here in handleSetRequireVpnForUids is where we refresh the interface rules so that a lockdown VPN will always have its tunnel interface present in allowed_iif.",
+      "revId": "c5f175e10b452f690cd22be5057b21fb7cdab1f4",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50ce7024_234c5c48",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 8119,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-25T17:49:52Z",
+      "side": 1,
+      "message": "If anyone can think of a better way to handle this, I\u0027m all ears.",
+      "revId": "c5f175e10b452f690cd22be5057b21fb7cdab1f4",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4cc10822_69b20a85",
+        "filename": "service/src/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-25T17:49:52Z",
+      "side": 1,
+      "message": "This TODO is very important since this patch has not been tested yet.",
+      "revId": "c5f175e10b452f690cd22be5057b21fb7cdab1f4",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}

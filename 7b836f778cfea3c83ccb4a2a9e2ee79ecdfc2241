@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23aa142d_88c6283c",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 8232,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-25T17:49:52Z",
+      "side": 0,
+      "message": "A side effect of having the lockdown state incorporated into getVpnIsolationInterface\u0027s determination is that, because lockdown state is not tracked, we cannot know what the value for getVpnIsolationInterface was for a given network at a given time. Sadly, this means we cannot use the past state to skip unnecessary steps anymore, *or* to know what interface was used for a network in the past (actual tunnel interface or wildcard). We need to perform the steps all the time, now. That\u0027s why these lines were removed.",
+      "revId": "7b836f778cfea3c83ccb4a2a9e2ee79ecdfc2241",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
