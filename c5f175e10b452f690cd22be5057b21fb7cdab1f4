@@ -67,6 +67,23 @@
       "message": "This TODO is very important since this patch has not been tested yet.",
       "revId": "c5f175e10b452f690cd22be5057b21fb7cdab1f4",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cc534eb_096a71ac",
+        "filename": "service/src/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-25T18:16:02Z",
+      "side": 1,
+      "message": "java.lang.NullPointerException: Attempt to invoke interface method \u0027boolean java.util.Set.containsAll(java.util.Collection)\u0027 on a null object reference",
+      "revId": "c5f175e10b452f690cd22be5057b21fb7cdab1f4",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
