@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e89cc941_9331d3a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-25T08:07:54Z",
+      "side": 1,
+      "message": "To repro current fail case:\n1. Turn on and connect always-on, lockdown VPN\n2. Check that `adb shell dumpsys connectivity trafficcontroller | grep -E \u0027^\\s*[0-9]{5}\\s+.*LOCKDOWN` shows `tun` on end of lines; then check with `| grep -v tun` on the end and it should be totally empty (no output).\n3. If step 2 fails, we already have an issue, but re-establish the VPN within the app and test step 2 again. It should succeed.\n4. Toggle VPN\u0027s \"Always on\" setting off, then toggle it back and turn \"Block connections...\" (lockdown) back on, too.\n5. Perform step 2 again. It fails.",
+      "parentUuid": "1bf05f5d_d2b362fb",
+      "revId": "7d9a31b609d0930671b55d573381edcbcbff1064",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a3ed3ff5_b15339d6",
         "filename": "service/src/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 5
