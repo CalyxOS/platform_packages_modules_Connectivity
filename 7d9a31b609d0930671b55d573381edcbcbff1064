@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "043d79a7_9c03d89a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-25T03:14:12Z",
+      "side": 1,
+      "message": "Appears to work, but may benefit from more formalized testing. Re-submitted to AOSP.",
+      "revId": "7d9a31b609d0930671b55d573381edcbcbff1064",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
