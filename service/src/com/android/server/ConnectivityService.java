@@ -8073,23 +8073,48 @@ public class ConnectivityService extends IConnectivityManager.Stub
      *  3. the VPN is fully-routed
      *  4. the VPN interface is non-null
      *
+     * or
+     *
+     *  1. the network is an app VPN (not legacy VPN)
+     *  2. the VPN is in lockdown mode
+     *
      * @see INetd#firewallAddUidInterfaceRules
      * @see INetd#firewallRemoveUidInterfaceRules
      */
     @Nullable
     private String getVpnIsolationInterface(@NonNull NetworkAgentInfo nai, NetworkCapabilities nc,
             LinkProperties lp) {
-        if (nc == null || lp == null) return null;
-        if (nai.isVPN()
-                && !nai.networkAgentConfig.allowBypass
+        if (nc == null || lp == null || !nai.isVPN()) return null;
+
+        final UserHandle ncUserHandle = UserHandle.getUserHandleForUid(nc.getOwnerUid());
+        final boolean isLockdownEnabled = isVpnRequiredForUserId(ncUserHandle.getIdentifier());
+
+        if (isLockdownEnabled
+                || (!nai.networkAgentConfig.allowBypass
                 && nc.getOwnerUid() != Process.SYSTEM_UID
                 && lp.getInterfaceName() != null
                 && (lp.hasIpv4DefaultRoute() || lp.hasIpv4UnreachableDefaultRoute())
                 && (lp.hasIpv6DefaultRoute() || lp.hasIpv6UnreachableDefaultRoute())
-                && !lp.hasExcludeRoute()) {
+                && !lp.hasExcludeRoute())) {
             return lp.getInterfaceName();
         }
         return null;
+    }
+
+    /**
+     * Returns whether a particular user id has VPN lockdown enabled by checking if any of the
+     * known blocked UID ranges involve the user. (Unfortunately, mLockdownEnabled only applies to
+     * legacy VPNs, and VpnManager#isVpnLockdownEnabled is not accessible from here.)
+     *
+     * NOTE: This function assumes that lockdown mode is all-or-nothing for a user.
+     */
+    private boolean isVpnRequiredForUserId(int userId) {
+        for (UidRange range : mVpnBlockedUidRanges) {
+            if (userId >= range.getStartUser() && userId <= range.getEndUser()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

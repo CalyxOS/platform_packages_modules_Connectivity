@@ -1007,6 +1007,13 @@ public class PermissionMonitor {
         for (final int uid: affectedUids) {
             if (!hasRestrictedNetworksPermission(uid)) {
                 updateLockdownUidRule(uid, add);
+
+                // Also update the allowed interface rules in response to the lockdown change.
+                // ConnectivityService#getVpnIsolationInterface ultimately determines the
+                // allowed interface checked in bpf_progs/net.d when the IIF_MATCH flag is set.
+                // When lockdown is enabled, that function always returns the VPN interface
+                // to ensure that non-VPN ingress is properly blocked.
+                updateVpnUid(uid, add);
             }
         }
     }
