@@ -18,6 +18,23 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bf05f5d_d2b362fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-25T07:54:29Z",
+      "side": 1,
+      "message": "Sorry, I think something is still missing (does not seem to handle some cases?) and this needs tests.\n\nJust realized I forgot to verify that the lockdown + VPN not established behavior is as expected (blocked), and in the process of checking that, the `adb shell dumpsys trafficcontroller` output seemed to show that toggling lockdown doesn\u0027t always change the allowed_iif for affected uids to change to the VPN\u0027s tun interface as it should, because I wasn\u0027t seeing it after multiple toggles off and on of lockdown. Not sure how to reproduce yet.",
+      "revId": "7d9a31b609d0930671b55d573381edcbcbff1064",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a3ed3ff5_b15339d6",
