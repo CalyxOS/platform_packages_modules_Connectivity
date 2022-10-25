@@ -16,6 +16,24 @@
       "message": "Spoke with Oliver. We think this could possibly be improved by:\n- Starting from scratch AOSP behavior again\n- Adapt getVpnIsolationInterface to consider whether the VPN is a lockdown VPN, and if so, return the interface name always\n- Ensure that when the lockdown state changes, the updateVpnUidsInterfaceRules should be called again so that allowed_iif gets updated appropriately",
       "revId": "b6f92e0dae9fe71ed59edc26e9a2d5897a0f602f",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d943ac44_85b97906",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-25T03:16:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10d36120_45b698d6",
+      "revId": "b6f92e0dae9fe71ed59edc26e9a2d5897a0f602f",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
