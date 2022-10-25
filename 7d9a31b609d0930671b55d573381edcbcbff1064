@@ -68,6 +68,23 @@
       "message": "bpf_progs/net.d should be bpf_progs/netd.c",
       "revId": "7d9a31b609d0930671b55d573381edcbcbff1064",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd2b2a29_91690cf9",
+        "filename": "service/src/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-25T09:05:59Z",
+      "side": 1,
+      "message": "As described in the comments, getVpnIsolationInterface is our primary changed function -- it now considers lockdown status -- but it is only actually called from two functions, both within ConnectivityService (not here in PermissionMonitor): updateVpnUids and updateVpnFiltering. Neither of these is triggered in any way by this call to updateVpnUid within PermissionMonitor, so this shouldn\u0027t work.\n\nSo, I am still not sure how this patch overall *ever* works when toggling lockdown, but it does appear to work sometimes.",
+      "revId": "7d9a31b609d0930671b55d573381edcbcbff1064",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
