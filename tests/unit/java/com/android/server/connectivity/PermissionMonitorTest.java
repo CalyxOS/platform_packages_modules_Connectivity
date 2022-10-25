@@ -796,7 +796,7 @@ public class PermissionMonitorTest {
 
         // During VPN uid update (vpnRange1 -> vpnRange2), ConnectivityService first deletes the
         // old UID rules then adds the new ones. Expect netd to be updated
-        mPermissionMonitor.onVpnUidRangesRemoved(ifName, vpnRange1, VPN_UID);
+        mPermissionMonitor.onVpnUidRangesRemoved(vpnRange1, VPN_UID);
         verify(mBpfNetMaps).removeUidInterfaceRules(aryEq(new int[] {MOCK_UID11}));
         mPermissionMonitor.onVpnUidRangesAdded(ifName, vpnRange2, VPN_UID);
         verify(mBpfNetMaps).addUidInterfaceRules(eq(ifName), aryEq(new int[]{MOCK_UID12}));
@@ -804,7 +804,7 @@ public class PermissionMonitorTest {
         reset(mBpfNetMaps);
 
         // When VPN is disconnected, expect rules to be torn down
-        mPermissionMonitor.onVpnUidRangesRemoved(ifName, vpnRange2, VPN_UID);
+        mPermissionMonitor.onVpnUidRangesRemoved(vpnRange2, VPN_UID);
         verify(mBpfNetMaps).removeUidInterfaceRules(aryEq(new int[] {MOCK_UID12}));
         assertNull(mPermissionMonitor.getVpnInterfaceUidRanges(ifName));
     }

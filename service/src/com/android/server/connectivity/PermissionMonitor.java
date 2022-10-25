@@ -937,28 +937,52 @@ public class PermissionMonitor {
     }
 
     /**
-     * Called when a set of UID ranges are removed from an active VPN network
+     * Called when a set of UID ranges are removed from an active VPN network.
      *
-     * @param iface The VPN network's interface name. Null iface indicates that the app is allowed
-     *              to receive packets on all interfaces.
-     * @param rangesToRemove Existing UID ranges to be removed from the VPN network
+     * Due to a lack of lockdown state information, ConnectivityService cannot consistently
+     * determine the interface from which the ranges should be removed, so we remove the
+     * given ranges from all interfaces and warn if the ranges are removed from more than one,
+     * which should not happen.
+     *
+     * @param rangesToRemove Existing UID ranges to be removed from VPN filtering.
+                             Must not be null or empty.
      * @param vpnAppUid The uid of the VPN app
      */
-    public synchronized void onVpnUidRangesRemoved(@Nullable String iface,
-            Set<UidRange> rangesToRemove, int vpnAppUid) {
+    public synchronized void onVpnUidRangesRemoved(Set<UidRange> rangesToRemove,
+            int vpnAppUid) {
         // Calculate the list of app uids that are no longer under the VPN due to the removed UID
         // ranges and update Netd about them.
         final Set<Integer> changedUids = intersectUids(rangesToRemove, mAllApps);
         removeBypassingUids(changedUids, vpnAppUid);
-        updateVpnUidsInterfaceRules(iface, changedUids, false /* add */);
-        Set<UidRange> existingRanges = mVpnInterfaceUidRanges.getOrDefault(iface, null);
-        if (existingRanges == null) {
-            loge("Attempt to remove unknown vpn uid Range iface = " + iface);
-            return;
+
+        boolean anyVpnContainedRanges = false;
+        for (Map.Entry<String, Set<UidRange>> vpn : mVpnInterfaceUidRanges.entrySet()) {
+            final Set<UidRange> vpnRanges = vpn.getValue();
+
+            // TODO: Verify whether or not this properly identifies the VPN.
+            if (!vpnRanges.containsAll(rangesToRemove)) {
+                continue;
+            }
+
+            final String iface = vpn.getKey();
+            log("onVpnUidRangesRemoved: " + iface);
+            if (anyVpnContainedRanges) {
+                loge("Unexpectedly removing ranges from multiple VPNs of mVpnInterfaceUidRanges!");
+            }
+            updateVpnUidsInterfaceRules(iface, changedUids, false /* add */);
+            Set<UidRange> existingRanges = mVpnInterfaceUidRanges.getOrDefault(iface, null);
+            if (existingRanges == null) {
+                loge("Attempt to remove unknown vpn uid Range iface = " + iface);
+                continue;
+            }
+            existingRanges.removeAll(rangesToRemove);
+            if (existingRanges.size() == 0) {
+                mVpnInterfaceUidRanges.remove(iface);
+            }
+            anyVpnContainedRanges = true;
         }
-        existingRanges.removeAll(rangesToRemove);
-        if (existingRanges.size() == 0) {
-            mVpnInterfaceUidRanges.remove(iface);
+        if (!anyVpnContainedRanges) {
+            loge("Failed to remove supplied ranges from mVpnInterfaceUidRanges");
         }
     }
 
