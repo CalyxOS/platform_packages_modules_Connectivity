@@ -35,6 +35,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf285665_4c77f893",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5989,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-26T04:25:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f8104843_e8de611f",
+      "revId": "c5f175e10b452f690cd22be5057b21fb7cdab1f4",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "50ce7024_234c5c48",
@@ -48,6 +66,24 @@
       "writtenOn": "2022-10-25T17:49:52Z",
       "side": 1,
       "message": "If anyone can think of a better way to handle this, I\u0027m all ears.",
+      "revId": "c5f175e10b452f690cd22be5057b21fb7cdab1f4",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aed63270_21042abb",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 8119,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-26T04:25:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "50ce7024_234c5c48",
       "revId": "c5f175e10b452f690cd22be5057b21fb7cdab1f4",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
@@ -69,6 +105,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7836a1b8_826daa05",
+        "filename": "service/src/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-26T04:25:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4cc10822_69b20a85",
+      "revId": "c5f175e10b452f690cd22be5057b21fb7cdab1f4",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0cc534eb_096a71ac",
@@ -82,6 +136,24 @@
       "writtenOn": "2022-10-25T18:16:02Z",
       "side": 1,
       "message": "java.lang.NullPointerException: Attempt to invoke interface method \u0027boolean java.util.Set.containsAll(java.util.Collection)\u0027 on a null object reference",
+      "revId": "c5f175e10b452f690cd22be5057b21fb7cdab1f4",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d992b405_3ababd23",
+        "filename": "service/src/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-26T04:25:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0cc534eb_096a71ac",
       "revId": "c5f175e10b452f690cd22be5057b21fb7cdab1f4",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
