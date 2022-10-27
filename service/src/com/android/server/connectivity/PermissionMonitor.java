@@ -50,6 +50,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.ContentObserver;
+import android.net.ConnectivityManager;
 import android.net.ConnectivitySettingsManager;
 import android.net.INetd;
 import android.net.UidRange;
@@ -928,6 +929,7 @@ public class PermissionMonitor {
         // packets to that UID is fine.
         final Set<Integer> changedUids = intersectUids(rangesToAdd, mAllApps);
         removeBypassingUids(changedUids, vpnAppUid);
+        removeVpnLockdownUids(iface, changedUids);
         updateVpnUidsInterfaceRules(iface, changedUids, true /* add */);
         if (mVpnInterfaceUidRanges.containsKey(iface)) {
             mVpnInterfaceUidRanges.get(iface).addAll(rangesToAdd);
@@ -950,6 +952,7 @@ public class PermissionMonitor {
         // ranges and update Netd about them.
         final Set<Integer> changedUids = intersectUids(rangesToRemove, mAllApps);
         removeBypassingUids(changedUids, vpnAppUid);
+        removeVpnLockdownUids(iface, changedUids);
         updateVpnUidsInterfaceRules(iface, changedUids, false /* add */);
         Set<UidRange> existingRanges = mVpnInterfaceUidRanges.getOrDefault(iface, null);
         if (existingRanges == null) {
@@ -960,6 +963,12 @@ public class PermissionMonitor {
         if (existingRanges.size() == 0) {
             mVpnInterfaceUidRanges.remove(iface);
         }
+    }
+
+    public synchronized void updateVpnLockdownUidInterfaceRules(@Nullable String iface,
+            boolean add) {
+        updateVpnUidsInterfaceRules(iface, intersectUids(mVpnLockdownUidRanges.getSet(), mAllApps),
+                add);
     }
 
     /**
@@ -1047,6 +1056,18 @@ public class PermissionMonitor {
     private void removeBypassingUids(Set<Integer> uids, int vpnAppUid) {
         uids.remove(vpnAppUid);
         uids.removeIf(this::hasRestrictedNetworksPermission);
+    }
+
+    /**
+     * Remove all apps which are under VPN Lockdown from the list of uids
+     *
+     * @param iface The interface name of the active VPN connection
+     * @param uids The list of uids to operate on
+     */
+    private void removeVpnLockdownUids(String iface, Set<Integer> uids) {
+        if (iface == null) {
+            uids.removeAll(intersectUids(mVpnLockdownUidRanges.getSet(), mAllApps));
+        }
     }
 
     /**
