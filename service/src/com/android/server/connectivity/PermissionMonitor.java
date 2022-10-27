@@ -81,6 +81,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -111,12 +112,14 @@ public class PermissionMonitor {
     @GuardedBy("this")
     private final SparseIntArray mUidToNetworkPerm = new SparseIntArray();
 
-    // NonNull keys are active non-bypassable and fully-routed VPN's interface name, Values are uid
-    // ranges for apps under the VPNs which enable interface filtering.
-    // If key is null, Values are uid ranges for apps under the VPNs which are connected but do not
-    // enable interface filtering.
+    // Keys are VPN's interface name, Values are uid ranges for apps under the VPNs.
     @GuardedBy("this")
     private final Map<String, Set<UidRange>> mVpnInterfaceUidRanges = new ArrayMap<>();
+
+    // Values are uid ranges for apps under the VPNs which are connected but do not enable
+    // interface filtering, except in lockdown.
+    @GuardedBy("this")
+    private final Set<UidRange> mVpnAllowAllIngressUidRanges = new ArraySet<>();
 
     // Items are uid ranges for apps under the VPN Lockdown
     // Ranges were given through ConnectivityManager#setRequireVpnForUids, and ranges are allowed to
@@ -518,6 +521,29 @@ public class PermissionMonitor {
         return PERMISSION_SYSTEM == mUidToNetworkPerm.get(uid, PERMISSION_NONE);
     }
 
+    /**
+     * Returns whether the given uid can receive packets on all interfaces.
+     * Does not consider whether the uid has restricted networking because this is already
+     * considered previously by the functions that call this, where relevant.
+     */
+    private synchronized boolean isUidAllowedAllIngress(int uid) {
+        return !UidRange.containsUid(mVpnLockdownUidRanges.getSet(), uid)
+                && UidRange.containsUid(mVpnAllowAllIngressUidRanges, uid);
+    }
+
+    /**
+     * Returns the VPN interface for a particular uid.
+     */
+    @Nullable
+    private synchronized String findIfaceForUid(int uid) {
+        for (Map.Entry<String, Set<UidRange>> vpn : mVpnInterfaceUidRanges.entrySet()) {
+            if (UidRange.containsUid(vpn.getValue(), uid)) {
+                return vpn.getKey();
+            }
+        }
+        return null;
+    }
+
     private void sendUidsNetworkPermission(SparseIntArray uids, boolean add) {
         List<Integer> network = new ArrayList<>();
         List<Integer> system = new ArrayList<>();
@@ -914,18 +940,20 @@ public class PermissionMonitor {
     /**
      * Called when a new set of UID ranges are added to an active VPN network
      *
-     * @param iface The active VPN network's interface name. Null iface indicates that the app is
-     *              allowed to receive packets on all interfaces.
+     * @param iface The active VPN network's interface name.
      * @param rangesToAdd The new UID ranges to be added to the network
      * @param vpnAppUid The uid of the VPN app
+     * @param allowAllIngress Whether the app is allowed to receive packets on all interfaces,
+     *                        aside from any lockdown restrictions.
      */
-    public synchronized void onVpnUidRangesAdded(@Nullable String iface, Set<UidRange> rangesToAdd,
-            int vpnAppUid) {
+    public synchronized void onVpnUidRangesAdded(@NonNull String iface, Set<UidRange> rangesToAdd,
+            int vpnAppUid, boolean allowAllIngress) {
         // Calculate the list of new app uids under the VPN due to the new UID ranges and update
         // Netd about them. Because mAllApps only contains appIds instead of uids, the result might
         // be an overestimation if an app is not installed on the user on which the VPN is running,
         // but that's safe: if an app is not installed, it cannot receive any packets, so dropping
         // packets to that UID is fine.
+        Objects.requireNonNull(iface);
         final Set<Integer> changedUids = intersectUids(rangesToAdd, mAllApps);
         removeBypassingUids(changedUids, vpnAppUid);
         updateVpnUidsInterfaceRules(iface, changedUids, true /* add */);
@@ -934,23 +962,27 @@ public class PermissionMonitor {
         } else {
             mVpnInterfaceUidRanges.put(iface, new HashSet<UidRange>(rangesToAdd));
         }
+        if (allowAllIngress) {
+            mVpnAllowAllIngressUidRanges.addAll(rangesToAdd);
+        }
     }
 
     /**
      * Called when a set of UID ranges are removed from an active VPN network
      *
-     * @param iface The VPN network's interface name. Null iface indicates that the app is allowed
-     *              to receive packets on all interfaces.
+     * @param iface The VPN network's interface name.
      * @param rangesToRemove Existing UID ranges to be removed from the VPN network
      * @param vpnAppUid The uid of the VPN app
      */
-    public synchronized void onVpnUidRangesRemoved(@Nullable String iface,
+    public synchronized void onVpnUidRangesRemoved(@NonNull String iface,
             Set<UidRange> rangesToRemove, int vpnAppUid) {
         // Calculate the list of app uids that are no longer under the VPN due to the removed UID
         // ranges and update Netd about them.
+        Objects.requireNonNull(iface);
         final Set<Integer> changedUids = intersectUids(rangesToRemove, mAllApps);
         removeBypassingUids(changedUids, vpnAppUid);
         updateVpnUidsInterfaceRules(iface, changedUids, false /* add */);
+        mVpnAllowAllIngressUidRanges.removeAll(rangesToRemove);
         Set<UidRange> existingRanges = mVpnInterfaceUidRanges.getOrDefault(iface, null);
         if (existingRanges == null) {
             loge("Attempt to remove unknown vpn uid Range iface = " + iface);
@@ -1067,7 +1099,21 @@ public class PermissionMonitor {
         }
         try {
             if (add) {
-                mBpfNetMaps.addUidInterfaceRules(iface, toIntArray(uids));
+                // Divide uids into two sets:
+                // Set 1: uids either under lockdown or not within the ranges that are allowed
+                //        to receive packets on all interfaces. These will use the iface provided.
+                // Set 2: Remaining uids. These will use the null iface (wildcard).
+                final Set<Integer> uidsFiltered = new ArraySet<>();
+                final Set<Integer> uidsWildcard = new ArraySet<>();
+                for (Integer uid : uids) {
+                    if (!isUidAllowedAllIngress(uid)) {
+                        uidsFiltered.add(uid);
+                    } else {
+                        uidsWildcard.add(uid);
+                    }
+                }
+                mBpfNetMaps.addUidInterfaceRules(iface, toIntArray(uidsFiltered));
+                mBpfNetMaps.addUidInterfaceRules(null, toIntArray(uidsWildcard));
             } else {
                 mBpfNetMaps.removeUidInterfaceRules(toIntArray(uids));
             }
@@ -1085,6 +1131,21 @@ public class PermissionMonitor {
             }
         } catch (ServiceSpecificException e) {
             loge("Failed to " + (add ? "add" : "remove") + " Lockdown rule: " + e);
+        }
+
+        // Also update the interface rules accordingly.
+        String iface = findIfaceForUid(uid);
+
+        // If the iface cannot be determined, there are no rules set, so there is nothing to change.
+        if (iface != null) {
+            if (isUidAllowedAllIngress(uid)) {
+                iface = null;
+            }
+            try {
+                mBpfNetMaps.addUidInterfaceRules(iface, new int[] { uid });
+            } catch (RemoteException e) {
+                loge("Failed to " + (add ? "set" : "unset") + " Lockdown interface adjustment: " + e);
+            }
         }
     }
 
@@ -1245,13 +1306,17 @@ public class PermissionMonitor {
 
     /** Dump info to dumpsys */
     public void dump(IndentingPrintWriter pw) {
-        pw.println("Interface filtering rules:");
+        pw.println("Interface UIDs:");
         pw.increaseIndent();
         for (Map.Entry<String, Set<UidRange>> vpn : mVpnInterfaceUidRanges.entrySet()) {
             pw.println("Interface: " + vpn.getKey());
             pw.println("UIDs: " + vpn.getValue().toString());
             pw.println();
         }
+        pw.decreaseIndent();
+
+        pw.println();
+        pw.println("UIDs allowed all ingress: " + mVpnAllowAllIngressUidRanges.toString());
         pw.decreaseIndent();
 
         pw.println();
