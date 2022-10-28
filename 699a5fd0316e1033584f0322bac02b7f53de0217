@@ -35,6 +35,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a020266_ff9dabe8",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 5986,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2022-10-28T12:09:44Z",
+      "side": 1,
+      "message": "I would have expected the bug to come from this part of the code since it loops over all networks and therefore should require to update only the UIDs related to the VPN for which lockdown was toggled",
+      "parentUuid": "77d9f9dd_742c3a57",
+      "revId": "699a5fd0316e1033584f0322bac02b7f53de0217",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "3cdd2b59_c68242ed",
@@ -52,6 +70,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "49002c11_e726bda8",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7781,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2022-10-28T12:09:44Z",
+      "side": 1,
+      "message": "In the case where `updateVpnFiltering()` is called from `handleSetRequireVpnForUids()` it shouldn\u0027t make a difference since we\u0027re passing in the same link properties for both since those shouldn\u0027t have change while toggling lockdown.\nFor the case where it is called from `updateLinkProperties` it is worth considering",
+      "parentUuid": "3cdd2b59_c68242ed",
+      "revId": "699a5fd0316e1033584f0322bac02b7f53de0217",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "95152f5c_3d5bb80e",
@@ -65,6 +101,24 @@
       "writtenOn": "2022-10-28T06:49:17Z",
       "side": 1,
       "message": "Maybe should be newLp.getInterfaceName()?",
+      "revId": "699a5fd0316e1033584f0322bac02b7f53de0217",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ab1d641_f1650e77",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7786,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2022-10-28T12:09:44Z",
+      "side": 1,
+      "message": "Same as above",
+      "parentUuid": "95152f5c_3d5bb80e",
       "revId": "699a5fd0316e1033584f0322bac02b7f53de0217",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
