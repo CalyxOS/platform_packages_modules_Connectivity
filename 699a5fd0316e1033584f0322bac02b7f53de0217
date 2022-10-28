@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4cbb70dc_6481115a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-28T06:49:17Z",
+      "side": 1,
+      "message": "When establishing a VPN connection in a work profile or secondary user, the allowed interface is replaced for the uids of all lockdown apps - e.g. when a work profile VPN establishes itself on tun3, then main user and any secondary user uids also become tun3, unless they are part of `always_on_vpn_lockdown_whitelist` (which requires a reboot to take effect and is undone when touching the always-on or lockdwon toggles).\n\nSee with `adb shell dumpsys connectivity trafficcontroller | sed -n -E \u0027/^\\s*mUidOwnerMap:$/,/^$/p\u0027`",
+      "revId": "699a5fd0316e1033584f0322bac02b7f53de0217",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77d9f9dd_742c3a57",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 5986,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-28T06:49:17Z",
+      "side": 1,
+      "message": "Could possibly narrow down this changed segment with something like:\n```\n            final int ncUserId \u003d UserHandle.getUserHandleForUid(\n                    nai.networkCapabilities.getOwnerUid()).getIdentifier();\n\n            if (nai.isVPN()) {\n                for (UidRange range : newVpnBlockedUidRanges) {\n                    if (ncUserId \u003e\u003d range.getStartUser() \u0026\u0026 ncUserId \u003c\u003d range.getEndUser()) {\n                        updateVpnFiltering(nai.linkProperties, nai.linkProperties, nai,\n                                true /* force */);\n                        break;\n                    }\n                }\n            }\n```\n\nThat does not seem to resolve the iface replacement of lockdown uids in other users, though. Either the snippet above doesn\u0027t work or the problem is coming from elsewhere.",
+      "revId": "699a5fd0316e1033584f0322bac02b7f53de0217",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3cdd2b59_c68242ed",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7781,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-28T06:49:17Z",
+      "side": 1,
+      "message": "Maybe should be oldLp.getInterfaceName()?",
+      "revId": "699a5fd0316e1033584f0322bac02b7f53de0217",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95152f5c_3d5bb80e",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7786,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-28T06:49:17Z",
+      "side": 1,
+      "message": "Maybe should be newLp.getInterfaceName()?",
+      "revId": "699a5fd0316e1033584f0322bac02b7f53de0217",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
