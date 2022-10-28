@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ab0b2cd_197449ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-28T17:59:18Z",
+      "side": 1,
+      "message": "Tested in combinations of lockdown on/off, VPN fully/partially-routed to ensure consistent behavior. Also ensured allowlisted and bypassing uids are handled properly.",
+      "revId": "f6fa58f0e0ff04c79407d68d79bf79e6d63fca13",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}

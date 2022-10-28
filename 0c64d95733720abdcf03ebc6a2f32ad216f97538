@@ -24,6 +24,30 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8debd268_e9b39552",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 8263,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-28T17:59:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7f214b7_1958994d",
+      "range": {
+        "startLine": 8263,
+        "startChar": 97,
+        "endLine": 8263,
+        "endChar": 104
+      },
+      "revId": "0c64d95733720abdcf03ebc6a2f32ad216f97538",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a18c8e2e_90b3ef42",
@@ -41,6 +65,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5780a498_2cfcd204",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 8268,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-28T17:59:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a18c8e2e_90b3ef42",
+      "revId": "0c64d95733720abdcf03ebc6a2f32ad216f97538",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e0f9ab0c_fd6bdb96",
@@ -54,6 +96,30 @@
       "writtenOn": "2022-10-28T16:21:27Z",
       "side": 1,
       "message": "Can be removed? I don\u0027t see any usages",
+      "range": {
+        "startLine": 53,
+        "startChar": 19,
+        "endLine": 53,
+        "endChar": 38
+      },
+      "revId": "0c64d95733720abdcf03ebc6a2f32ad216f97538",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e14db87_e45fea52",
+        "filename": "service/src/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-28T17:59:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0f9ab0c_fd6bdb96",
       "range": {
         "startLine": 53,
         "startChar": 19,
