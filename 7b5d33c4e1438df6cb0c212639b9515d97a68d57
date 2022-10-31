@@ -16,6 +16,24 @@
       "message": "Could I ask for a sync with the change merged in AOSP?\n\n* service/native/libs/libclat/clatutils_test.cpp changes don\u0027t apply here, but\n* tests/unit/java/com/android/server/connectivity/ClatCoordinatorTest.java do apply\n\nThanks!",
       "revId": "7b5d33c4e1438df6cb0c212639b9515d97a68d57",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bee3d217_1b0278b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-10-31T13:36:10Z",
+      "side": 1,
+      "message": "That should do it, I think? (There was one change to ClatCoordinatorTest.java that didn\u0027t apply, since we do not have `testNotStartClatWithNativeFailureGenerateIpv6Address`.)",
+      "parentUuid": "0cb34bc7_441005e3",
+      "revId": "7b5d33c4e1438df6cb0c212639b9515d97a68d57",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
