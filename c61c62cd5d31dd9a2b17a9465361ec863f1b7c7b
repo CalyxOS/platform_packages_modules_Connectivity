@@ -16,6 +16,23 @@
       "message": "Have not verified with this test change but no idea how it would fail",
       "revId": "c61c62cd5d31dd9a2b17a9465361ec863f1b7c7b",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66c83fd3_3b017af2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-10-31T16:38:06Z",
+      "side": 1,
+      "message": "Merged in AOSP",
+      "revId": "c61c62cd5d31dd9a2b17a9465361ec863f1b7c7b",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
