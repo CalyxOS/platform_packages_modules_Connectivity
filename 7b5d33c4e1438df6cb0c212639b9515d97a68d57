@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cb34bc7_441005e3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-10-31T10:51:37Z",
+      "side": 1,
+      "message": "Could I ask for a sync with the change merged in AOSP?\n\n* service/native/libs/libclat/clatutils_test.cpp changes don\u0027t apply here, but\n* tests/unit/java/com/android/server/connectivity/ClatCoordinatorTest.java do apply\n\nThanks!",
+      "revId": "7b5d33c4e1438df6cb0c212639b9515d97a68d57",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
