@@ -408,7 +408,7 @@ public class ClatCoordinatorTest {
 
         // Generate a checksum-neutral IID.
         inOrder.verify(mDeps).generateIpv6Address(eq(BASE_IFACE),
-                eq(XLAT_LOCAL_IPV4ADDR_STRING), eq(NAT64_PREFIX_STRING));
+                eq(XLAT_LOCAL_IPV4ADDR_STRING), eq(NAT64_PREFIX_STRING), eq(MARK));
 
         // Open, configure and bring up the tun interface.
         inOrder.verify(mDeps).createTunInterface(eq(STACKED_IFACE));
