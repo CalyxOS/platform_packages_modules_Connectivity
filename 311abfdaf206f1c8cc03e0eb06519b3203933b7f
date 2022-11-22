@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "53411297_ab1f3f78",
+        "filename": "bpf_progs/netd.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2022-11-22T23:09:32Z",
+      "side": 1,
+      "message": "Sounds like it may be best to make our own custom function that only checks this? Would it avoid making changes to this function?",
+      "range": {
+        "startLine": 235,
+        "startChar": 4,
+        "endLine": 239,
+        "endChar": 0
+      },
+      "revId": "311abfdaf206f1c8cc03e0eb06519b3203933b7f",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6d19790b_793df6a6",
         "filename": "bpf_progs/netd.c",
         "patchSetId": 7
@@ -14,6 +37,52 @@
       "writtenOn": "2022-11-22T23:06:44Z",
       "side": 1,
       "message": "Oops. This *might* not have repercussions in practice, but we have `ifindex` and we should be using it, not `skb-\u003eifindex`",
+      "revId": "311abfdaf206f1c8cc03e0eb06519b3203933b7f",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a35d3b9_6da1b2ef",
+        "filename": "bpf_progs/netd.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2022-11-22T23:09:32Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 315,
+        "startChar": 4,
+        "endLine": 317,
+        "endChar": 56
+      },
+      "revId": "311abfdaf206f1c8cc03e0eb06519b3203933b7f",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e220e85_039667f5",
+        "filename": "bpf_progs/netd.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2022-11-22T23:09:32Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 464,
+        "startChar": 15,
+        "endLine": 464,
+        "endChar": 69
+      },
       "revId": "311abfdaf206f1c8cc03e0eb06519b3203933b7f",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
