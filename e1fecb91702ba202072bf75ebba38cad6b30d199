@@ -50,6 +50,24 @@
       "message": "I added this from AOSP as an attempt to fix the clat issue, but it didn\u0027t, so I\u0027m not sure what the benefit of this is. (I don\u0027t think I tested issues with DUN, and I haven\u0027t heard anyone complain.)",
       "revId": "e1fecb91702ba202072bf75ebba38cad6b30d199",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02bff232_b2e6bff6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-11-22T18:43:21Z",
+      "side": 1,
+      "message": "\"Remove DUN requirement for tethering\"\n\nhttps://review.calyxos.org/q/I296f303a23351e4ab29898895abfcd313c747db9",
+      "parentUuid": "ddacb431_6c5d4c7e",
+      "revId": "e1fecb91702ba202072bf75ebba38cad6b30d199",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
