@@ -16,6 +16,23 @@
       "message": "Sync with AOSP",
       "revId": "fccff45e4773bcfa876744057277aa44a1f72311",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a41333ab_0bb9ebaa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-11-23T19:50:26Z",
+      "side": 1,
+      "message": "Oliver, I\u0027m thinking maybe let\u0027s revisit this in December if possible. We can bring in some of the things we have learned from testing, and from AOSP\u0027s advice, *without* going as overboard as I did over there - goal being a patch as minimal as possible that still satisfies requirements. Current patchset I think has a few issues that we can address when we look into it; my patchsets are not reasonable as-is.",
+      "revId": "fccff45e4773bcfa876744057277aa44a1f72311",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
