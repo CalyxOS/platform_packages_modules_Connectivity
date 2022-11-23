@@ -48,6 +48,30 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bacf8284_3f120a13",
+        "filename": "bpf_progs/netd.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-11-23T23:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "584b1185_ea7349e9",
+      "range": {
+        "startLine": 235,
+        "startChar": 4,
+        "endLine": 239,
+        "endChar": 0
+      },
+      "revId": "311abfdaf206f1c8cc03e0eb06519b3203933b7f",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d19790b_793df6a6",
@@ -61,6 +85,24 @@
       "writtenOn": "2022-11-22T23:06:44Z",
       "side": 1,
       "message": "Oops. This *might* not have repercussions in practice, but we have `ifindex` and we should be using it, not `skb-\u003eifindex`",
+      "revId": "311abfdaf206f1c8cc03e0eb06519b3203933b7f",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84ef2a21_f74556d2",
+        "filename": "bpf_progs/netd.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-11-23T23:11:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6d19790b_793df6a6",
       "revId": "311abfdaf206f1c8cc03e0eb06519b3203933b7f",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
@@ -88,6 +130,30 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "17e05929_6b72387e",
+        "filename": "bpf_progs/netd.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-11-23T23:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a35d3b9_6da1b2ef",
+      "range": {
+        "startLine": 315,
+        "startChar": 4,
+        "endLine": 317,
+        "endChar": 56
+      },
+      "revId": "311abfdaf206f1c8cc03e0eb06519b3203933b7f",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6e220e85_039667f5",
@@ -101,6 +167,30 @@
       "writtenOn": "2022-11-22T23:09:32Z",
       "side": 1,
       "message": "Ditto",
+      "range": {
+        "startLine": 464,
+        "startChar": 15,
+        "endLine": 464,
+        "endChar": 69
+      },
+      "revId": "311abfdaf206f1c8cc03e0eb06519b3203933b7f",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7f2ab04_5ffe091c",
+        "filename": "bpf_progs/netd.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-11-23T23:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e220e85_039667f5",
       "range": {
         "startLine": 464,
         "startChar": 15,

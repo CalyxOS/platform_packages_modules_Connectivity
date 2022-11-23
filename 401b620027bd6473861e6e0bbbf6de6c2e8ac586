@@ -72,6 +72,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8eb28a0_b867ac78",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-11-23T23:11:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7d422748_3e6ac3be",
+      "revId": "401b620027bd6473861e6e0bbbf6de6c2e8ac586",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b3444a20_6e5f5f47",
@@ -85,6 +103,24 @@
       "writtenOn": "2022-10-19T01:32:39Z",
       "side": 1,
       "message": "Still not sure if `(uid % AID_USER_OFFSET)` (conversion to appId) is even necessary here; it may have been an attempt to resolve a bug and not be needed. Does `bpf_socket_get_uid` return appId or uid? If uid, then something here is probably wrong.",
+      "revId": "401b620027bd6473861e6e0bbbf6de6c2e8ac586",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bd2bf61_0abf3d75",
+        "filename": "bpf_progs/netd.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-11-23T23:11:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b3444a20_6e5f5f47",
       "revId": "401b620027bd6473861e6e0bbbf6de6c2e8ac586",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
