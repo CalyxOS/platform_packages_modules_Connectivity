@@ -16,6 +16,75 @@
       "message": "Tested with ThornApple and DuckDuckGo.",
       "revId": "fea7d6231bab5ce0c2d0e558e42c8b6f3b1baf4e",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44ddd905_4bf8eda8",
+        "filename": "bpf_progs/netd.c",
+        "patchSetId": 8
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2022-11-23T23:52:32Z",
+      "side": 1,
+      "message": "I\u0027d like to follow the pattern in `bpf_owner_match`\n```\nBpfConfig enabledRules \u003d getConfig(UID_RULES_CONFIGURATION_KEY);\n\nconst UidOwnerValue* uidEntry \u003d bpf_uid_owner_map_lookup_elem(\u0026uid);\nconst uint32_t uidRules \u003d uidEntry ? uidEntry-\u003erule : 0;\n\nif (enabledRules) {\n    if ((enabledRules \u0026 RESTRICTED_MATCH) \u0026\u0026 !(uidRules \u0026 RESTRICTED_MATCH)) {\n        return BPF_DROP;\n    }\n}\n\nreturn BPF_PASS;\n```",
+      "range": {
+        "startLine": 224,
+        "startChar": 4,
+        "endLine": 226,
+        "endChar": 5
+      },
+      "revId": "fea7d6231bab5ce0c2d0e558e42c8b6f3b1baf4e",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "759bcd47_7df51d5a",
+        "filename": "bpf_progs/netd.c",
+        "patchSetId": 8
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2022-11-23T23:52:32Z",
+      "side": 1,
+      "message": "Remove whitespace line",
+      "range": {
+        "startLine": 458,
+        "startChar": 0,
+        "endLine": 458,
+        "endChar": 0
+      },
+      "revId": "fea7d6231bab5ce0c2d0e558e42c8b6f3b1baf4e",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad9c1fd3_4dfb8b71",
+        "filename": "bpf_progs/netd.c",
+        "patchSetId": 8
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2022-11-23T23:52:32Z",
+      "side": 1,
+      "message": "Can be move out of else condition",
+      "range": {
+        "startLine": 466,
+        "startChar": 8,
+        "endLine": 466,
+        "endChar": 67
+      },
+      "revId": "fea7d6231bab5ce0c2d0e558e42c8b6f3b1baf4e",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
