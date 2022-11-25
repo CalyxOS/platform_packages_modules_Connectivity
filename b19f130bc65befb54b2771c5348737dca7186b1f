@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "271f8a4d_9c1992a5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-11-25T20:49:27Z",
+      "side": 1,
+      "message": "Enable global cleartext, reboot - not working.\n\ndns.google won\u0027t work either\none.one.one.one works.",
+      "revId": "b19f130bc65befb54b2771c5348737dca7186b1f",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
