@@ -85,6 +85,23 @@
       "message": "Well, it doesn\u0027t hurt. I had it on my daily driver (raven) doing whatever it does for weeks, and I believe I had it during all of my testing of the clat lockdown VPN fix as well.",
       "revId": "e1fecb91702ba202072bf75ebba38cad6b30d199",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a9b0d72_28c12bbf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2022-11-25T18:22:00Z",
+      "side": 1,
+      "message": "I need a second to verify this one on test device",
+      "revId": "e1fecb91702ba202072bf75ebba38cad6b30d199",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
