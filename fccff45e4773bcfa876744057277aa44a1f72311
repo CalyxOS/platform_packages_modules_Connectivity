@@ -68,6 +68,24 @@
       "parentUuid": "7f2f8eee_9e9114e9",
       "revId": "fccff45e4773bcfa876744057277aa44a1f72311",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d19726a8_c079e3ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-01-06T20:37:58Z",
+      "side": 1,
+      "message": "Good question. Nah, as far as our code, this is exactly the same as the last reasonable patch submitted to AOSP (patchset 8). Only differences are their code (android13 vs master). This change was submitted within 15 minutes of the AOSP change.",
+      "parentUuid": "f2486fbc_d28d50db",
+      "revId": "fccff45e4773bcfa876744057277aa44a1f72311",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
