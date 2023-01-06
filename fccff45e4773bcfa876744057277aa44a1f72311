@@ -33,6 +33,23 @@
       "message": "Oliver, I\u0027m thinking maybe let\u0027s revisit this in December if possible. We can bring in some of the things we have learned from testing, and from AOSP\u0027s advice, *without* going as overboard as I did over there - goal being a patch as minimal as possible that still satisfies requirements. Current patchset I think has a few issues that we can address when we look into it; my patchsets are not reasonable as-is.",
       "revId": "fccff45e4773bcfa876744057277aa44a1f72311",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f2f8eee_9e9114e9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-01-06T20:24:15Z",
+      "side": 1,
+      "message": "Uh. This one has been haunting me for a while. Maybe a new plan for this, one step at a time? This is my thinking currently, I wonder what you all think:\n\n1. Get `atest FrameworksNetTests` to actually succeed in CalyxOS, or at least the relevant ones. Could start with https://gitlab.com/CalyxOS/calyxos/-/issues/1365 which Chirayu opened a while ago now.\n2. Put the latest patchset we have here into a local worktree, and try the tests, which will likely fail (but, maybe not).\n3. Adapt existing tests, and/or create new ones if needed, to demonstrate that apps under lockdown cannot receive incoming connections except through the VPN. Tests should be clear and simple to understand.\n4. Make any necessary fixes to our implementation.\n\nNote to self: Don\u0027t adapt tests with a primary goal of getting them to pass. The tests should make enough sense that we *know* that they test what we want, and we *know* that if there are any problems, they are with the implementation. This will likely require writing easier-to-understand tests than AOSP.",
+      "revId": "fccff45e4773bcfa876744057277aa44a1f72311",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
