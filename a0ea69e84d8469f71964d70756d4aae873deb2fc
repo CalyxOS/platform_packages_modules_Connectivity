@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1134160c_3691695b",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4420,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-01-27T15:49:16Z",
+      "side": 1,
+      "message": "Calling this within `destroyNetwork` like we do here means that it could be delayed up to `nai.teardownDelayMs` (see the bottom of the method just above this one), which could be a [maximum of 5 seconds](https://cs.android.com/android/platform/superproject/+/android-13.0.0_r18:packages/modules/Connectivity/framework/src/android/net/NetworkAgent.java;l\u003d203).\n\nFor our purposes in updating the restricted mode allowlist, could the callback be earlier and still resolve our problems? Maybe just below `rematchAllNetworksAndRequests();`? (The name of the callback may need to be changed, depending, e.g. `onRematched` or something.)",
+      "revId": "a0ea69e84d8469f71964d70756d4aae873deb2fc",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
