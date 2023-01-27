@@ -3966,6 +3966,19 @@ public class ConnectivityManager {
         public void onBlockedStatusChanged(@NonNull Network network, boolean blocked) {}
 
         /**
+         * Called when a network has already disconnected, network rematching has taken place,
+         * and the network is fully destroyed.
+         *
+         * <p>Unlike {@link #onLost}, calling {@link #getActiveNetwork} and similar methods from
+         * this callback will return updated information from after the loss has been handled.
+         *
+         * @param network The {@link Network} destroyed.
+         * @hide
+         */
+        @SystemApi(client = MODULE_LIBRARIES)
+        public void onDestroyed(@NonNull Network network) {}
+
+        /**
          * Called when access to the specified network is blocked or unblocked, or the reason for
          * access being blocked changes.
          *
@@ -4034,6 +4047,8 @@ public class ConnectivityManager {
     public static final int CALLBACK_RESUMED             = 10;
     /** @hide */
     public static final int CALLBACK_BLK_CHANGED         = 11;
+    /** @hide */
+    public static final int CALLBACK_DESTROYED           = 12;
 
     /** @hide */
     public static String getCallbackName(int whichCallback) {
@@ -4049,6 +4064,7 @@ public class ConnectivityManager {
             case CALLBACK_SUSPENDED:    return "CALLBACK_SUSPENDED";
             case CALLBACK_RESUMED:      return "CALLBACK_RESUMED";
             case CALLBACK_BLK_CHANGED:  return "CALLBACK_BLK_CHANGED";
+            case CALLBACK_DESTROYED:    return "CALLBACK_DESTROYED";
             default:
                 return Integer.toString(whichCallback);
         }
@@ -4135,6 +4151,10 @@ public class ConnectivityManager {
                 }
                 case CALLBACK_BLK_CHANGED: {
                     callback.onBlockedStatusChanged(network, message.arg1);
+                    break;
+                }
+                case CALLBACK_DESTROYED: {
+                    callback.onDestroyed(network);
                 }
             }
         }

@@ -65,6 +65,7 @@ package android.net {
 
   public static class ConnectivityManager.NetworkCallback {
     method public void onBlockedStatusChanged(@NonNull android.net.Network, int);
+    method public void onDestroyed(@NonNull android.net.Network);
   }
 
   public class ConnectivitySettingsManager {

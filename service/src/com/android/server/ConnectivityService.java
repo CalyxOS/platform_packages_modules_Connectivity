@@ -4417,6 +4417,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             nai.onNetworkDestroyed();
         }
         mNetIdManager.releaseNetId(nai.network.getNetId());
+        notifyNetworkCallbacks(nai, ConnectivityManager.CALLBACK_DESTROYED);
     }
 
     private boolean createNativeNetwork(@NonNull NetworkAgentInfo nai) {
