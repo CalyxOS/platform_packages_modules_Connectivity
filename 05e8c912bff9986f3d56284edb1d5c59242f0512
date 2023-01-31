@@ -16,6 +16,24 @@
       "message": "Not consistent. `false` works, but `Boolean.FALSE` helps to clarify that we are using `Boolean` to allow `null` as well.",
       "revId": "05e8c912bff9986f3d56284edb1d5c59242f0512",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "faf898f6_90ddfccc",
+        "filename": "tests/unit/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1422,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-01-31T19:07:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1535813_c47962ec",
+      "revId": "05e8c912bff9986f3d56284edb1d5c59242f0512",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
