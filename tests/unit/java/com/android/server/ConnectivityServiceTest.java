@@ -1419,7 +1419,7 @@ public class ConnectivityServiceTest {
                                     return super.settingsSecureGetStringForUser(key, userId);
                             }
                         }
-                    }, new Ikev2SessionCreator());
+                    }, new Ikev2SessionCreator(), Boolean.FALSE /* forceGlobalVpn */);
         }
 
         public void setUids(Set<UidRange> uids) {
