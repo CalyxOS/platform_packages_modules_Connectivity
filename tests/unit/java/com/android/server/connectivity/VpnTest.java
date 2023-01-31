@@ -1808,7 +1808,8 @@ public class VpnTest {
                 .thenReturn(asUserContext);
         final TestLooper testLooper = new TestLooper();
         final Vpn vpn = new Vpn(testLooper.getLooper(), mContext, new TestDeps(), mNetService,
-                mNetd, userId, mVpnProfileStore, mSystemServices, mIkev2SessionCreator);
+                mNetd, userId, mVpnProfileStore, mSystemServices, mIkev2SessionCreator,
+                Boolean.FALSE /* forceGlobalVpn */);
         verify(mConnectivityManager, times(1)).registerNetworkProvider(argThat(
                 provider -> provider.getName().contains("VpnNetworkProvider")
         ));
