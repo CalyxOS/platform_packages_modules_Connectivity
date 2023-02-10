@@ -8849,7 +8849,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * being disconnected.
      */
     private void rematchAllNetworksAndRequests() {
+        mPolicyManager.clearRestrictedModeAllowlist();
         rematchNetworksAndRequests(getNrisFromGlobalRequests());
+        mPolicyManager.updateRestrictedModeAllowlist();
     }
 
     /**
