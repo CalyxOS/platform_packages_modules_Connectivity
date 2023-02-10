@@ -4378,7 +4378,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         //  Currently, deleting it breaks tests that check for the default network disconnecting.
         //  Find out why, fix the rematch code, and delete this.
         mLegacyTypeTracker.remove(nai, wasDefault);
+        mPolicyManager.clearRestrictedModeAllowlist();
         rematchAllNetworksAndRequests();
+        mPolicyManager.updateRestrictedModeAllowlist();
         mLingerMonitor.noteDisconnect(nai);
 
         // Immediate teardown.
