@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (C) 2023 The Calyx Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -236,6 +237,7 @@ import android.util.ArraySet;
 import android.util.LocalLog;
 import android.util.Log;
 import android.util.Pair;
+import android.util.Range;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 
@@ -298,6 +300,7 @@ import java.util.Comparator;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -845,6 +848,71 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // ConnectivitySettingsManager#INGRESS_RATE_LIMIT_BYTES_PER_SECOND}
     // Only the handler thread is allowed to access this field.
     private long mIngressRateLimit = -1;
+
+    private final Deferrer mNetworkNotificationsDeferrer = new Deferrer(false);
+
+    /** Thread-safe helper class for deferring Runnable actions and running them in order. */
+    private final class Deferrer {
+        private final Object mLock = new Object();
+
+        @GuardedBy("mLock")
+        private boolean mDefer;
+        @GuardedBy("mLock")
+        private final LinkedList<Runnable> mRunnables = new LinkedList<>();
+
+        public Deferrer(final boolean initialDefer) {
+            mDefer = initialDefer;
+        }
+
+        /** Start deferring any Runnables provided to {@link #runOrDefer} going forward. */
+        public void startDeferring() {
+            synchronized (mLock) {
+                mDefer = true;
+            }
+        }
+
+        /**
+         * If Runnables are deferred, defer this one. If they are not, run it now, but if there
+         * are somehow any unprocessed Runnables, run those first.
+         */
+        public void runOrDefer(final @NonNull Runnable r) {
+            final boolean runNow;
+            final boolean hasDeferredRunnables;
+            synchronized (mLock) {
+                runNow = !mDefer;
+                hasDeferredRunnables = !mRunnables.isEmpty();
+                if (!runNow || hasDeferredRunnables) {
+                    mRunnables.add(r);
+                }
+            }
+            if (runNow) {
+                if (hasDeferredRunnables) {
+                    runAllAndStopDeferring();
+                } else {
+                    r.run();
+                }
+            }
+        }
+
+        /** Run any deferred Runnables, and stop deferring them going forward. */
+        public void runAllAndStopDeferring() {
+            while (true) {
+                final Runnable nextRunnable;
+                synchronized (mLock) {
+                    if (mRunnables.isEmpty()) {
+                        mDefer = false;
+                        break;
+                    }
+                    nextRunnable = mRunnables.pop();
+                }
+                try {
+                    nextRunnable.run();
+                } catch (Exception ex) {
+                    loge("Error invoking deferred Runnable", ex);
+                }
+            }
+        }
+    }
 
     /**
      * Implements support for the legacy "one network per network type" model.
@@ -8104,6 +8172,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return filterIface != null || (nai.isVPN() && SdkLevel.isAtLeastT());
     }
 
+    private static Bundle toUidRangesBundle(final @NonNull Collection<UidRange> ranges) {
+        final Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("uidRanges", new ArrayList<>(ranges));
+        return bundle;
+    }
+
     private static UidRangeParcel[] toUidRangeStableParcels(final @NonNull Set<UidRange> ranges) {
         final UidRangeParcel[] stableRanges = new UidRangeParcel[ranges.size()];
         int index = 0;
@@ -8340,7 +8414,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
             intent.putExtra(ConnectivityManager.EXTRA_NETWORK_REQUEST, req);
             nri.mPendingIntentSent = true;
-            sendIntent(nri.mPendingIntent, intent);
+            final PendingIntent pendingIntent = nri.mPendingIntent;
+            mNetworkNotificationsDeferrer.runOrDefer(() -> {
+                sendIntent(pendingIntent, intent);
+            });
         }
         // else not handled
     }
@@ -8443,16 +8520,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         msg.what = notificationType;
         msg.setData(bundle);
-        try {
-            if (VDBG) {
-                String notification = ConnectivityManager.getCallbackName(notificationType);
-                log("sending notification " + notification + " for " + nrForCallback);
+        final Messenger messenger = nri.mMessenger;
+        mNetworkNotificationsDeferrer.runOrDefer(() -> {
+            try {
+                if (VDBG) {
+                    String notification = ConnectivityManager.getCallbackName(notificationType);
+                    log("sending notification " + notification + " for " + nrForCallback);
+                }
+                messenger.send(msg);
+            } catch (RemoteException e) {
+                // may occur naturally in the race of binder death.
+                loge("RemoteException caught trying to send a callback msg for " + nrForCallback);
             }
-            nri.mMessenger.send(msg);
-        } catch (RemoteException e) {
-            // may occur naturally in the race of binder death.
-            loge("RemoteException caught trying to send a callback msg for " + nrForCallback);
-        }
+        });
     }
 
     private static <T extends Parcelable> void putParcelable(Bundle bundle, T t) {
@@ -8882,6 +8962,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (nai.isBackgroundNetwork()) oldBgNetworks.add(nai);
         }
 
+        final Set<UidRange> affectedUids = new ArraySet<>();
+        for (final NetworkReassignment.RequestReassignment event :
+                changes.getRequestReassignments()) {
+            affectedUids.addAll(event.mNetworkRequestInfo.getUids());
+        }
+        if (!affectedUids.isEmpty()) {
+            mNetworkNotificationsDeferrer.startDeferring();
+
+            logw("applyNetworkReassignment: clearRestrictedModeAllowlist start");
+            mPolicyManager.clearRestrictedModeAllowlist(toUidRangesBundle(affectedUids));
+            logw("applyNetworkReassignment: clearRestrictedModeAllowlist complete");
+        }
+
         // First, update the lists of satisfied requests in the network agents. This is necessary
         // because some code later depends on this state to be correct, most prominently computing
         // the linger status.
@@ -8966,6 +9059,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     teardownUnneededNetwork(nai);
                 }
             }
+        }
+
+        if (!affectedUids.isEmpty()) {
+            logw("applyNetworkReassignment: updateRestrictedModeAllowlist start");
+            mPolicyManager.updateRestrictedModeAllowlist(toUidRangesBundle(affectedUids));
+            logw("applyNetworkReassignment: updateRestrictedModeAllowlist complete");
+
+            mNetworkNotificationsDeferrer.runAllAndStopDeferring();
+            logw("applyNetworkReassignment: sending deferred notifications complete");
         }
     }
 
