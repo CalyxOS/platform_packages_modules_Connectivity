@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (C) 2023 The Calyx Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -236,6 +237,7 @@ import android.util.ArraySet;
 import android.util.LocalLog;
 import android.util.Log;
 import android.util.Pair;
+import android.util.Range;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 
@@ -298,6 +300,7 @@ import java.util.Comparator;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -845,6 +848,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // ConnectivitySettingsManager#INGRESS_RATE_LIMIT_BYTES_PER_SECOND}
     // Only the handler thread is allowed to access this field.
     private long mIngressRateLimit = -1;
+
+    @GuardedBy("mDeferredNetworkNotifications")
+    private boolean mDeferNetworkNotifications = false;
+    @GuardedBy("mDeferredNetworkNotifications")
+    private final LinkedList<Runnable> mDeferredNetworkNotifications = new LinkedList<>();
 
     /**
      * Implements support for the legacy "one network per network type" model.
@@ -8104,6 +8112,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return filterIface != null || (nai.isVPN() && SdkLevel.isAtLeastT());
     }
 
+    private static Bundle toUidRangesBundle(final @NonNull Collection<UidRange> ranges) {
+        final Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("uidRanges", new ArrayList<>(ranges));
+        return bundle;
+    }
+
     private static UidRangeParcel[] toUidRangeStableParcels(final @NonNull Set<UidRange> ranges) {
         final UidRangeParcel[] stableRanges = new UidRangeParcel[ranges.size()];
         int index = 0;
@@ -8340,9 +8354,53 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
             intent.putExtra(ConnectivityManager.EXTRA_NETWORK_REQUEST, req);
             nri.mPendingIntentSent = true;
-            sendIntent(nri.mPendingIntent, intent);
+            final PendingIntent pendingIntent = nri.mPendingIntent;
+            maybeDefer(() -> {
+                sendIntent(pendingIntent, intent);
+            });
         }
         // else not handled
+    }
+
+    /**
+     * If notifications are deferred, defer this action. If they are not, run it now, but if there
+     * are somehow any unprocessed deferred actions, run those first.
+     */
+    private void maybeDefer(final @NonNull Runnable r) {
+        final boolean runNow;
+        final boolean runAllDeferred;
+        synchronized (mDeferredNetworkNotifications) {
+            runNow = !mDeferNetworkNotifications;
+            runAllDeferred = !mDeferredNetworkNotifications.isEmpty();
+            if (!runNow || runAllDeferred) {
+                mDeferredNetworkNotifications.add(r);
+            }
+        }
+        if (runAllDeferred) {
+            runDeferredNotificationsAndStopDeferring();
+        } else if (runNow) {
+            r.run();
+        }
+    }
+
+    /** Run any deferred callbacks, and stop deferring them going forward. */
+    private void runDeferredNotificationsAndStopDeferring() {
+        // Run all deferred notifications. Use synchronization to ensure nothing gets missed.
+        while (true) {
+            final Runnable nextRunnable;
+            synchronized (mDeferredNetworkNotifications) {
+                if (mDeferredNetworkNotifications.isEmpty()) {
+                    mDeferNetworkNotifications = false;
+                    break;
+                }
+                nextRunnable = mDeferredNetworkNotifications.pop();
+            }
+            try {
+                nextRunnable.run();
+            } catch (Exception ex) {
+                loge("Error invoking deferred network notfication", ex);
+            }
+        }
     }
 
     private void sendIntent(PendingIntent pendingIntent, Intent intent) {
@@ -8385,6 +8443,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // are Type.LISTEN, but should not have NetworkCallbacks invoked.
             return;
         }
+        // Ultimately, we will not defer callbacks that signify a reduction in network
+        // availability. The goal of deferring is that a network truly be available when called -
+        // in other words, after NetworkPolicyManager has updated the restricted mode allowlist.
+        boolean noDefer = false;
         Bundle bundle = new Bundle();
         // TODO b/177608132: make sure callbacks are indexed by NRIs and not NetworkRequest objects.
         // TODO: check if defensive copies of data is needed.
@@ -8414,7 +8476,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 break;
             }
             case ConnectivityManager.CALLBACK_LOSING: {
+                noDefer = true;
                 msg.arg1 = arg1;
+                break;
+            }
+            case ConnectivityManager.CALLBACK_LOST: {
+                noDefer = true;
+                break;
+            }
+            case ConnectivityManager.CALLBACK_UNAVAIL: {
+                noDefer = true;
                 break;
             }
             case ConnectivityManager.CALLBACK_CAP_CHANGED: {
@@ -8435,7 +8506,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         networkAgent.linkProperties, nri.mPid, nri.mUid));
                 break;
             }
+            case ConnectivityManager.CALLBACK_SUSPENDED: {
+                noDefer = true;
+                break;
+            }
             case ConnectivityManager.CALLBACK_BLK_CHANGED: {
+                // Do not defer if network is blocked.
+                noDefer = (arg1 != 0);
                 maybeLogBlockedStatusChanged(nri, networkAgent.network, arg1);
                 msg.arg1 = arg1;
                 break;
@@ -8443,15 +8520,23 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         msg.what = notificationType;
         msg.setData(bundle);
-        try {
-            if (VDBG) {
-                String notification = ConnectivityManager.getCallbackName(notificationType);
-                log("sending notification " + notification + " for " + nrForCallback);
+        final Messenger messenger = nri.mMessenger;
+        final Runnable r = () -> {
+            try {
+                if (VDBG) {
+                    String notification = ConnectivityManager.getCallbackName(notificationType);
+                    log("sending notification " + notification + " for " + nrForCallback);
+                }
+                messenger.send(msg);
+            } catch (RemoteException e) {
+                // may occur naturally in the race of binder death.
+                loge("RemoteException caught trying to send a callback msg for " + nrForCallback);
             }
-            nri.mMessenger.send(msg);
-        } catch (RemoteException e) {
-            // may occur naturally in the race of binder death.
-            loge("RemoteException caught trying to send a callback msg for " + nrForCallback);
+        };
+        if (noDefer) {
+            r.run();
+        } else {
+            maybeDefer(r);
         }
     }
 
@@ -8882,6 +8967,20 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (nai.isBackgroundNetwork()) oldBgNetworks.add(nai);
         }
 
+        final Set<UidRange> affectedUids = new ArraySet<>();
+        for (final NetworkReassignment.RequestReassignment event :
+                changes.getRequestReassignments()) {
+            affectedUids.addAll(event.mNetworkRequestInfo.getUids());
+        }
+        if (!affectedUids.isEmpty()) {
+            synchronized (mDeferredNetworkNotifications) {
+                mDeferNetworkNotifications = true;
+            }
+            logw("applyNetworkReassignment: clearRestrictedModeAllowlist start");
+            mPolicyManager.clearRestrictedModeAllowlist(toUidRangesBundle(affectedUids));
+            logw("applyNetworkReassignment: clearRestrictedModeAllowlist complete");
+        }
+
         // First, update the lists of satisfied requests in the network agents. This is necessary
         // because some code later depends on this state to be correct, most prominently computing
         // the linger status.
@@ -8966,6 +9065,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     teardownUnneededNetwork(nai);
                 }
             }
+        }
+
+        if (!affectedUids.isEmpty()) {
+            logw("applyNetworkReassignment: reassignment complete");
+            mPolicyManager.updateRestrictedModeAllowlist(toUidRangesBundle(affectedUids));
+            logw("applyNetworkReassignment: updateRestrictedModeAllowlist complete");
+
+            // Run all deferred notifications. Use synchronization to ensure nothing gets missed.
+            runDeferredNotificationsAndStopDeferring();
+            logw("applyNetworkReassignment: sending deferred notifications complete");
         }
     }
 

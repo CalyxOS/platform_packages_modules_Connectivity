@@ -16,7 +16,12 @@
 
 package android.net;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
+import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.UserHandle;
@@ -31,6 +36,7 @@ import java.util.Set;
  *
  * @hide
  */
+@SystemApi(client = MODULE_LIBRARIES)
 public final class UidRange implements Parcelable {
     public final int start;
     public final int stop;
@@ -44,7 +50,7 @@ public final class UidRange implements Parcelable {
     }
 
     /** Creates a UidRange for the specified user. */
-    public static UidRange createForUser(UserHandle user) {
+    public static @NonNull UidRange createForUser(@NonNull UserHandle user) {
         final UserHandle nextUser = UserHandle.of(user.getIdentifier() + 1);
         final int start = user.getUid(0 /* appId */);
         final int end = nextUser.getUid(0 /* appId */) - 1;
@@ -62,6 +68,7 @@ public final class UidRange implements Parcelable {
     }
 
     /** Returns whether the UidRange contains the specified UID. */
+    @SuppressLint("KotlinOperator")
     public boolean contains(int uid) {
         return start <= uid && uid <= stop;
     }
@@ -76,7 +83,7 @@ public final class UidRange implements Parcelable {
     /**
      * @return {@code true} if this range contains every UID contained by the {@code other} range.
      */
-    public boolean containsRange(UidRange other) {
+    public boolean containsRange(@NonNull UidRange other) {
         return start <= other.start && other.stop <= stop;
     }
 
@@ -114,15 +121,15 @@ public final class UidRange implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeInt(start);
         dest.writeInt(stop);
     }
 
-    public static final @android.annotation.NonNull Creator<UidRange> CREATOR =
+    public static final @NonNull Creator<UidRange> CREATOR =
             new Creator<UidRange>() {
         @Override
-        public UidRange createFromParcel(Parcel in) {
+        public UidRange createFromParcel(@NonNull Parcel in) {
             int start = in.readInt();
             int stop = in.readInt();
 
@@ -143,7 +150,7 @@ public final class UidRange implements Parcelable {
      *
      * @see UidRange#contains(int)
      */
-    public static boolean containsUid(Collection<UidRange> ranges, int uid) {
+    public static boolean containsUid(@Nullable Collection<UidRange> ranges, int uid) {
         if (ranges == null) return false;
         for (UidRange range : ranges) {
             if (range.contains(uid)) {
@@ -155,6 +162,8 @@ public final class UidRange implements Parcelable {
 
     /**
      *  Convert a set of {@code Range<Integer>} to a set of {@link UidRange}.
+     *
+     * @hide
      */
     @Nullable
     public static ArraySet<UidRange> fromIntRanges(@Nullable Set<Range<Integer>> ranges) {
@@ -169,6 +178,8 @@ public final class UidRange implements Parcelable {
 
     /**
      *  Convert a set of {@link UidRange} to a set of {@code Range<Integer>}.
+     *
+     * @hide
      */
     @Nullable
     public static ArraySet<Range<Integer>> toIntRanges(@Nullable Set<UidRange> ranges) {

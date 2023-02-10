@@ -223,6 +223,22 @@ package android.net {
     method @NonNull public default android.net.TransportInfo makeCopy(long);
   }
 
+  public final class UidRange implements android.os.Parcelable {
+    ctor public UidRange(int, int);
+    method public boolean contains(int);
+    method public boolean containsRange(@NonNull android.net.UidRange);
+    method public static boolean containsUid(@Nullable java.util.Collection<android.net.UidRange>, int);
+    method public int count();
+    method @NonNull public static android.net.UidRange createForUser(@NonNull android.os.UserHandle);
+    method public int describeContents();
+    method public int getEndUser();
+    method public int getStartUser();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.UidRange> CREATOR;
+    field public final int start;
+    field public final int stop;
+  }
+
   public final class VpnTransportInfo implements android.os.Parcelable android.net.TransportInfo {
     ctor public VpnTransportInfo(int, @Nullable String);
     method public int describeContents();
