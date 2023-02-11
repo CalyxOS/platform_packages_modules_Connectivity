@@ -846,6 +846,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // Only the handler thread is allowed to access this field.
     private long mIngressRateLimit = -1;
 
+    private boolean mDeferNetworkNotifications = false;
+    private final List<Runnable> mDeferredNetworkNotifications = new ArrayList<>();
+
     /**
      * Implements support for the legacy "one network per network type" model.
      *
@@ -8324,6 +8327,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private void sendPendingIntentForRequest(NetworkRequestInfo nri, NetworkAgentInfo networkAgent,
             int notificationType) {
         if (notificationType == ConnectivityManager.CALLBACK_AVAILABLE && !nri.mPendingIntentSent) {
+            final boolean shouldDefer = mDeferNetworkNotifications;
             Intent intent = new Intent();
             intent.putExtra(ConnectivityManager.EXTRA_NETWORK, networkAgent.network);
             // If apps could file multi-layer requests with PendingIntents, they'd need to know
@@ -8340,7 +8344,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
             intent.putExtra(ConnectivityManager.EXTRA_NETWORK_REQUEST, req);
             nri.mPendingIntentSent = true;
-            sendIntent(nri.mPendingIntent, intent);
+            final PendingIntent pendingIntent = nri.mPendingIntent;
+            Runnable r = () -> {
+                sendIntent(pendingIntent, intent);
+            };
+            if (shouldDefer) {
+                mDeferredNetworkNotifications.add(r);
+            } else {
+                r.run();
+            }
         }
         // else not handled
     }
@@ -8385,6 +8397,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // are Type.LISTEN, but should not have NetworkCallbacks invoked.
             return;
         }
+        // Ultimately, we will not defer callbacks that signify a reduction in network
+        // availability. The goal of deferring is that a network truly be available when called -
+        // in other words, after NetworkPolicyManager has updated the restricted mode allowlist.
+        boolean shouldDefer = mDeferNetworkNotifications;
         Bundle bundle = new Bundle();
         // TODO b/177608132: make sure callbacks are indexed by NRIs and not NetworkRequest objects.
         // TODO: check if defensive copies of data is needed.
@@ -8414,7 +8430,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 break;
             }
             case ConnectivityManager.CALLBACK_LOSING: {
+                shouldDefer = false;
                 msg.arg1 = arg1;
+                break;
+            }
+            case ConnectivityManager.CALLBACK_LOST: {
+                shouldDefer = false;
+                break;
+            }
+            case ConnectivityManager.CALLBACK_UNAVAIL: {
+                shouldDefer = false;
                 break;
             }
             case ConnectivityManager.CALLBACK_CAP_CHANGED: {
@@ -8435,7 +8460,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         networkAgent.linkProperties, nri.mPid, nri.mUid));
                 break;
             }
+            case ConnectivityManager.CALLBACK_SUSPENDED: {
+                shouldDefer = false;
+                break;
+            }
             case ConnectivityManager.CALLBACK_BLK_CHANGED: {
+                // Only defer if network has been unblocked.
+                shouldDefer = shouldDefer && (arg1 == 0);
                 maybeLogBlockedStatusChanged(nri, networkAgent.network, arg1);
                 msg.arg1 = arg1;
                 break;
@@ -8443,15 +8474,23 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         msg.what = notificationType;
         msg.setData(bundle);
-        try {
-            if (VDBG) {
-                String notification = ConnectivityManager.getCallbackName(notificationType);
-                log("sending notification " + notification + " for " + nrForCallback);
+        final Messenger messenger = nri.mMessenger;
+        Runnable r = () -> {
+            try {
+                if (VDBG) {
+                    String notification = ConnectivityManager.getCallbackName(notificationType);
+                    log("sending notification " + notification + " for " + nrForCallback);
+                }
+                messenger.send(msg);
+            } catch (RemoteException e) {
+                // may occur naturally in the race of binder death.
+                loge("RemoteException caught trying to send a callback msg for " + nrForCallback);
             }
-            nri.mMessenger.send(msg);
-        } catch (RemoteException e) {
-            // may occur naturally in the race of binder death.
-            loge("RemoteException caught trying to send a callback msg for " + nrForCallback);
+        };
+        if (shouldDefer) {
+            mDeferredNetworkNotifications.add(r);
+        } else {
+            r.run();
         }
     }
 
@@ -8849,9 +8888,26 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * being disconnected.
      */
     private void rematchAllNetworksAndRequests() {
-        mPolicyManager.clearRestrictedModeAllowlist();
-        rematchNetworksAndRequests(getNrisFromGlobalRequests());
-        mPolicyManager.updateRestrictedModeAllowlist();
+        mDeferNetworkNotifications = true;
+        try {
+            mPolicyManager.clearRestrictedModeAllowlist();
+            logw("rematchAllNetworksAndRequests: clearRestrictedModeAllowlist complete");
+            rematchNetworksAndRequests(getNrisFromGlobalRequests());
+            logw("rematchAllNetworksAndRequests: rematchNetworksAndRequests complete");
+            mPolicyManager.updateRestrictedModeAllowlist();
+            logw("rematchAllNetworksAndRequests: updateRestrictedModeAllowlist complete");
+        } finally {
+            for (final Runnable r : mDeferredNetworkNotifications) {
+                try {
+                    r.run();
+                } catch (Exception ex) {
+                    loge("Error invoking deferred network notfication", ex);
+                }
+            }
+            logw("rematchAllNetworksAndRequests: sending deferred notifications complete");
+            mDeferredNetworkNotifications.clear();
+            mDeferNetworkNotifications = false;
+        }
     }
 
     /**
