@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27384230_dbd58511",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-11T13:14:08Z",
+      "side": 1,
+      "message": "Resolves FirewallTest nearly always failing to access the network after switching to a network that should be allowed.",
+      "revId": "54b69781942485273a0b1742a00f0a6228fcd5a6",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
