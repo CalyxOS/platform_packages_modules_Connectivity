@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39d8afcd_a275d58e",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 8379,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-14T13:28:44Z",
+      "side": 1,
+      "message": "This isn\u0027t right. It causes deferring to stop after the second call to maybeDefer.\n\nPut this in a class, too, rather than have methods and state floating around.",
+      "revId": "3a5146146bb1c8a9066cd6c4730fcedcf6e63888",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ce905d0_93aceb14",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 8449,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-14T13:28:44Z",
+      "side": 1,
+      "message": "This doesn\u0027t matter enough to handle it in a special way, especially now that calls to `updateRestrictedModeAllowlist` are so much faster than before. Can take all this out.",
+      "revId": "3a5146146bb1c8a9066cd6c4730fcedcf6e63888",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68405640_15379180",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 8980,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-14T13:28:44Z",
+      "side": 1,
+      "message": "Improve line spacing here",
+      "revId": "3a5146146bb1c8a9066cd6c4730fcedcf6e63888",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bacdc537_a3805d01",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 9072,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-14T13:28:44Z",
+      "side": 1,
+      "message": "Improve line spacing here",
+      "revId": "3a5146146bb1c8a9066cd6c4730fcedcf6e63888",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
