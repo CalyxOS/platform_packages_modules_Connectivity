@@ -18,6 +18,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "32e51ab4_7bb47459",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 8379,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-14T13:30:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39d8afcd_a275d58e",
+      "revId": "3a5146146bb1c8a9066cd6c4730fcedcf6e63888",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9ce905d0_93aceb14",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-02-14T13:28:44Z",
       "side": 1,
       "message": "This doesn\u0027t matter enough to handle it in a special way, especially now that calls to `updateRestrictedModeAllowlist` are so much faster than before. Can take all this out.",
+      "revId": "3a5146146bb1c8a9066cd6c4730fcedcf6e63888",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e79f226_3379fe0f",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 8449,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-14T13:30:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ce905d0_93aceb14",
       "revId": "3a5146146bb1c8a9066cd6c4730fcedcf6e63888",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
@@ -52,6 +88,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "037313fa_56b22f05",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 8980,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-14T13:30:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "68405640_15379180",
+      "revId": "3a5146146bb1c8a9066cd6c4730fcedcf6e63888",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bacdc537_a3805d01",
@@ -65,6 +119,24 @@
       "writtenOn": "2023-02-14T13:28:44Z",
       "side": 1,
       "message": "Improve line spacing here",
+      "revId": "3a5146146bb1c8a9066cd6c4730fcedcf6e63888",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2459ee2a_9402d266",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 9072,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-14T13:30:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bacdc537_a3805d01",
       "revId": "3a5146146bb1c8a9066cd6c4730fcedcf6e63888",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
