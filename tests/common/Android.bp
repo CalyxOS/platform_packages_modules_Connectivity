@@ -38,6 +38,7 @@ java_library {
         "net-utils-framework-common",
         "platform-compat-test-rules",
         "platform-test-annotations",
+        "org.lineageos.platform.lineagesettings",
     ],
     libs: [
         "android.test.base.stubs",
