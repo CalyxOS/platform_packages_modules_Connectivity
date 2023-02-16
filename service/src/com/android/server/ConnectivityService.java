@@ -9318,6 +9318,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (!networkAgent.created
                 && (state == NetworkInfo.State.CONNECTED
                 || (state == NetworkInfo.State.CONNECTING && networkAgent.isVPN()))) {
+            mPolicyManager.clearRestrictedModeAllowlistForUids(new Bundle());
 
             // A network that has just connected has zero requests and is thus a foreground network.
             networkAgent.networkCapabilities.addCapability(NET_CAPABILITY_FOREGROUND);
@@ -9332,9 +9333,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
             networkAgent.created = true;
             networkAgent.onNetworkCreated();
             updateAllowedUids(networkAgent, null, networkAgent.networkCapabilities);
+            mPolicyManager.updateRestrictedModeAllowlistForUids(new Bundle());
         }
 
         if (!networkAgent.everConnected && state == NetworkInfo.State.CONNECTED) {
+            mPolicyManager.clearRestrictedModeAllowlistForUids(new Bundle());
             networkAgent.everConnected = true;
 
             // NetworkCapabilities need to be set before sending the private DNS config to
@@ -9395,6 +9398,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
             // This has to happen after matching the requests, because callbacks are just requests.
             notifyNetworkCallbacks(networkAgent, ConnectivityManager.CALLBACK_PRECHECK);
+            mPolicyManager.updateRestrictedModeAllowlistForUids(new Bundle());
         } else if (state == NetworkInfo.State.DISCONNECTED) {
             // Clear the restricted mode allowlist immediately for affected UIDs. If this does not
             // happen soon enough, traffic can leak in the transition to another network.
@@ -9429,7 +9433,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
         } else if (networkAgent.created && (oldInfo.getState() == NetworkInfo.State.SUSPENDED ||
                 state == NetworkInfo.State.SUSPENDED)) {
+            mPolicyManager.clearRestrictedModeAllowlistForUids(new Bundle());
             mLegacyTypeTracker.update(networkAgent);
+            mPolicyManager.updateRestrictedModeAllowlistForUids(new Bundle());
         }
     }
 
