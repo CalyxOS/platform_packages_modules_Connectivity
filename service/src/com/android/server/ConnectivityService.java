@@ -9396,6 +9396,20 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // This has to happen after matching the requests, because callbacks are just requests.
             notifyNetworkCallbacks(networkAgent, ConnectivityManager.CALLBACK_PRECHECK);
         } else if (state == NetworkInfo.State.DISCONNECTED) {
+            // Clear the restricted mode allowlist immediately for affected UIDs. If this does not
+            // happen soon enough, traffic can leak in the transition to another network.
+            final NetworkCapabilities nc = networkAgent.networkCapabilities;
+            final Bundle uidRangesBundle;
+            if (nc != null) {
+                final Set<UidRange> uidRanges = nc.getUidRanges();
+                uidRangesBundle = uidRanges != null ? toUidRangesBundle(uidRanges) : null;
+            } else {
+                uidRangesBundle = null;
+            }
+            if (uidRangesBundle != null) {
+                mPolicyManager.clearRestrictedModeAllowlistForUids(uidRangesBundle);
+            }
+
             networkAgent.disconnect();
             if (networkAgent.isVPN()) {
                 updateVpnUids(networkAgent, networkAgent.networkCapabilities, null);
@@ -9407,6 +9421,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 // VPN to make sure we do not broadcast the old proxy data.
                 // TODO(b/122649188): send the broadcast only to VPN users.
                 mProxyTracker.sendProxyBroadcast();
+            }
+
+            // Update the restricted mode allowlist for affected UIDs.
+            if (uidRangesBundle != null) {
+                mPolicyManager.updateRestrictedModeAllowlistForUids(uidRangesBundle);
             }
         } else if (networkAgent.created && (oldInfo.getState() == NetworkInfo.State.SUSPENDED ||
                 state == NetworkInfo.State.SUSPENDED)) {
