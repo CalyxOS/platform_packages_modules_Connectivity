@@ -7839,6 +7839,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // Null iface given to onVpnUidRangesAdded/Removed is a wildcard to allow apps to receive
         // packets on all interfaces. This is required to accept incoming traffic in Lockdown mode
         // by overriding the Lockdown blocking rule.
+        mPolicyManager.clearRestrictedModeAllowlistForUids(new Bundle());
         if (wasFiltering) {
             mPermissionMonitor.onVpnUidRangesRemoved(oldIface, ranges, vpnAppUid);
         }
@@ -8322,6 +8323,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // Null iface given to onVpnUidRangesAdded/Removed is a wildcard to allow apps to
             // receive packets on all interfaces. This is required to accept incoming traffic in
             // Lockdown mode by overriding the Lockdown blocking rule.
+
+            mPolicyManager.clearRestrictedModeAllowlistForUids(new Bundle());
             if (wasFiltering && !prevRanges.isEmpty()) {
                 mPermissionMonitor.onVpnUidRangesRemoved(oldIface, prevRanges,
                         prevNc.getOwnerUid());
@@ -8357,6 +8360,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         toRemove.removeAll(newUids);
         toAdd.removeAll(prevUids);
 
+        mPolicyManager.clearRestrictedModeAllowlistForUids(new Bundle());
         try {
             if (!toAdd.isEmpty()) {
                 mNetd.networkAddUidRangesParcel(new NativeUidRangeConfig(
@@ -9400,19 +9404,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
             notifyNetworkCallbacks(networkAgent, ConnectivityManager.CALLBACK_PRECHECK);
             mPolicyManager.updateRestrictedModeAllowlistForUids(new Bundle());
         } else if (state == NetworkInfo.State.DISCONNECTED) {
-            // Clear the restricted mode allowlist immediately for affected UIDs. If this does not
+            // Clear the restricted mode allowlist immediately. If this does not
             // happen soon enough, traffic can leak in the transition to another network.
-            final NetworkCapabilities nc = networkAgent.networkCapabilities;
-            final Bundle uidRangesBundle;
-            if (nc != null) {
-                final Set<UidRange> uidRanges = nc.getUidRanges();
-                uidRangesBundle = uidRanges != null ? toUidRangesBundle(uidRanges) : null;
-            } else {
-                uidRangesBundle = null;
-            }
-            if (uidRangesBundle != null) {
-                mPolicyManager.clearRestrictedModeAllowlistForUids(uidRangesBundle);
-            }
+            mPolicyManager.clearRestrictedModeAllowlistForUids(new Bundle());
 
             networkAgent.disconnect();
             if (networkAgent.isVPN()) {
@@ -9428,9 +9422,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
 
             // Update the restricted mode allowlist for affected UIDs.
-            if (uidRangesBundle != null) {
-                mPolicyManager.updateRestrictedModeAllowlistForUids(uidRangesBundle);
-            }
+            mPolicyManager.updateRestrictedModeAllowlistForUids(new Bundle());
         } else if (networkAgent.created && (oldInfo.getState() == NetworkInfo.State.SUSPENDED ||
                 state == NetworkInfo.State.SUSPENDED)) {
             mPolicyManager.clearRestrictedModeAllowlistForUids(new Bundle());
