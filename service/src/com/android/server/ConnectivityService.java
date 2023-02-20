@@ -98,6 +98,7 @@ import static android.system.OsConstants.IPPROTO_TCP;
 import static android.system.OsConstants.IPPROTO_UDP;
 
 import static com.android.net.module.util.DeviceConfigUtils.TETHERING_MODULE_NAME;
+import static com.android.net.module.util.NetworkCapabilitiesUtils.packBits;
 
 import static java.util.Map.Entry;
 
@@ -238,6 +239,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
+import android.util.SparseLongArray;
 
 import com.android.connectivity.resources.R;
 import com.android.internal.annotations.GuardedBy;
@@ -307,6 +309,7 @@ import java.util.SortedSet;
 import java.util.StringJoiner;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 /**
  * @hide
@@ -395,6 +398,208 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     private SparseIntArray mUidBlockedReasons = new SparseIntArray();
 
+    /** Map of UID to its bit-packed allowed transports. */
+    private SparseLongArray mUidAllowedTransports = new SparseLongArray();
+
+    /** Allowed UID ranges provided to Netd, tracked based on the netId to which they belong. */
+    @GuardedBy("mNetworkForNetId")
+    private Map<Integer, NativeUidRangeConfig> mNetIdToAllowlist =
+            new HashMap<Integer, NativeUidRangeConfig>();
+
+    /**
+     * UIDs that we wish to be denied access to networks based on certain policies, grouped by the
+     * netId to which they belong. Used to prevent affected UIDs from getting online through a VPN.
+     */
+    @GuardedBy("mNetworkForNetId")
+    private Map<Integer, List<Integer>> mNetIdToDisallowedUids = new HashMap<>();
+
+    @Override
+    public void setUidsAllowedTransports(@NonNull final int[] uids,
+            @NonNull final long[] allowedTransportsPacked) {
+        mHandler.post(() -> handleSetUidsAllowedTransports(uids, allowedTransportsPacked));
+    }
+
+    private void handleSetUidsAllowedTransports(@NonNull final int[] uids,
+            @NonNull final long[] allowedTransportsPacked) {
+        for (int i = 0; i < uids.length; i++) {
+            final int uid = uids[i];
+            final long transportsPacked = allowedTransportsPacked[i];
+            mUidAllowedTransports.put(uid, transportsPacked);
+        }
+        for (final var nai : mNetworkAgentInfos) {
+            if (nai.isVPN()) {
+                updateDisallowedUidsForNetwork(nai);
+                continue;
+            }
+            for (final int uid : uids) {
+                if (nai.networkCapabilities.appliesToUid(uid)) {
+                    updateAllowedUidsForNetwork(nai);
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * Block VPN traffic for UIDs that are not allowed to use VPNs. Without this, apps are allowed
+     * to use VPNs regardless of policy, because the VPN itself manages its allowed UID ranges.
+     */
+    private void updateDisallowedUidsForNetwork(@NonNull final NetworkAgentInfo nai) {
+        final var disallowedUids = getUidsDisallowedByPolicyForCapabilities(
+                nai.networkCapabilities);
+        final int[] newDenylist;
+        synchronized (mNetworkForNetId) {
+            mNetIdToDisallowedUids.put(nai.network.netId, disallowedUids);
+            newDenylist = mNetIdToDisallowedUids.values().stream().flatMap(Collection::stream)
+                    .distinct().mapToInt(Integer::intValue).toArray();
+        }
+        replaceFirewallChainUnchecked(ConnectivityManager.FIREWALL_CHAIN_OEM_DENY_1, newDenylist);
+    }
+
+    /**
+     * Generate an allowlist configuration for Netd that reflects a network's allowed UIDs and
+     * includes a sub priority to allow the network to act as a default network for the UIDs
+     * if it is considered to be the default network overall. This default network handling is
+     * required, or else UIDs that do not make specific network requests will have no connectivity.
+     */
+    private NativeUidRangeConfig getAllowlistedNativeUidRangeConfigForNetwork(
+            @NonNull final NetworkAgentInfo nai) {
+        final int netId = nai.network.netId;
+        final var uidsAllowedByPolicy = getUidRangeParcelsAllowedByPolicyForCapabilities(
+                nai.networkCapabilities);
+        final boolean isDefault = isDefaultNetwork(nai);
+        final int subPriority = isDefault ? PREFERENCE_ORDER_LOWEST_WITH_DEFAULT
+                : PREFERENCE_ORDER_IRRELEVANT_BECAUSE_NOT_DEFAULT;
+        return new NativeUidRangeConfig(netId, uidsAllowedByPolicy, subPriority);
+    }
+
+    /**
+     * Update our tracked configurations for Netd based on changes to default networks, and inform
+     * Netd if any changes need to be made to ensure that allowed UIDs do or do not utilize
+     * changed networks as their default network. This default network handling is required, or
+     * else UIDs that do not make specific network requests will have no connectivity or will
+     * have their traffic traverse the wrong network.
+     */
+    private void updateUidDefaultNetworkRules(@Nullable final NetworkAgentInfo newDefaultNetwork) {
+        final Integer defaultNetId = newDefaultNetwork == null ? null
+                : newDefaultNetwork.network.netId;
+        final var configs = new ArrayList<Pair<NativeUidRangeConfig, NativeUidRangeConfig>>();
+        synchronized (mNetworkForNetId) {
+            for (final var config : mNetIdToAllowlist.values()) {
+                final var configIsDefault =
+                        config.subPriority == PREFERENCE_ORDER_LOWEST_WITH_DEFAULT;
+                final int subPriority;
+                if (configIsDefault && !Objects.equals(config.netId, defaultNetId)) {
+                    // Remove and replace any existing rules with a subPriority for default.
+                    subPriority = PREFERENCE_ORDER_IRRELEVANT_BECAUSE_NOT_DEFAULT;
+                } else if (!configIsDefault && Objects.equals(config.netId, defaultNetId)) {
+                    // Remove and replace any existing rules with a subPriority for default.
+                    subPriority = PREFERENCE_ORDER_LOWEST_WITH_DEFAULT;
+                } else {
+                    continue;
+                }
+                final var newConfig =
+                        new NativeUidRangeConfig(config.netId, config.uidRanges, subPriority);
+                mNetIdToAllowlist.put(newConfig.netId, newConfig);
+                configs.add(new Pair<>(config, newConfig));
+            }
+        }
+        for (final var pair : configs) {
+            try {
+                mNetd.networkAddUidRangesParcel(pair.second);
+                mNetd.networkRemoveUidRangesParcel(pair.first);
+            } catch (RemoteException | ServiceSpecificException e) {
+                loge("updateUidDefaultNetworkRules: Exception while updating", e);
+            }
+        }
+    }
+
+    /** Update our tracked allowlist for a network, sending the allowed UIDs to Netd. */
+    private void updateAllowedUidsForNetwork(@NonNull final NetworkAgentInfo nai) {
+        final int netId = nai.network.netId;
+        final var config = getAllowlistedNativeUidRangeConfigForNetwork(nai);
+        final NativeUidRangeConfig lastConfig;
+        synchronized (mNetworkForNetId) {
+            lastConfig = mNetIdToAllowlist.get(netId);
+            mNetIdToAllowlist.put(netId, config);
+        }
+        try {
+            if (lastConfig.uidRanges != null && lastConfig.uidRanges.length > 0) {
+                mNetd.networkRemoveUidRangesParcel(lastConfig);
+            }
+            if (config.uidRanges != null && config.uidRanges.length > 0) {
+                mNetd.networkAddUidRangesParcel(config);
+            }
+        } catch (Exception e) {
+            loge("updateAllowedUidsForTransports: Exception for netId " + netId, e);
+        }
+    }
+
+    private static final long TRANSPORT_VPN_FLAG = 1 << TRANSPORT_VPN;
+
+    /**
+     * Returns true if all of the provided transports are allowed, or if transports represent
+     * a VPN and VPNs are allowed. Otherwise, returns false.
+     */
+    private static boolean areTransportsAllowed(final long transports,
+            final long allowedTransports) {
+        // TODO: In the future, we may want to provide a way to restrict VPN access based on
+        // its other transports, e.g. to block apps from using mobile data even if that data
+        // is over a VPN. This is possible by removing or extending the check below.
+        if ((transports & TRANSPORT_VPN_FLAG) != 0) {
+            // For a VPN, all that matters is VPN access, nothing else.
+            return (allowedTransports & TRANSPORT_VPN_FLAG) != 0;
+        }
+        return (allowedTransports & transports) == transports;
+    }
+
+    /**
+     * Return a list of UIDs that are policy-restricted based on the provided NetworkCapabilities.
+     */
+    private List<Integer> getUidsDisallowedByPolicyForCapabilities(
+            @NonNull final NetworkCapabilities nc) {
+        if (!nc.hasCapability(NET_CAPABILITY_NOT_RESTRICTED)) {
+            // We do not want to meddle with networks that are already considered restricted.
+            // These will have their own allowed UIDs.
+            return List.of();
+        }
+        final long packedTransports = packBits(nc.getTransportTypes());
+        if (packedTransports == 0L) {
+            // If we are not supplied with transports to check, nothing is allowed.
+            return List.of();
+        }
+        final int size = mUidAllowedTransports.size();
+        final var uids = new ArrayList<Integer>();
+        int lastUid = 0;
+        for (int i = 0; i < size; i++) {
+            int uid = mUidAllowedTransports.keyAt(i);
+            long allowedTransports = mUidAllowedTransports.valueAt(i);
+            if (!areTransportsAllowed(packedTransports, allowedTransports)) {
+                uids.add(uid);
+            }
+        }
+        return uids;
+    }
+
+    /**
+     * Gather an array of UidRangeParcel representing all possible UIDs that are not restricted
+     * by policy, based on the provided NetworkCapabilities.
+     */
+    private UidRangeParcel[] getUidRangeParcelsAllowedByPolicyForCapabilities(
+            @NonNull final NetworkCapabilities nc) {
+        final var uids = getUidsDisallowedByPolicyForCapabilities(nc);
+        final var ranges = new ArrayList<UidRangeParcel>();
+        int lastUid = 0;
+        for (final Integer uid : uids) {
+            if (uid != lastUid) {
+                ranges.add(new UidRangeParcel(lastUid, uid - 1));
+            }
+            lastUid = uid + 1;
+        }
+        ranges.add(new UidRangeParcel(lastUid, Integer.MAX_VALUE));
+        return ranges.toArray(new UidRangeParcel[0]);
+    }
+
     private final Context mContext;
     private final ConnectivityResources mResources;
     // The Context is created for UserHandle.ALL.
@@ -476,6 +681,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // See {@link ConnectivitySettingsManager#setMobileDataPreferredUids}
     @VisibleForTesting
     static final int PREFERENCE_ORDER_MOBILE_DATA_PREFERERRED = 30;
+    // Lowest subpriority that still adds default network rules.
+    static final int PREFERENCE_ORDER_LOWEST_WITH_DEFAULT = 998;
     // Preference order that signifies the network shouldn't be set as a default network for
     // the UIDs, only give them access to it. TODO : replace this with a boolean
     // in NativeUidRangeConfig
@@ -1532,6 +1739,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mLocationPermissionChecker = mDeps.makeLocationPermissionChecker(mContext);
         mCarrierPrivilegeAuthenticator =
                 mDeps.makeCarrierPrivilegeAuthenticator(mContext, mTelephonyManager);
+
+        // Enable the OEM denylist chain. {@see mNetIdToDisallowedUids}
+        try {
+            mBpfNetMaps.setChildChain(ConnectivityManager.FIREWALL_CHAIN_OEM_DENY_1, true);
+        } catch (ServiceSpecificException e) {
+            logwtf("Could not enable fw_oem_deny_1 chain", e);
+        }
 
         // To ensure uid state is synchronized with Network Policy, register for
         // NetworkPolicyManagerService events must happen prior to NetworkPolicyManagerService
@@ -4264,6 +4478,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 final boolean wasDefault = isDefaultNetwork(nai);
                 synchronized (mNetworkForNetId) {
                     mNetworkForNetId.remove(nai.network.getNetId());
+                    mNetIdToAllowlist.remove(nai.network.getNetId());
+                    mNetIdToDisallowedUids.remove(nai.network.getNetId());
                 }
                 mNetIdManager.releaseNetId(nai.network.getNetId());
                 // Just in case.
@@ -4344,6 +4560,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // Remove the NetworkAgent, but don't mark the netId as
             // available until we've told netd to delete it below.
             mNetworkForNetId.remove(nai.network.getNetId());
+            mNetIdToAllowlist.remove(nai.network.getNetId());
+            mNetIdToDisallowedUids.remove(nai.network.getNetId());
         }
         propagateUnderlyingNetworkCapabilities(nai.network);
         // Remove all previously satisfied requests.
@@ -7778,6 +7996,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (wasFiltering) {
             mPermissionMonitor.onVpnUidRangesRemoved(oldIface, ranges, vpnAppUid);
         }
+        updateDisallowedUidsForNetwork(nai);
         if (needsFiltering) {
             mPermissionMonitor.onVpnUidRangesAdded(newIface, ranges, vpnAppUid);
         }
@@ -7792,13 +8011,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private int getNetworkPermission(NetworkCapabilities nc) {
+        /*
         if (!nc.hasCapability(NET_CAPABILITY_NOT_RESTRICTED)) {
             return INetd.PERMISSION_SYSTEM;
         }
         if (!nc.hasCapability(NET_CAPABILITY_FOREGROUND)) {
             return INetd.PERMISSION_NETWORK;
         }
-        return INetd.PERMISSION_NONE;
+        */
+        // For firewalling purposes, all networks are restricted (allowlist only).
+        return INetd.PERMISSION_SYSTEM;
     }
 
     private void updateNetworkPermissions(@NonNull final NetworkAgentInfo nai,
@@ -8258,6 +8480,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 mPermissionMonitor.onVpnUidRangesRemoved(oldIface, prevRanges,
                         prevNc.getOwnerUid());
             }
+            updateDisallowedUidsForNetwork(nai);
             if (shouldFilter && !newRanges.isEmpty()) {
                 mPermissionMonitor.onVpnUidRangesAdded(newIface, newRanges, newNc.getOwnerUid());
             }
@@ -8269,6 +8492,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void updateAllowedUids(@NonNull NetworkAgentInfo nai,
             @Nullable NetworkCapabilities prevNc, @Nullable NetworkCapabilities newNc) {
+        if (!nai.isVPN()) {
+            updateAllowedUidsForNetwork(nai);
+        }
         // In almost all cases both NC code for empty access UIDs. return as fast as possible.
         final boolean prevEmpty = null == prevNc || prevNc.getAllowedUidsNoCopy().isEmpty();
         final boolean newEmpty = null == newNc || newNc.getAllowedUidsNoCopy().isEmpty();
@@ -8605,6 +8831,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         } catch (RemoteException | ServiceSpecificException e) {
             loge("Exception setting app default network", e);
         }
+        updateUidDefaultNetworkRules(newDefaultNetwork);
     }
 
     private void makeDefaultNetwork(@Nullable final NetworkAgentInfo newDefaultNetwork) {
@@ -8617,6 +8844,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         } catch (RemoteException | ServiceSpecificException e) {
             loge("Exception setting default network :" + e);
         }
+        updateUidDefaultNetworkRules(newDefaultNetwork);
     }
 
     private void processListenRequests(@NonNull final NetworkAgentInfo nai) {
@@ -11403,6 +11631,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public void replaceFirewallChain(final int chain, final int[] uids) {
         enforceNetworkStackOrSettingsPermission();
 
+        replaceFirewallChainUnchecked(chain, uids);
+    }
+
+    private void replaceFirewallChainUnchecked(final int chain, final int[] uids) {
         try {
             switch (chain) {
                 case ConnectivityManager.FIREWALL_CHAIN_DOZABLE:
