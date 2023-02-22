@@ -78,6 +78,7 @@ import com.android.networkstack.apishim.common.ProcessShim;
 import com.android.server.BpfNetMaps;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -975,6 +976,15 @@ public class PermissionMonitor {
      *               ranges that are currently subject to lockdown.
      */
     public synchronized void updateVpnLockdownUidRanges(boolean add, UidRange[] ranges) {
+        updateVpnLockdownUidRanges(add, ranges, List.of());
+    }
+
+    /**
+     * Same as updateVpnLockdownUidRanges above, but includes a list of all insisted lockdown UIDs
+     * so that they can be excluded from processing.
+     */
+    public synchronized void updateVpnLockdownUidRanges(boolean add, UidRange[] ranges,
+            @NonNull final Collection<Integer> allInsistedLockdownUids) {
         final Set<UidRange> affectedUidRanges = new HashSet<>();
 
         for (final UidRange range : ranges) {
@@ -996,8 +1006,23 @@ public class PermissionMonitor {
         // mAllApps only contains appIds instead of uids. So the generated uid list might contain
         // apps that are installed only on some users but not others. But that's safe: if an app is
         // not installed, it cannot receive any packets, so dropping packets to that UID is fine.
-        final Set<Integer> affectedUids = intersectUids(affectedUidRanges, mAllApps);
+        final Set<Integer> affectedUids = affectedUidRanges.isEmpty() ? new HashSet<>()
+                : intersectUids(affectedUidRanges, mAllApps);
 
+        // Make sure that insisted lockdown UIDs are not removed.
+        if (!add) {
+            affectedUids.removeAll(allInsistedLockdownUids);
+        }
+
+        updateVpnLockdownUidsUntracked(add, affectedUids);
+    }
+
+    /**
+     * Updates incoming traffic VPN lockdown status for eligible UIDs directly, without tracking
+     * state locally in this class.
+     */
+    public synchronized void updateVpnLockdownUidsUntracked(boolean add,
+            @NonNull final Collection<Integer> affectedUids) {
         // We skip adding rule to privileged apps and allow them to bypass incoming packet
         // filtering. The behaviour is consistent with how lockdown works for outgoing packets, but
         // the implementation is different: while ConnectivityService#setRequireVpnForUids does not
