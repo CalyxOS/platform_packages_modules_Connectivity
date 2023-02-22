@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08ba628c_866db108",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-22T22:44:54Z",
+      "side": 1,
+      "message": "Not yet tested",
+      "revId": "241bd773a9a5855864f6d4d66d0bbb1a1dfd1680",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abaae591_d29eebdd",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1543,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-22T22:44:54Z",
+      "side": 1,
+      "message": "Remove this",
+      "revId": "241bd773a9a5855864f6d4d66d0bbb1a1dfd1680",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a055ffc9_7098f57e",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5977,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-22T22:44:54Z",
+      "side": 1,
+      "message": "There may be more that needs to be done here. When this is called with `require`, a single IP rule is added. But if that single IP rule already exists because it was added as part of `setRequireVpnForUids`, as a result of lockdown being turned on VPN-wide, that means that if/when the VPN\u0027s lockdown mode is turned off, there will no longer be a rule for the UID.\n\nSo, we may need to interact with existing tracked state, e.g. `mVpnLockdownUidRangesProvidedVsEffectiveMap`, to make sure we are not adding something that is already present, and if we are, take steps to make sure it does not get removed later.",
+      "revId": "241bd773a9a5855864f6d4d66d0bbb1a1dfd1680",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4bdb40f2_81092874",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6010,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-22T22:44:54Z",
+      "side": 1,
+      "message": "Thankfully this whole method appears to be unneeded...",
+      "revId": "241bd773a9a5855864f6d4d66d0bbb1a1dfd1680",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bda576d4_04249c74",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6046,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-22T22:44:54Z",
+      "side": 1,
+      "message": "Maybe add something like: `Otherwise, Netd will not recognize the ranges for removal from IP rules.`",
+      "revId": "241bd773a9a5855864f6d4d66d0bbb1a1dfd1680",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
