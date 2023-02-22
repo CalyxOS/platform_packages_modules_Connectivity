@@ -307,6 +307,7 @@ import java.util.SortedSet;
 import java.util.StringJoiner;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 /**
  * @hide
@@ -3125,6 +3126,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (!ConnectivitySettingsManager.getMobileDataPreferredUids(mContext).isEmpty()) {
             updateMobileDataPreferredUids();
         }
+
+        // Set up the firewall for any insisted VPN lockdown UIDs.
+        handleSetRequireVpnInsistedForUids(true, getInsistedVpnLockdownUids());
     }
 
     /**
@@ -5953,11 +5957,80 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 encodeBool(requireVpn), 0 /* arg2 */, ranges));
     }
 
+    @Override
+    public void setRequireVpnInsistedForUids(final boolean insist,
+            @NonNull final int[] uids) {
+        enforceNetworkStackOrSettingsPermission();
+        mHandler.post(() -> handleSetRequireVpnInsistedForUids(insist,
+                Arrays.stream(uids).boxed().collect(Collectors.toList())));
+    }
+
+    private void handleSetRequireVpnInsistedForUids(final boolean insist,
+            @NonNull final List<Integer> uids) {
+        final List<Integer> affectedUids = new ArrayList<>(uids);
+        final Set<Integer> insistedLockdownUids = affectedUids.stream()
+                .filter(uid -> mInsistedVpnLockdownUids.contains(uid))
+                        .collect(Collectors.toSet());
+
+        // For Netd's purposes, IP rules stack, and there can be duplicates. This means we can add
+        // and remove our own prohibit rules without affecting existing rules, as long as we make
+        // sure not to remove rules we did not add.
+        if (insist) {
+            // Act on UIDs that are *not* already insisted upon.
+            affectedUids.removeAll(insistedLockdownUids);
+        } else {
+            // Act only on UIDs that are already insisted upon.
+            affectedUids.retainAll(insistedLockdownUids);
+        }
+
+        try {
+            mNetd.networkRejectNonSecureVpn(insist, toUidRangeParcelPerUid(affectedUids));
+            // Only add to tracked UIDs on success.
+            if (insist) {
+                mInsistedVpnLockdownUids.addAll(affectedUids);
+            } else {
+                mInsistedVpnLockdownUids.removeAll(affectedUids);
+            }
+        } catch (RemoteException | ServiceSpecificException e) {
+            Log.e(TAG, "setRequireVpnInsistedForUid(" + insist + ", "
+                    + affectedUids + "): netd command failed: " + e);
+        }
+
+        if (SdkLevel.isAtLeastT()) {
+            // Insisted lockdown UIDs are provided separately so that they do not interfere with
+            // PermissionMonitor's state tracking for the provided ranges, while still being
+            // processed at the same time to prevent certain UIDs from being momentarily in the
+            // wrong state.
+            mPermissionMonitor.updateVpnLockdownUidRanges(insist, new UidRange[0],
+                    mInsistedVpnLockdownUids);
+        }
+    }
+
+    @NonNull
+    private List<Integer> getInsistedVpnLockdownUids() {
+        final int[] uids;
+        try {
+            uids = mPolicyManager.getUidsWithLockdownPolicy();
+        } catch (RuntimeException e) {
+            Log.wtf(TAG, "Failed to retrieve UIDs with lockdown policy");
+            return List.of();
+        }
+        return Arrays.stream(uids).boxed().collect(Collectors.toList());
+    }
+
+    @NonNull
+    private UidRangeParcel[] toUidRangeParcelPerUid(
+            @NonNull final Collection<Integer> uids) {
+        return uids.stream().map(uid -> new UidRangeParcel(uid, uid))
+                .toArray(UidRangeParcel[]::new);
+    }
+
     private void handleSetRequireVpnForUids(boolean requireVpn, UidRange[] ranges) {
         if (DBG) {
             Log.d(TAG, "Setting VPN " + (requireVpn ? "" : "not ") + "required for UIDs: "
                     + Arrays.toString(ranges));
         }
+
         // Cannot use a Set since the list of UID ranges might contain duplicates.
         final List<UidRange> newVpnBlockedUidRanges = new ArrayList(mVpnBlockedUidRanges);
         for (int i = 0; i < ranges.length; i++) {
@@ -5976,7 +6049,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         if (SdkLevel.isAtLeastT()) {
-            mPermissionMonitor.updateVpnLockdownUidRanges(requireVpn, ranges);
+            final List<UidRange> rangesList = Arrays.asList(ranges);
+            final List<Integer> affectedInsistedUids = mInsistedVpnLockdownUids.stream()
+                    .filter(uid -> UidRange.containsUid(rangesList, uid))
+                            .collect(Collectors.toList());
+            mPermissionMonitor.updateVpnLockdownUidRanges(requireVpn, ranges,
+                    affectedInsistedUids);
         }
 
         for (final NetworkAgentInfo nai : mNetworkAgentInfos) {
@@ -7025,6 +7103,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // contents must never be mutated. When the ranges change, the array is replaced with a new one
     // (on the handler thread).
     private volatile List<UidRange> mVpnBlockedUidRanges = new ArrayList<>();
+
+    // List of UIDs for which lockdown is always insisted.
+    // Only read or modified on the handler thread.
+    private Set<Integer> mInsistedVpnLockdownUids = new ArraySet<>();
 
     // Must only be accessed on the handler thread
     @NonNull
