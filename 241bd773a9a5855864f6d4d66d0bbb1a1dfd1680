@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4ef948ed_f3229ae4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-22T23:16:10Z",
+      "side": 1,
+      "message": "Okay, from a brief test, I can see that Netd is able to add ip rules that already exist. (There can be duplicates.) This is in contrast to attempting to add ip rules via the command line, which will display an error if the rule already exists.\n```\n14000:  from all fwmark 0x0/0x20000 iif lo uidrange 10208-10208 prohibit\n14000:  from all fwmark 0x0/0x20000 iif lo uidrange 10208-10208 prohibit\n```\n\nThis *could* be a good thing for us and might allow for some simplification.\n\nRight now, if I toggle background data access repeatedly, a duplicate of the rule is added each time.",
+      "revId": "241bd773a9a5855864f6d4d66d0bbb1a1dfd1680",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "abaae591_d29eebdd",
         "filename": "service/src/com/android/server/ConnectivityService.java",
         "patchSetId": 1
