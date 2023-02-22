@@ -78,6 +78,7 @@ import com.android.networkstack.apishim.common.ProcessShim;
 import com.android.server.BpfNetMaps;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -975,6 +976,11 @@ public class PermissionMonitor {
      *               ranges that are currently subject to lockdown.
      */
     public synchronized void updateVpnLockdownUidRanges(boolean add, UidRange[] ranges) {
+        updateVpnLockdownUidRanges(add, ranges, List.of());
+    }
+
+    public synchronized void updateVpnLockdownUidRanges(boolean add, UidRange[] ranges,
+            final @NonNull Collection<Integer> additionalLockdownUids) {
         final Set<UidRange> affectedUidRanges = new HashSet<>();
 
         for (final UidRange range : ranges) {
@@ -996,7 +1002,15 @@ public class PermissionMonitor {
         // mAllApps only contains appIds instead of uids. So the generated uid list might contain
         // apps that are installed only on some users but not others. But that's safe: if an app is
         // not installed, it cannot receive any packets, so dropping packets to that UID is fine.
-        final Set<Integer> affectedUids = intersectUids(affectedUidRanges, mAllApps);
+        final Set<Integer> affectedUids = affectedUidRanges.isEmpty() ? new HashSet<>()
+                : intersectUids(affectedUidRanges, mAllApps);
+
+        // Additional lockdown UIDs should always be added but never removed.
+        if (add) {
+            affectedUids.addAll(additionalLockdownUids);
+        } else {
+            affectedUids.removeAll(additionalLockdownUids);
+        }
 
         // We skip adding rule to privileged apps and allow them to bypass incoming packet
         // filtering. The behaviour is consistent with how lockdown works for outgoing packets, but
