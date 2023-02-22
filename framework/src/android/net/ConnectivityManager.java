@@ -1411,6 +1411,31 @@ public class ConnectivityManager {
     }
 
     /**
+     * Insist the given UIDs must require VPN (lockdown), regardless of the VPN's configuration.
+     * This allows for the lockdown VPN state of a UID to be adjusted dynamically, without
+     * waiting for a VPN to be re-established or have its lockdown configuration changed.
+     * This method is called by NetworkPolicyManagerService when a UID's policies change.
+     *
+     * @param requireVpn {@code true} to insist VPN be required for the UIDs, {@code false} to
+     *                   revert to the VPN's configuration for the UIDs.
+     * @param uids The UIDs to affect.
+     *
+     * @hide
+     */
+    @RequiresPermission(anyOf = {
+            NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK,
+            android.Manifest.permission.NETWORK_STACK,
+            android.Manifest.permission.NETWORK_SETTINGS})
+    @SystemApi(client = MODULE_LIBRARIES)
+    public void setRequireVpnInsistedForUids(boolean requireVpn, @NonNull int[] uids) {
+        try {
+            mService.setRequireVpnInsistedForUids(requireVpn, uids);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * Informs ConnectivityService of whether the legacy lockdown VPN, as implemented by
      * LockdownVpnTracker, is in use. This is deprecated for new devices starting from Android 12
      * but is still supported for backwards compatibility.
