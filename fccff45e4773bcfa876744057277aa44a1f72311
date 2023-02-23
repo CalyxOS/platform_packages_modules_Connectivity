@@ -103,6 +103,24 @@
       "message": "Now that I\u0027ve been looking at the Connectivity module again for the last week or maybe more, this change is much easier to wrap my head around. The code is simple, and I don\u0027t see any problems with it. Automated tests are great, but personally I don\u0027t think that should be cause to hold this up. And based on what we\u0027re touching, right now I don\u0027t see how this could possibly make anything worse.\n\nGoing to give this a whirl again on-device.",
       "revId": "fccff45e4773bcfa876744057277aa44a1f72311",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "863e1039_07194454",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-23T19:35:36Z",
+      "side": 1,
+      "message": "Working for me. Also works in combination with per-UID lockdown: https://review.calyxos.org/q/topic:firewall-per-uid-lockdown\n\n(Real-world test: Turn on primitive ftpd, ensure you can connect to it normally via another device, turn off mobile data \u0026 Wi-Fi, now you can\u0027t, turn one on, now you can.)\n\nIf they both review okay, it *might* make sense to ship them together...?",
+      "parentUuid": "d6edbb1c_9441216b",
+      "revId": "fccff45e4773bcfa876744057277aa44a1f72311",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
