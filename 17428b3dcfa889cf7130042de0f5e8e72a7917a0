@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d89106aa_c3934e58",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-23T14:39:25Z",
+      "side": 1,
+      "message": "1. `adb shell dumpsys connectivity trafficcontroller | grep -F LOCKDOWN_VPN_MATCH`\n2. Set to or from VPN-only toggles for an app.\n3. Run 1 again.\n\n- Expected result: LOCKDOWN_VPN_MATCH is added or removed appropriately.\n- Actual result: It is not.\n\nLooks like IP rules are being modified appropriately, but the BPF map is not.",
+      "revId": "17428b3dcfa889cf7130042de0f5e8e72a7917a0",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
