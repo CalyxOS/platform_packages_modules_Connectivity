@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25a30413_ca137962",
+        "filename": "service/src/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-23T18:02:08Z",
+      "side": 1,
+      "message": "Now, the only place that this specific method is called from is PermissionMonitorTest.java. The other instance, in ConnectivityService.java, uses the variant that takes `allInsistedLockdownUids`.\n\nI guess this is a reminder that the tests should ideally be updated.",
+      "revId": "029bd5b20d7184a7ec74dee852310f927dbbbeb3",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23db1291_c52ab909",
+        "filename": "service/src/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-23T18:02:08Z",
+      "side": 1,
+      "message": "We\u0027re not calling this method with empty UID ranges anymore, so this can go back to how it was.",
+      "revId": "029bd5b20d7184a7ec74dee852310f927dbbbeb3",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
