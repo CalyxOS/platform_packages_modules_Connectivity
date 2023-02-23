@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eae2d84e_17aae3c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-23T17:04:48Z",
+      "side": 1,
+      "message": "Also, we still need `mVpnBlockedUidRanges` to include the UIDs for which we are insisting VPN lockdown mode be required so that the blocked state for a UID is updated and responded to appropriately.",
+      "revId": "75465483825711c1709c5ed4c690097a70deadca",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0bb9c93f_e37eb1fe",
