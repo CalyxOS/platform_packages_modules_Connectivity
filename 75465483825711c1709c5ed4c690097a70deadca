@@ -51,6 +51,23 @@
       "message": "This is still wrong.\n\nTest:\n1. VPN is in always-on lockdown mode.\n2. Turn VPN-only on for a UID if it is not already on, and then change that.\n3. UID will have LOCKDOWN_VPN_MATCH removed as seen in `adb shell dumpsys connectivity trafficcontroller | grep $uid`. It should still be on, because it is on for the VPN.",
       "revId": "75465483825711c1709c5ed4c690097a70deadca",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "873749d7_2913a204",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6058,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-23T17:24:46Z",
+      "side": 1,
+      "message": "No, we provide the full list now.",
+      "revId": "75465483825711c1709c5ed4c690097a70deadca",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
