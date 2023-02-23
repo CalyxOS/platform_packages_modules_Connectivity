@@ -16,6 +16,40 @@
       "message": "1. `adb shell dumpsys connectivity trafficcontroller | grep -F LOCKDOWN_VPN_MATCH`\n2. Set to or from VPN-only toggles for an app.\n3. Run 1 again.\n\n- Expected result: LOCKDOWN_VPN_MATCH is added or removed appropriately.\n- Actual result: It is not.\n\nLooks like IP rules are being modified appropriately, but the BPF map is not.",
       "revId": "17428b3dcfa889cf7130042de0f5e8e72a7917a0",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a0e9bca_224eb343",
+        "filename": "service/src/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-23T14:42:23Z",
+      "side": 1,
+      "message": "`additionalLockdownUids` should maybe be called `allInsistedLockdownUids` to clarify, and then we need to fix removals.",
+      "revId": "17428b3dcfa889cf7130042de0f5e8e72a7917a0",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6c3621c_d1041125",
+        "filename": "service/src/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-23T14:42:23Z",
+      "side": 1,
+      "message": "If we no longer insist on them, we need to be able to remove them, so this needs to change.",
+      "revId": "17428b3dcfa889cf7130042de0f5e8e72a7917a0",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
