@@ -121,6 +121,24 @@
       "parentUuid": "d6edbb1c_9441216b",
       "revId": "fccff45e4773bcfa876744057277aa44a1f72311",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97c47c0e_e5d93a77",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-23T19:36:34Z",
+      "side": 1,
+      "message": "(Without per-uid lockdown, of course just put a VPN into/out of lockdown mode for testing)",
+      "parentUuid": "863e1039_07194454",
+      "revId": "fccff45e4773bcfa876744057277aa44a1f72311",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
