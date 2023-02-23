@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f082690c_ebdadb9f",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6033,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-23T14:31:45Z",
+      "side": 1,
+      "message": "Unnecessary newline",
+      "revId": "c586fdf32976bc30593a85d1dd4e978029e25d08",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
