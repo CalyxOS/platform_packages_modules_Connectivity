@@ -18,6 +18,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "39475e08_b4560ae2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-23T16:03:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d89106aa_c3934e58",
+      "revId": "17428b3dcfa889cf7130042de0f5e8e72a7917a0",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8a0e9bca_224eb343",
@@ -35,6 +53,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "17d7fab3_f5a6da74",
+        "filename": "service/src/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-23T16:03:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a0e9bca_224eb343",
+      "revId": "17428b3dcfa889cf7130042de0f5e8e72a7917a0",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a6c3621c_d1041125",
@@ -48,6 +84,24 @@
       "writtenOn": "2023-02-23T14:42:23Z",
       "side": 1,
       "message": "If we no longer insist on them, we need to be able to remove them, so this needs to change.",
+      "revId": "17428b3dcfa889cf7130042de0f5e8e72a7917a0",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da935906_cf20704f",
+        "filename": "service/src/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-23T16:03:02Z",
+      "side": 1,
+      "message": "Ack, we call a separate method when we want to add or remove insisted ranges now.",
+      "parentUuid": "a6c3621c_d1041125",
       "revId": "17428b3dcfa889cf7130042de0f5e8e72a7917a0",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }

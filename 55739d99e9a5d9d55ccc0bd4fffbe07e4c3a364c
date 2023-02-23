@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8dfa0a8c_7d6c0412",
+        "filename": "service/src/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-23T16:03:02Z",
+      "side": 1,
+      "message": "This might not be necessary. The branch below for removal is definitely needed, though.",
+      "revId": "55739d99e9a5d9d55ccc0bd4fffbe07e4c3a364c",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
