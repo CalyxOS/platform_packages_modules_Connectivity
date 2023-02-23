@@ -16,6 +16,23 @@
       "message": "Seems to work fully now, but I want to go through another time or two before myself marking it works.",
       "revId": "3f090f3f91b117db61975d03608ee46f79931b5d",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cd6474c_21cae1a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-23T18:41:35Z",
+      "side": 1,
+      "message": "This works (although I would appreciate someone else checking it out and trying some things).\n\nMarking CR -2 until we address the rest of https://gitlab.com/CalyxOS/calyxos/-/issues/1488#note_1288806594",
+      "revId": "3f090f3f91b117db61975d03608ee46f79931b5d",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
