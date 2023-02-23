@@ -38,6 +38,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "360e552b_cbad7f56",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5993,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-23T16:15:02Z",
+      "side": 1,
+      "message": "If we\u0027re only adding when the Netd call succeeds, we should just drop out when there is a failure. There\u0027s no use blocking inbound but not outbound, and it will cause state confusion.\n\nSo, return in the catch.",
+      "revId": "17428b3dcfa889cf7130042de0f5e8e72a7917a0",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8a0e9bca_224eb343",
         "filename": "service/src/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 3
