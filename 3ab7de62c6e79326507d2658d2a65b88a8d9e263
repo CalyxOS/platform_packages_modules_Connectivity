@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3594971_768cea9b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-28T20:44:07Z",
+      "side": 1,
+      "message": "This change does not currently handle incoming traffic for networks that a UID is not allowed to use. This is in some ways an AOSP limitation, but it is one that was overcome with the prior just-in-time (or, sometimes, not-so-in-time) implementation of transport-based restrictions, so ideally we would address it here, too.\n\nThis change already adds the UIDs of apps that are *not* allowed to use VPNs to an OEM denylist chain when a VPN is connected (but before it is available for use). Doing this also blocks incoming traffic, just like restricted mode does, as they both make use of BPF chains. Technically, this change could also do that for UIDs that it thinks should be blocked on their active network, like the current implementation already does, but with better performance and timing since we are operating in the Connectivity module directly.\n\nRegardless, the approach taken in this change is useful even if we additionally use a firewall chain-based approach, since there\u0027s no other good way (that I know of) to stop leaks that can occur when a VPN disconnects, apart from lockdown mode, which is not suitable for all situations.",
+      "revId": "3ab7de62c6e79326507d2658d2a65b88a8d9e263",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}

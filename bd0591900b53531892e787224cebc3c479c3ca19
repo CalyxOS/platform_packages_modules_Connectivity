@@ -16,6 +16,24 @@
       "message": "Disallowed-VPN UIDs are not (or not always) getting removed from the denylist when the VPN disconnects.",
       "revId": "bd0591900b53531892e787224cebc3c479c3ca19",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "214c8a03_ca25b57c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-28T20:44:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00afe267_f964b2a1",
+      "revId": "bd0591900b53531892e787224cebc3c479c3ca19",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
