@@ -7363,7 +7363,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         nai.notifyRegistered();
         NetworkInfo networkInfo = nai.networkInfo;
         updateNetworkInfo(nai, networkInfo);
-        updateVpnUids(nai, null, nai.networkCapabilities);
+        if (nai.isVPN()) {
+            updateVpnUids(nai, null, nai.networkCapabilities);
+        }
     }
 
     private class NetworkOfferInfo implements IBinder.DeathRecipient {
@@ -7473,7 +7475,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         // update filtering rules, need to happen after the interface update so netd knows about the
         // new interface (the interface name -> index map becomes initialized)
-        updateVpnFiltering(newLp, oldLp, networkAgent);
+        if (networkAgent.isVPN()) {
+            updateVpnFiltering(newLp, oldLp, networkAgent);
+        }
 
         updateMtu(newLp, oldLp);
         // TODO - figure out what to do for clat
@@ -8008,7 +8012,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         updateNetworkPermissions(nai, newNc);
         final NetworkCapabilities prevNc = nai.getAndSetNetworkCapabilities(newNc);
 
-        updateVpnUids(nai, prevNc, newNc);
+        if (nai.isVPN()) {
+            updateVpnUids(nai, prevNc, newNc);
+        }
         updateAllowedUids(nai, prevNc, newNc);
         nai.updateScoreForNetworkAgentUpdate();
 
