@@ -18,6 +18,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9dce88a3_00a65e11",
+        "filename": "service/src/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-02-28T20:50:28Z",
+      "side": 1,
+      "message": "Ack, implementation has changed since this comment, no longer valid",
+      "parentUuid": "25a30413_ca137962",
+      "revId": "029bd5b20d7184a7ec74dee852310f927dbbbeb3",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "23db1291_c52ab909",
