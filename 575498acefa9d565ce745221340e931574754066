@@ -16,6 +16,23 @@
       "message": "VPN blocking for apps without the VPN toggle, which was the entire purpose for the denylist in the first place, is not working now for some reason. It\u0027s not being refreshed appropriately.",
       "revId": "575498acefa9d565ce745221340e931574754066",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09cc92b7_6da3ed92",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-01T14:40:35Z",
+      "side": 1,
+      "message": "`isConnected()` is false when this is called related to a VPN being established.",
+      "revId": "575498acefa9d565ce745221340e931574754066",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
