@@ -18,6 +18,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "98fb1f3f_29a3d47d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-01T13:55:00Z",
+      "side": 1,
+      "message": "Does not seem worth it right now, because disallowed UIDs are only computed for VPNs or default networks, so this would need to be restructured if we wanted to share the results between both.",
+      "parentUuid": "a01ce966_c47bd359",
+      "revId": "79dd7e98de1d739bddcb4b1cb308eaf19c414cfc",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3890dd83_bd2f043b",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-03-01T13:41:35Z",
       "side": 1,
       "message": "Maybe instead only do the other checks if prevNc !\u003d null, since I think we already respond appropriately to new networks (which don\u0027t have prevNc).",
+      "revId": "79dd7e98de1d739bddcb4b1cb308eaf19c414cfc",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2e00c8b_facb8072",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 8290,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-01T13:55:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3890dd83_bd2f043b",
       "revId": "79dd7e98de1d739bddcb4b1cb308eaf19c414cfc",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
