@@ -18,6 +18,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d50686d6_a718a175",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-01T15:45:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1af4b9f8_ff40e05a",
+      "revId": "575498acefa9d565ce745221340e931574754066",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "09cc92b7_6da3ed92",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-03-01T14:40:35Z",
       "side": 1,
       "message": "`isConnected()` is false when this is called related to a VPN being established.",
+      "revId": "575498acefa9d565ce745221340e931574754066",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3430e760_8b535ff9",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-01T15:45:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09cc92b7_6da3ed92",
       "revId": "575498acefa9d565ce745221340e931574754066",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
