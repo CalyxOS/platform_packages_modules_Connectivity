@@ -16,6 +16,23 @@
       "message": "TODO: Update disallowed UIDs when network capabilities change and covered UIDs or transports are different between them.",
       "revId": "ca0d8c52551d46277c9669833d4f47d5d3548957",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "008bd706_8d3ec637",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-01T12:54:27Z",
+      "side": 1,
+      "message": "TODO (probably?): Do not include UIDs with restricted network permission in disallowed UIDs. I don\u0027t mean UIDs that have network access in CalyxOS, or UIDs that have permission based on any tweaks to checks that we have made, but the original AOSP definition of this. See PermissionMonitor.\n\nKeep in mind that as of now, the user is individually choosing the policies that cause a UID to be disallowed, and they may not be able to disallow a system UID from the UI, but it\u0027s still better if users can\u0027t inadvertently break things! That said, we *probably* don\u0027t need to monitor for changes in which UIDs have restricted networks permission.",
+      "revId": "ca0d8c52551d46277c9669833d4f47d5d3548957",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
