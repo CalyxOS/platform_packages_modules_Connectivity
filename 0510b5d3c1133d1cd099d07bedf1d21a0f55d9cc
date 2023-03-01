@@ -16,6 +16,24 @@
       "message": "Unused import, whoops",
       "revId": "0510b5d3c1133d1cd099d07bedf1d21a0f55d9cc",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "748afc9e_0bca46b7",
+        "filename": "service/src/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-01T19:52:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd350fd3_07e4db45",
+      "revId": "0510b5d3c1133d1cd099d07bedf1d21a0f55d9cc",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
