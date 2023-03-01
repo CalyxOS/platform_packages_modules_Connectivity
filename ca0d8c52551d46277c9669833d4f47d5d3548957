@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07751b3c_753c076a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-01T12:47:29Z",
+      "side": 1,
+      "message": "TODO: Update disallowed UIDs when network capabilities change and covered UIDs or transports are different between them.",
+      "revId": "ca0d8c52551d46277c9669833d4f47d5d3548957",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
