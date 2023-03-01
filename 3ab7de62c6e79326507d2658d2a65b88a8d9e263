@@ -34,6 +34,24 @@
       "parentUuid": "b3594971_768cea9b",
       "revId": "3ab7de62c6e79326507d2658d2a65b88a8d9e263",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0ae2a8a_f7c5f26b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-01T16:20:12Z",
+      "side": 1,
+      "message": "Unintended behavior (bug): UIDs are disallowed on VPNs if they are disallowed on the default network (Wi-Fi or mobile data), which means when VPN is on but other toggles are off, there is no connectivity.",
+      "parentUuid": "0a44e6da_753c4cec",
+      "revId": "3ab7de62c6e79326507d2658d2a65b88a8d9e263",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
