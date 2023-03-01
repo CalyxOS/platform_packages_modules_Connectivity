@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1af4b9f8_ff40e05a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-01T14:04:50Z",
+      "side": 1,
+      "message": "VPN blocking for apps without the VPN toggle, which was the entire purpose for the denylist in the first place, is not working now for some reason. It\u0027s not being refreshed appropriately.",
+      "revId": "575498acefa9d565ce745221340e931574754066",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
