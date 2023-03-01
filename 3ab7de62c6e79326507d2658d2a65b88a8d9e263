@@ -52,6 +52,24 @@
       "parentUuid": "0a44e6da_753c4cec",
       "revId": "3ab7de62c6e79326507d2658d2a65b88a8d9e263",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93f967df_bc590ee6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-01T19:40:13Z",
+      "side": 1,
+      "message": "Done; required checking active network for each UID (like we did for earlier restricted mode fixes) but making sure that VPNs that aren\u0027t fully-connected yet are included.\n\nManual tests are passing for me.",
+      "parentUuid": "d0ae2a8a_f7c5f26b",
+      "revId": "3ab7de62c6e79326507d2658d2a65b88a8d9e263",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
