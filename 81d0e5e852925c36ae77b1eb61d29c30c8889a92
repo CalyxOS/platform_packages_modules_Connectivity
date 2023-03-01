@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3080520_255fc8f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2023-03-01T22:24:19Z",
+      "side": 1,
+      "message": "Looks sane overall. Decent amount of custom code in ConnectivityService. Thankfully, generally easy to read (at least by AOSP networking code standards). Not too easy to see how it all works together but given the value it provides and that the main bits are related to netd directly, debugging can happen by tracing backwards from those entry points.",
+      "revId": "81d0e5e852925c36ae77b1eb61d29c30c8889a92",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a188e8cf_7ff649dd",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2023-03-01T22:24:19Z",
+      "side": 1,
+      "message": "Why is VPN skipped for the next part of processing? Is it because VPN handles its own UIDs?",
+      "range": {
+        "startLine": 433,
+        "startChar": 12,
+        "endLine": 435,
+        "endChar": 13
+      },
+      "revId": "81d0e5e852925c36ae77b1eb61d29c30c8889a92",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "968dd325_16f7840f",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2023-03-01T22:24:19Z",
+      "side": 1,
+      "message": "Should we go for this now? Could explain reasoning in changelog",
+      "range": {
+        "startLine": 631,
+        "startChar": 8,
+        "endLine": 633,
+        "endChar": 84
+      },
+      "revId": "81d0e5e852925c36ae77b1eb61d29c30c8889a92",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "198d1544_f412f000",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1841,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2023-03-01T22:24:19Z",
+      "side": 1,
+      "message": "Could possibly use the utility function instead? Concerning initialization, could it be move to where other chains are initialized?",
+      "range": {
+        "startLine": 1841,
+        "startChar": 24,
+        "endLine": 1841,
+        "endChar": 37
+      },
+      "revId": "81d0e5e852925c36ae77b1eb61d29c30c8889a92",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da22520e_52064158",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 8139,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2023-03-01T22:24:19Z",
+      "side": 1,
+      "message": "Generally we tend to remove rather than comment out",
+      "range": {
+        "startLine": 8132,
+        "startChar": 8,
+        "endLine": 8139,
+        "endChar": 10
+      },
+      "revId": "81d0e5e852925c36ae77b1eb61d29c30c8889a92",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb8c9d44_b0ea8e55",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 9584,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2023-03-01T22:24:19Z",
+      "side": 1,
+      "message": "nitpick, could be named `updateDisallowedUids` to match the function below more closely given its inspiration?",
+      "range": {
+        "startLine": 9584,
+        "startChar": 12,
+        "endLine": 9584,
+        "endChar": 42
+      },
+      "revId": "81d0e5e852925c36ae77b1eb61d29c30c8889a92",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0211f117_c998004f",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 11753,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2023-03-01T22:24:19Z",
+      "side": 1,
+      "message": "I don\u0027t see other references to this function. Split for readability or?",
+      "range": {
+        "startLine": 11753,
+        "startChar": 8,
+        "endLine": 11753,
+        "endChar": 37
+      },
+      "revId": "81d0e5e852925c36ae77b1eb61d29c30c8889a92",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
