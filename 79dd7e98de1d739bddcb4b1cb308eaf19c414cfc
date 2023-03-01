@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a01ce966_c47bd359",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-01T13:41:35Z",
+      "side": 1,
+      "message": "Possible TODO: Can probably optimize updateAllowedUidsForNetwork to use the disallowed UIDs already gathered and stored in mNetIdToDisallowedUids, rather than recalculating them, as long as updateDisallowedUidsForNetwork is always run first. The calculation right now is negligible for performance (\u003c1ms).",
+      "revId": "79dd7e98de1d739bddcb4b1cb308eaf19c414cfc",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3890dd83_bd2f043b",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 8290,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-01T13:41:35Z",
+      "side": 1,
+      "message": "Maybe instead only do the other checks if prevNc !\u003d null, since I think we already respond appropriately to new networks (which don\u0027t have prevNc).",
+      "revId": "79dd7e98de1d739bddcb4b1cb308eaf19c414cfc",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
