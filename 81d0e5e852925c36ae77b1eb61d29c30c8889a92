@@ -124,6 +124,30 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb9713d4_b16a471e",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-02T19:48:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2276dba1_d9fb7032",
+      "range": {
+        "startLine": 433,
+        "startChar": 12,
+        "endLine": 435,
+        "endChar": 13
+      },
+      "revId": "81d0e5e852925c36ae77b1eb61d29c30c8889a92",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "968dd325_16f7840f",
@@ -268,6 +292,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "31989b84_42989d1d",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1841,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-02T19:48:20Z",
+      "side": 1,
+      "message": "About the chains: do you know if there could be disadvantages to using these OEM chains, as opposed to creating one of our own or something? Is there a possibility that some system-bundled app might use them on certain devices at some point? I\u0027m guessing this is not likely to be an issue for Pixels and possibly not for CalyxOS, but you may know more.",
+      "parentUuid": "db62741d_e0f6bc7e",
+      "range": {
+        "startLine": 1841,
+        "startChar": 24,
+        "endLine": 1841,
+        "endChar": 37
+      },
+      "revId": "81d0e5e852925c36ae77b1eb61d29c30c8889a92",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "da22520e_52064158",
         "filename": "service/src/com/android/server/ConnectivityService.java",
         "patchSetId": 11
@@ -303,6 +351,30 @@
       "side": 1,
       "message": "Fair, and I removed the previous return too anyway...",
       "parentUuid": "da22520e_52064158",
+      "range": {
+        "startLine": 8132,
+        "startChar": 8,
+        "endLine": 8139,
+        "endChar": 10
+      },
+      "revId": "81d0e5e852925c36ae77b1eb61d29c30c8889a92",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4805ee9_7cd940a4",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 8139,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-02T19:48:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67613376_bc0cde2a",
       "range": {
         "startLine": 8132,
         "startChar": 8,
@@ -374,6 +446,30 @@
       "side": 1,
       "message": "No worries, it\u0027s a nitpick. If we match AOSP naming overall it helps understand the structure of the functions and how they work (individually and together)",
       "parentUuid": "620b7b74_9199c03a",
+      "range": {
+        "startLine": 9584,
+        "startChar": 12,
+        "endLine": 9584,
+        "endChar": 42
+      },
+      "revId": "81d0e5e852925c36ae77b1eb61d29c30c8889a92",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a348dc62_2ac50ad5",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 9584,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-02T19:48:20Z",
+      "side": 1,
+      "message": "Ack, I updated some of the comments but I think we can keep the naming as-is or else I\u0027ll risk overthinking it (more)",
+      "parentUuid": "476bac49_65f51ba4",
       "range": {
         "startLine": 9584,
         "startChar": 12,
