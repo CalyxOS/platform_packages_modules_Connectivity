@@ -53,6 +53,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfbfb6ab_d774a5d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-02T20:36:05Z",
+      "side": 1,
+      "message": "Ack, niche use case (e.g. trying to cast Netflix with VPN-only and using VPN for another country); if we mention it somewhere it should be fine and if there are other scenarios we haven\u0027t thought of then I\u0027m sure users will let us know and we can go from there.",
+      "parentUuid": "b3df582c_93177536",
+      "revId": "81d0e5e852925c36ae77b1eb61d29c30c8889a92",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a188e8cf_7ff649dd",
