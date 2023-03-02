@@ -102,6 +102,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2276dba1_d9fb7032",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2023-03-02T16:58:38Z",
+      "side": 1,
+      "message": "Possibly, but since there are a few places where this is done, maybe better in commit message? Up to you",
+      "parentUuid": "226df0b7_72069af4",
+      "range": {
+        "startLine": 433,
+        "startChar": 12,
+        "endLine": 435,
+        "endChar": 13
+      },
+      "revId": "81d0e5e852925c36ae77b1eb61d29c30c8889a92",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "968dd325_16f7840f",
         "filename": "service/src/com/android/server/ConnectivityService.java",
         "patchSetId": 11
@@ -137,6 +161,30 @@
       "side": 1,
       "message": "If we do, we need a migration for users who have VPN-only toggles (Wi-Fi and Mobile Data toggles turned off) now, or those apps will have no connectivity. We would also need a way to replace the functionality, i.e. by implementing firewall-per-uid-lockdown. There\u0027s probably some wider design discussion to be had before this could happen.",
       "parentUuid": "968dd325_16f7840f",
+      "range": {
+        "startLine": 631,
+        "startChar": 8,
+        "endLine": 633,
+        "endChar": 84
+      },
+      "revId": "81d0e5e852925c36ae77b1eb61d29c30c8889a92",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7fd15e5_8f923453",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2023-03-02T16:58:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0ed63622_e173abbe",
       "range": {
         "startLine": 631,
         "startChar": 8,
@@ -184,6 +232,30 @@
       "side": 1,
       "message": "On the first point, true, it only doesn\u0027t use the utility method so that it avoids the unnecessary permission check. On the second point, do you know where that would be? These chains are meant to be used from outside of Connectivity, so that\u0027s probably where. (Doing all this in Connectivity makes things much snappier though, which is important for a firewall.)",
       "parentUuid": "198d1544_f412f000",
+      "range": {
+        "startLine": 1841,
+        "startChar": 24,
+        "endLine": 1841,
+        "endChar": 37
+      },
+      "revId": "81d0e5e852925c36ae77b1eb61d29c30c8889a92",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db62741d_e0f6bc7e",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1841,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2023-03-02T16:58:38Z",
+      "side": 1,
+      "message": "I didn\u0027t look much into it. Was just thinking that I remmber seeing some code somewhere enabling chains and thought it would belong",
+      "parentUuid": "d337788f_bc4dc6f1",
       "range": {
         "startLine": 1841,
         "startChar": 24,
@@ -290,6 +362,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "476bac49_65f51ba4",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 9584,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2023-03-02T16:58:38Z",
+      "side": 1,
+      "message": "No worries, it\u0027s a nitpick. If we match AOSP naming overall it helps understand the structure of the functions and how they work (individually and together)",
+      "parentUuid": "620b7b74_9199c03a",
+      "range": {
+        "startLine": 9584,
+        "startChar": 12,
+        "endLine": 9584,
+        "endChar": 42
+      },
+      "revId": "81d0e5e852925c36ae77b1eb61d29c30c8889a92",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0211f117_c998004f",
         "filename": "service/src/com/android/server/ConnectivityService.java",
         "patchSetId": 11
@@ -325,6 +421,30 @@
       "side": 1,
       "message": "Oh right, good catch, this whole change fragment is no longer needed and can be undone. (It was just to avoid an unnecessary permission check, but we don\u0027t use replaceFirewallChain anymore anyway, since it\u0027s unreasonably slow.)",
       "parentUuid": "0211f117_c998004f",
+      "range": {
+        "startLine": 11753,
+        "startChar": 8,
+        "endLine": 11753,
+        "endChar": 37
+      },
+      "revId": "81d0e5e852925c36ae77b1eb61d29c30c8889a92",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e502534_cd8aace3",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 11753,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2023-03-02T16:58:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1c48cfb5_3bd95e21",
       "range": {
         "startLine": 11753,
         "startChar": 8,
