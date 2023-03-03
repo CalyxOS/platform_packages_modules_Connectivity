@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2beffc9a_c6508916",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-03T15:20:06Z",
+      "side": 1,
+      "message": "Reusing the denylist (treating as mutable) makes thread synchronization tricky and leaves no way for anything but the handler thread to easily consult mLastDisallowedUidsDenylist, which is something that will help as part of fixing the firewall status bar icon.",
+      "revId": "8f421a334d64024004c4dd78a250ad1202858a7e",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
