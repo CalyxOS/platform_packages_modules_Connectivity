@@ -136,6 +136,7 @@ import android.net.DscpPolicy;
 import android.net.ICaptivePortal;
 import android.net.IConnectivityDiagnosticsCallback;
 import android.net.IConnectivityManager;
+import android.net.IDenylistChangedListener;
 import android.net.IDnsResolver;
 import android.net.INetd;
 import android.net.INetworkActivityListener;
@@ -414,6 +415,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @GuardedBy("mNetworkForNetId")
     private Map<Integer, List<Integer>> mNetIdToDisallowedUids = new HashMap<>();
 
+    private final RemoteCallbackList<IDenylistChangedListener> mDenylistListeners
+            = new RemoteCallbackList<>();
+
+    @Override
+    public void registerDenylistChangedListener(@NonNull IDenylistChangedListener listener) {
+        mDenylistListeners.register(listener);
+    }
+
+    @Override
+    public void unregisterDenylistChangedListener(@NonNull IDenylistChangedListener listener) {
+        mDenylistListeners.unregister(listener);
+    }
+
     /** {@see ConnectivityManager#setUidsAllowedTransports} */
     @Override
     public void setUidsAllowedTransports(@NonNull final int[] uids,
@@ -511,25 +525,61 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final var toRemove = prevDenylist.stream().filter(uid -> !newDenylist.contains(uid))
                 .collect(Collectors.toSet());
         if (DDBG) Log.d(TAG, ourTag + "toAdd: " + toAdd + "; toRemove: " + toRemove);
+        boolean anyFailed = false;
         for (final int uid : toAdd) {
             try {
                 mBpfNetMaps.setUidRule(ConnectivityManager.FIREWALL_CHAIN_OEM_DENY_1, uid,
                         FIREWALL_RULE_DENY);
             } catch (ServiceSpecificException e) {
                 logwtf(ourTag + "Failed to add uid " + uid, e);
+                anyFailed = true;
+                break;
             }
         }
-        for (final int uid : toRemove) {
-            try {
-                mBpfNetMaps.setUidRule(ConnectivityManager.FIREWALL_CHAIN_OEM_DENY_1, uid,
-                        FIREWALL_RULE_ALLOW);
-            } catch (ServiceSpecificException e) {
-                logwtf(ourTag + "Failed to remove uid " + uid, e);
+        if (!anyFailed) {
+            for (final int uid : toRemove) {
+                try {
+                    mBpfNetMaps.setUidRule(ConnectivityManager.FIREWALL_CHAIN_OEM_DENY_1, uid,
+                            FIREWALL_RULE_ALLOW);
+                } catch (ServiceSpecificException e) {
+                    logwtf(ourTag + "Failed to remove uid " + uid, e);
+                    anyFailed = true;
+                    break;
+                }
             }
+        }
+        if (anyFailed) {
+            // Should never happen, but just in case.
+            replaceFirewallChain(ConnectivityManager.FIREWALL_CHAIN_OEM_DENY_1,
+                    newDenylist.stream().mapToInt(Integer::intValue).toArray());
+        }
+        if (DDBG) Log.d(TAG, ourTag + "Notifying denylist change listeners...");
+        for (final int uid : toAdd) {
+            notifyDenylistChanged(uid, true /* added */);
+        }
+        for (final int uid : toRemove) {
+            notifyDenylistChanged(uid, false /* added */);
         }
         if (DDBG) Log.d(TAG, ourTag + "end");
     }
 
+    /**
+     * Notify listeners of a denylist change. We expect that this will be handled quickly, so we
+     * do so synchronously rather than use a handler thread. (Only NetworkPolicyManagerService is
+     * expected to register for denylist changes.)
+     */
+    private void notifyDenylistChanged(final int uid, final boolean denied) {
+        final int length = mDenylistListeners.beginBroadcast();
+        for (int i = 0; i < length; i++) {
+            final var listener = mDenylistListeners.getBroadcastItem(i);
+            try {
+                listener.onDenylistChanged(uid, denied);
+            } catch (RemoteException ignored) {
+                // no-op
+            }
+        }
+        mDenylistListeners.finishBroadcast();
+    }
 
     /**
      * Generates an allowlist configuration for Netd that reflects a network's allowed UIDs and

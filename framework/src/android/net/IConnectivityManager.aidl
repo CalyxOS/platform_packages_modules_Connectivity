@@ -20,6 +20,7 @@ import android.app.PendingIntent;
 import android.net.ConnectionInfo;
 import android.net.ConnectivityDiagnosticsManager;
 import android.net.IConnectivityDiagnosticsCallback;
+import android.net.IDenylistChangedListener;
 import android.net.INetworkAgent;
 import android.net.IOnCompleteListener;
 import android.net.INetworkActivityListener;
@@ -247,4 +248,7 @@ interface IConnectivityManager
     void replaceFirewallChain(int chain, in int[] uids);
 
     void setUidsAllowedTransports(in int[] uids, in long[] allowedTransportsPacked);
+
+    void registerDenylistChangedListener(in IDenylistChangedListener listener);
+    void unregisterDenylistChangedListener(in IDenylistChangedListener listener);
 }

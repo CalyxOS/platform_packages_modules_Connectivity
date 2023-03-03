@@ -6,6 +6,7 @@ package android.net {
   }
 
   public class ConnectivityManager {
+    method @RequiresPermission(anyOf={android.Manifest.permission.NETWORK_SETTINGS, android.Manifest.permission.NETWORK_STACK, android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK}) public void addDenylistChangedListener(@NonNull android.net.ConnectivityManager.OnDenylistChangedListener);
     method @RequiresPermission(anyOf={android.Manifest.permission.NETWORK_SETTINGS, android.Manifest.permission.NETWORK_STACK, android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK}) public void addUidToMeteredNetworkAllowList(int);
     method @RequiresPermission(anyOf={android.Manifest.permission.NETWORK_SETTINGS, android.Manifest.permission.NETWORK_STACK, android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK}) public void addUidToMeteredNetworkDenyList(int);
     method @RequiresPermission(anyOf={android.Manifest.permission.NETWORK_SETTINGS, android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK}) public void factoryReset();
@@ -17,6 +18,7 @@ package android.net {
     method @Nullable @RequiresPermission(anyOf={android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, android.Manifest.permission.NETWORK_STACK, android.Manifest.permission.NETWORK_SETTINGS}) public android.net.NetworkCapabilities getRedactedNetworkCapabilitiesForPackage(@NonNull android.net.NetworkCapabilities, int, @NonNull String);
     method @RequiresPermission(anyOf={android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, android.Manifest.permission.NETWORK_SETTINGS}) public void registerDefaultNetworkCallbackForUid(int, @NonNull android.net.ConnectivityManager.NetworkCallback, @NonNull android.os.Handler);
     method @RequiresPermission(anyOf={android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, android.Manifest.permission.NETWORK_SETTINGS}) public void registerSystemDefaultNetworkCallback(@NonNull android.net.ConnectivityManager.NetworkCallback, @NonNull android.os.Handler);
+    method @RequiresPermission(anyOf={android.Manifest.permission.NETWORK_SETTINGS, android.Manifest.permission.NETWORK_STACK, android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK}) public void removeDenylistChangedListener(@NonNull android.net.ConnectivityManager.OnDenylistChangedListener);
     method @RequiresPermission(anyOf={android.Manifest.permission.NETWORK_SETTINGS, android.Manifest.permission.NETWORK_STACK, android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK}) public void removeUidFromMeteredNetworkAllowList(int);
     method @RequiresPermission(anyOf={android.Manifest.permission.NETWORK_SETTINGS, android.Manifest.permission.NETWORK_STACK, android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK}) public void removeUidFromMeteredNetworkDenyList(int);
     method @RequiresPermission(anyOf={android.Manifest.permission.NETWORK_SETTINGS, android.Manifest.permission.NETWORK_STACK, android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK}) public void replaceFirewallChain(int, @NonNull int[]);
@@ -46,6 +48,7 @@ package android.net {
     field public static final int BLOCKED_METERED_REASON_USER_RESTRICTED = 131072; // 0x20000
     field public static final int BLOCKED_REASON_APP_STANDBY = 4; // 0x4
     field public static final int BLOCKED_REASON_BATTERY_SAVER = 1; // 0x1
+    field public static final int BLOCKED_REASON_DENYLIST = 64; // 0x40
     field public static final int BLOCKED_REASON_DOZE = 2; // 0x2
     field public static final int BLOCKED_REASON_LOCKDOWN_VPN = 16; // 0x10
     field public static final int BLOCKED_REASON_LOW_POWER_STANDBY = 32; // 0x20
@@ -66,6 +69,10 @@ package android.net {
 
   public static class ConnectivityManager.NetworkCallback {
     method public void onBlockedStatusChanged(@NonNull android.net.Network, int);
+  }
+
+  public static interface ConnectivityManager.OnDenylistChangedListener {
+    method public void onDenylistChanged(int, boolean);
   }
 
   public class ConnectivitySettingsManager {
