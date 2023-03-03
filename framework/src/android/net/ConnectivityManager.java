@@ -886,6 +886,15 @@ public class ConnectivityManager {
     public static final int BLOCKED_REASON_LOW_POWER_STANDBY = 1 << 5;
 
     /**
+     * Flag to indicate that an app is part of a denylist that would
+     * result in its network access being blocked.
+     *
+     * @hide
+     */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public static final int BLOCKED_REASON_DENYLIST = 1 << 6;
+
+    /**
      * Flag to indicate that an app is subject to Data saver restrictions that would
      * result in its metered network access being blocked.
      *
@@ -924,6 +933,7 @@ public class ConnectivityManager {
             BLOCKED_REASON_RESTRICTED_MODE,
             BLOCKED_REASON_LOCKDOWN_VPN,
             BLOCKED_REASON_LOW_POWER_STANDBY,
+            BLOCKED_REASON_DENYLIST,
             BLOCKED_METERED_REASON_DATA_SAVER,
             BLOCKED_METERED_REASON_USER_RESTRICTED,
             BLOCKED_METERED_REASON_ADMIN_DISABLED,
@@ -2631,6 +2641,78 @@ public class ConnectivityManager {
             try {
                 mService.unregisterNetworkActivityListener(rl);
                 mNetworkActivityListeners.remove(l);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+    }
+
+    /** @hide */
+    @SystemApi(client = MODULE_LIBRARIES)
+    public interface OnDenylistChangedListener {
+        void onDenylistChanged(@NonNull int[] uidsAdded, @NonNull int[] uidsRemoved);
+    }
+
+    @GuardedBy("mDenylistChangedListeners")
+    private final ArrayMap<OnDenylistChangedListener, IDenylistChangedListener>
+            mDenylistChangedListeners = new ArrayMap<>();
+
+    /**
+     * Start listening to notifications of a UID being added to or removed from a denylist that
+     * prevents network access, based on the UID's allowed transports.
+     *
+     * @param l The listener to be told when a UID is added to or removed from the denylist.
+     *
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    @RequiresPermission(anyOf = {
+            android.Manifest.permission.NETWORK_SETTINGS,
+            android.Manifest.permission.NETWORK_STACK,
+            NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK
+    })
+   public void addDenylistChangedListener(@NonNull OnDenylistChangedListener l) {
+        final IDenylistChangedListener rl = new IDenylistChangedListener.Stub() {
+            @Override
+            public void onDenylistChanged(int[] uidsAdded, int[] uidsRemoved)
+                    throws RemoteException {
+                l.onDenylistChanged(uidsAdded, uidsRemoved);
+            }
+        };
+
+        synchronized (mDenylistChangedListeners) {
+            try {
+                mService.registerDenylistChangedListener(rl);
+                mDenylistChangedListeners.put(l, rl);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+    }
+
+    /**
+     * Removes denylist change listener previously registered with
+     * {@link #addDenylistChangedListener}.
+     *
+     * @param l Previously registered listener.
+     *
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    @RequiresPermission(anyOf = {
+            android.Manifest.permission.NETWORK_SETTINGS,
+            android.Manifest.permission.NETWORK_STACK,
+            NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK
+    })
+    public void removeDenylistChangedListener(@NonNull OnDenylistChangedListener l) {
+        synchronized (mDenylistChangedListeners) {
+            final IDenylistChangedListener rl = mDenylistChangedListeners.get(l);
+            if (rl == null) {
+                throw new IllegalArgumentException("Listener was not registered.");
+            }
+            try {
+                mService.unregisterDenylistChangedListener(rl);
+                mDenylistChangedListeners.remove(l);
             } catch (RemoteException e) {
                 throw e.rethrowFromSystemServer();
             }
