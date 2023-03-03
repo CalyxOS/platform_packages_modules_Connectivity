@@ -136,6 +136,7 @@ import android.net.DscpPolicy;
 import android.net.ICaptivePortal;
 import android.net.IConnectivityDiagnosticsCallback;
 import android.net.IConnectivityManager;
+import android.net.IDenylistChangedListener;
 import android.net.IDnsResolver;
 import android.net.INetd;
 import android.net.INetworkActivityListener;
@@ -414,6 +415,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @GuardedBy("mNetworkForNetId")
     private Map<Integer, List<Integer>> mNetIdToDisallowedUids = new HashMap<>();
 
+    private final RemoteCallbackList<IDenylistChangedListener> mDenylistListeners
+            = new RemoteCallbackList<>();
+
+    @Override
+    public void registerDenylistChangedListener(@NonNull IDenylistChangedListener listener) {
+        mDenylistListeners.register(listener);
+    }
+
+    @Override
+    public void unregisterDenylistChangedListener(@NonNull IDenylistChangedListener listener) {
+        mDenylistListeners.unregister(listener);
+    }
+
     /** {@see ConnectivityManager#setUidsAllowedTransports} */
     @Override
     public void setUidsAllowedTransports(@NonNull final int[] uids,
@@ -543,9 +557,32 @@ public class ConnectivityService extends IConnectivityManager.Stub
             replaceFirewallChain(ConnectivityManager.FIREWALL_CHAIN_OEM_DENY_1,
                     newDenylist.stream().mapToInt(Integer::intValue).toArray());
         }
+        if (DDBG) Log.d(TAG, ourTag + "Notifying denylist change listeners...");
+        notifyDenylistChanged(toAdd.stream().mapToInt(Integer::intValue).toArray(),
+                toRemove.stream().mapToInt(Integer::intValue).toArray());
         if (DDBG) Log.d(TAG, ourTag + "end");
     }
 
+    /**
+     * Notify listeners of a denylist change. We expect that this will be handled quickly,
+     * so we do so on the handler thread, as is done for {@code mNetworkActivityListeners}.
+     * Only NetworkPolicyManagerService is expected to register for denylist changes.
+     */
+    private void notifyDenylistChanged(@NonNull final int[] uidsAdded,
+            @NonNull final int[] uidsRemoved) {
+        mHandler.post(() -> {
+            final int length = mDenylistListeners.beginBroadcast();
+            for (int i = 0; i < length; i++) {
+                final var listener = mDenylistListeners.getBroadcastItem(i);
+                try {
+                    listener.onDenylistChanged(uidsAdded, uidsRemoved);
+                } catch (RemoteException ignored) {
+                    // no-op
+                }
+            }
+            mDenylistListeners.finishBroadcast();
+        });
+    }
 
     /**
      * Generates an allowlist configuration for Netd that reflects a network's allowed UIDs and
