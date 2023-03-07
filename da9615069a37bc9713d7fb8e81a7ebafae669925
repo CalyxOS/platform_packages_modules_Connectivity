@@ -16,6 +16,57 @@
       "message": "Not tested",
       "revId": "da9615069a37bc9713d7fb8e81a7ebafae669925",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "058c4c4f_86881a6d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-07T22:51:13Z",
+      "side": 1,
+      "message": "Lots of necessary boilerplate, sadly, but it works.",
+      "revId": "da9615069a37bc9713d7fb8e81a7ebafae669925",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5775228f_0d35bc3e",
+        "filename": "framework/src/android/net/IDenylistChangedListener.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-07T22:51:13Z",
+      "side": 1,
+      "message": "This is a new file. Do we need Android Open Source Project in the copyright section, too?",
+      "revId": "da9615069a37bc9713d7fb8e81a7ebafae669925",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7913560_5f5bfc59",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-07T22:51:13Z",
+      "side": 1,
+      "message": "Let\u0027s do a few things here:\n\n1. Make this asynchronous. Right now, nothing depends on this being synchronous, and we can keep it that way.\n2. Notify about changes for multiple UIDs at once. Most-likely it\u0027s the IPC that\u0027s the slowest aspect of this.",
+      "revId": "da9615069a37bc9713d7fb8e81a7ebafae669925",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
