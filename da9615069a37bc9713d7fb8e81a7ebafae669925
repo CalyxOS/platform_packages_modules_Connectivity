@@ -35,6 +35,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "49e67d53_53dc5870",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-10T19:19:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b0ec735_fad658b6",
+      "revId": "da9615069a37bc9713d7fb8e81a7ebafae669925",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5775228f_0d35bc3e",
@@ -83,6 +101,24 @@
       "side": 1,
       "message": "(This is based on an observation of ~5ms processing time for all of the listeners to be called, when there are a lot of UIDs with a disallowed transport and there is a change in such a transport being the active network. 5ms isn\u0027t that bad on its own, but it could end up being higher if the device is in a lower power state and there\u0027s just no good reason to hold up the ConnectivityService thread for this.)",
       "parentUuid": "c7913560_5f5bfc59",
+      "revId": "da9615069a37bc9713d7fb8e81a7ebafae669925",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5740e114_4cf03ee1",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-10T19:19:39Z",
+      "side": 1,
+      "message": "Performance is much better now, shows as same-millisecond from notification of changes to completion.",
+      "parentUuid": "9fa51c95_3666f8ae",
       "revId": "da9615069a37bc9713d7fb8e81a7ebafae669925",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
