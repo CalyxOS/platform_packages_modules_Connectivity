@@ -70,6 +70,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c7ed08d_5954e901",
+        "filename": "framework/src/android/net/IDenylistChangedListener.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-03-10T19:22:05Z",
+      "side": 1,
+      "message": "Not in this case.",
+      "parentUuid": "5775228f_0d35bc3e",
+      "revId": "da9615069a37bc9713d7fb8e81a7ebafae669925",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c7913560_5f5bfc59",
