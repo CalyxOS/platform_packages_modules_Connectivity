@@ -34,6 +34,23 @@
       "parentUuid": "40a91f0f_48c3b43e",
       "revId": "237367ab2bec4a544c0b5409949966ec922f2c38",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d8a182e_08157072",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-14T18:29:42Z",
+      "side": 1,
+      "message": "Failure fallback needs to be separated from this; needs to be part of firewall-update-allowed-uids. It\u0027s only part of this change for convenience. Will fix now",
+      "revId": "237367ab2bec4a544c0b5409949966ec922f2c38",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
