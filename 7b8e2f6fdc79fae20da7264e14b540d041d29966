@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3525d803_04e8408d",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-14T18:37:44Z",
+      "side": 1,
+      "message": "Don\u0027t use logwtf because Log.wtf can apparently sometimes lead to a restart, which we don\u0027t want, because we have a fallback.",
+      "revId": "7b8e2f6fdc79fae20da7264e14b540d041d29966",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4a11db7_35c5c3ed",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-14T18:37:44Z",
+      "side": 1,
+      "message": "Same, don\u0027t use logwtf",
+      "revId": "7b8e2f6fdc79fae20da7264e14b540d041d29966",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
