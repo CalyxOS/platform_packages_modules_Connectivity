@@ -22,6 +22,30 @@
       },
       "revId": "727f53793fd438634f5bb75d4a0cac5e0aa7d9f4",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0fd7f11_15744cb0",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 2213,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-14T14:59:25Z",
+      "side": 1,
+      "message": "Yes, and the Binder calls are pretty expensive performance-wise, especially if they are happening frequently enough and for single UIDs. I think this is part of the reason why there\u0027s so much duplication of state tracking across AOSP.",
+      "parentUuid": "1797f35b_c60996fe",
+      "range": {
+        "startLine": 2213,
+        "startChar": 20,
+        "endLine": 2213,
+        "endChar": 52
+      },
+      "revId": "727f53793fd438634f5bb75d4a0cac5e0aa7d9f4",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
