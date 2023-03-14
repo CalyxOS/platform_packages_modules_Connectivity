@@ -16,6 +16,24 @@
       "message": "Discussed this with Oliver today. There are a few ways to fix the firewall status bar icon that would be less complex than this.\n\nOption 1 is to avoid listeners entirely by calling into NetworkPolicyManagerService (NPMS) directly with the changed UIDs, using what would be a newly-created method for NPMS, e.g. `setDenylistUids`. This would remove a *lot* of boilerplate required for registering and handling listeners, which are likely overkill, considering that NPMS is the only part of the system expected to need this information now or in the foreseeable future.\n\nOption 2 is to have the firewall status bar icon code use `registerDefaultNetworkCallbackForUid` to update the firewall icon based on whether a UID *should be* blocked, based on the information available. With this option, Connectivity would not communicate its denylist status of UIDs at all, and the firewall status bar icon code would come to its conclusion by comparing the transports of the active UID\u0027s active network with the transport policies. In other words, the new code would be mimicking the same checks already performed in Connectivity, but it would prevent the need to share this information outside of Connectivity.\n\nI believe Oliver is planning to take a quick look at Option 2 today. Neither of us personally consider the firewall status bar icon fixes to be blockers to shipping the other firewall fixes, so I\u0027m going to change the topic for these to `firewall-update-allowed-uids-icon`, but can change back if needed.",
       "revId": "237367ab2bec4a544c0b5409949966ec922f2c38",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6f07848_3c609620",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-03-14T18:24:31Z",
+      "side": 1,
+      "message": "SGTM. All of it.",
+      "parentUuid": "40a91f0f_48c3b43e",
+      "revId": "237367ab2bec4a544c0b5409949966ec922f2c38",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
