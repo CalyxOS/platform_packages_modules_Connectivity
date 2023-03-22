@@ -16,6 +16,24 @@
       "message": "In theory adding new aidl at the bottom should be fine, but let\u0027s double check.\n\nAs long as there\u0027s no external / proprietary app users of this - which there likely aren\u0027t given that it\u0027s a module - it should be safe.",
       "revId": "abd8c2d35e50c5efd25f891225e7f5a28c8c27c7",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a93cac5_228eb093",
+        "filename": "framework/src/android/net/IConnectivityManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-22T17:13:42Z",
+      "side": 1,
+      "message": "What sorts of problems should we expect? I\u0027ve been daily driving with changes to this file for quite some time (see the line above, needed by topic:firewall-update-allowed-uids) and never noticed any side effects.\n\nApps use ConnectivityManager all the time, e.g. https://developer.android.com/reference/android/net/ConnectivityManager#registerDefaultNetworkCallback(android.net.ConnectivityManager.NetworkCallback), which [FirewallTest](https://gitlab.com/t-m-w/network-change-firewall-test/-/blob/main/app/src/main/java/org/calyxos/firewalltest/ui/main/MainViewModel.kt#L28) even uses.",
+      "parentUuid": "b2546e5b_f6ce8584",
+      "revId": "abd8c2d35e50c5efd25f891225e7f5a28c8c27c7",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
