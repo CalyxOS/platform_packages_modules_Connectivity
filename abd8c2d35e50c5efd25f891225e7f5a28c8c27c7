@@ -52,6 +52,24 @@
       "parentUuid": "9a93cac5_228eb093",
       "revId": "abd8c2d35e50c5efd25f891225e7f5a28c8c27c7",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9644d209_48456f28",
+        "filename": "framework/src/android/net/IConnectivityManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-03-22T20:31:09Z",
+      "side": 1,
+      "message": "Yes, I meant external (to this repo) and proprietary (which we can\u0027t rebuild) users.\n\nAny AIDL change would affect such users. However, even then, since we\u0027re adding a new method, it\u0027d be fine.",
+      "parentUuid": "f3b08b51_0656456f",
+      "revId": "abd8c2d35e50c5efd25f891225e7f5a28c8c27c7",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
