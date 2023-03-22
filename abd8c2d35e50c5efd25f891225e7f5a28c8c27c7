@@ -34,6 +34,24 @@
       "parentUuid": "b2546e5b_f6ce8584",
       "revId": "abd8c2d35e50c5efd25f891225e7f5a28c8c27c7",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3b08b51_0656456f",
+        "filename": "framework/src/android/net/IConnectivityManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-03-22T17:15:40Z",
+      "side": 1,
+      "message": "Oh, my bad, you probably mean external / proprietary users of the IConnectivityManager interface directly.\n\nCorrect, there shouldn\u0027t be any. I even tried accessing it directly from fwb and it couldn\u0027t be found; it\u0027s module-internal.",
+      "parentUuid": "9a93cac5_228eb093",
+      "revId": "abd8c2d35e50c5efd25f891225e7f5a28c8c27c7",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
