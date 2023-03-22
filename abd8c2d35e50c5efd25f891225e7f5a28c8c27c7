@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2546e5b_f6ce8584",
+        "filename": "framework/src/android/net/IConnectivityManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-03-22T17:06:27Z",
+      "side": 1,
+      "message": "In theory adding new aidl at the bottom should be fine, but let\u0027s double check.\n\nAs long as there\u0027s no external / proprietary app users of this - which there likely aren\u0027t given that it\u0027s a module - it should be safe.",
+      "revId": "abd8c2d35e50c5efd25f891225e7f5a28c8c27c7",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
