@@ -16,6 +16,23 @@
       "message": "TODO: Test with actual build to ensure Global VPN works as expected even after these changes (should, but test).",
       "revId": "ee65bb6abf9637d6a917794faf57526f2f1d08b4",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b03916e_4be67821",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2023-03-23T15:25:58Z",
+      "side": 1,
+      "message": "Is this patch still required if we get this https://review.calyxos.org/c/CalyxOS/platform_packages_modules_Connectivity/+/15561 functional?",
+      "revId": "ee65bb6abf9637d6a917794faf57526f2f1d08b4",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
