@@ -33,6 +33,24 @@
       "message": "From what I can tell it seems like the LineageSettingsProvider (authority matching lineagesettings) is null during the test. I was trying to see what could be the reason for that and looked into how SettingsProvider is setup. I found one difference here but am uncertain this would make the difference",
       "revId": "1784e72aa998772f74676fd72e15391995e2d1ca",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2642d2ba_310b5a97",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2023-03-25T00:42:15Z",
+      "side": 1,
+      "message": "Hmm, now that I think about it I think it may be more likely that it is related to the permission `android:writePermission\u003d\"lineageos.permission.WRITE_SETTINGS\"`",
+      "parentUuid": "2c31054f_df457a6e",
+      "revId": "1784e72aa998772f74676fd72e15391995e2d1ca",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
