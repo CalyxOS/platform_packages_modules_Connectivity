@@ -51,6 +51,23 @@
       "parentUuid": "2c31054f_df457a6e",
       "revId": "1784e72aa998772f74676fd72e15391995e2d1ca",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71905331_d7d905ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2023-04-07T16:45:42Z",
+      "side": 1,
+      "message": "There are a number of changes required to make this work. Modifications to some existing classes (e.g. MockContext within ConnectivityServiceTest) and new classes like FakeLineageSettingsProvider (similar to FakeSettingsProvider)",
+      "revId": "1784e72aa998772f74676fd72e15391995e2d1ca",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
