@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a24d2adc_60d1b717",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-04-13T10:40:49Z",
+      "side": 1,
+      "message": "Updated commit message for accuracy now that this isn\u0027t checked directly in PhoneStatusBarPolicy",
+      "revId": "a274d961fa6c9d925f706532d0513bed35454b16",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
