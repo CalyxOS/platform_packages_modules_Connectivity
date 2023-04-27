@@ -515,6 +515,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // Nothing to do.
             return;
         }
+        /*
         boolean anyFailed = false;
         for (final int uid : toAdd) {
             try {
@@ -543,6 +544,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             replaceFirewallChain(ConnectivityManager.FIREWALL_CHAIN_OEM_DENY_1,
                     newDenylist.stream().mapToInt(Integer::intValue).toArray());
         }
+        */
         if (DDBG) Log.d(TAG, ourTag + "end");
     }
 
