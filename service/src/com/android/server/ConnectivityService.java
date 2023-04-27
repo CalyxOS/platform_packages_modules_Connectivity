@@ -8179,8 +8179,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private int getNetworkPermission(NetworkCapabilities nc) {
-        // For firewalling purposes, all networks are restricted (allowlist only).
-        return INetd.PERMISSION_SYSTEM;
+        if (!nc.hasCapability(NET_CAPABILITY_NOT_RESTRICTED)) {
+            return INetd.PERMISSION_SYSTEM;
+        }
+        if (!nc.hasCapability(NET_CAPABILITY_FOREGROUND)) {
+            return INetd.PERMISSION_NETWORK;
+        }
+        return INetd.PERMISSION_NONE;
     }
 
     private void updateNetworkPermissions(@NonNull final NetworkAgentInfo nai,
