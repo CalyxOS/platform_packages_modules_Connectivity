@@ -7849,11 +7849,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // the LinkProperties for the network are accurate.
         networkAgent.clatd.fixupLinkProperties(oldLp, newLp);
 
-        updateInterfaces(newLp, oldLp, netId, networkAgent.networkCapabilities);
+        final boolean anyIfaceChanges =
+                updateInterfaces(newLp, oldLp, netId, networkAgent.networkCapabilities);
+
+        // If any interface names changed, ensure VPN filtering is updated so that ingress filtering
+        // uses the most up-to-date allowed interface.
+        final boolean shouldForceUpdateVpnFiltering = networkAgent.isVPN() && anyIfaceChanges;
 
         // update filtering rules, need to happen after the interface update so netd knows about the
         // new interface (the interface name -> index map becomes initialized)
-        updateVpnFiltering(newLp, oldLp, networkAgent, false /* force */);
+        updateVpnFiltering(newLp, oldLp, networkAgent, shouldForceUpdateVpnFiltering);
 
         updateMtu(newLp, oldLp);
         // TODO - figure out what to do for clat
@@ -7982,7 +7987,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     }
 
-    private void updateInterfaces(final @Nullable LinkProperties newLp,
+    /** Return whether there were any added or removed interface names. */
+    private boolean updateInterfaces(final @Nullable LinkProperties newLp,
             final @Nullable LinkProperties oldLp, final int netId,
             final @NonNull NetworkCapabilities caps) {
         final CompareResult<String> interfaceDiff = new CompareResult<>(
@@ -8010,6 +8016,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 loge("Exception removing interface: " + e);
             }
         }
+        return !(interfaceDiff.added.isEmpty() && interfaceDiff.removed.isEmpty());
     }
 
     // TODO: move to frameworks/libs/net.
