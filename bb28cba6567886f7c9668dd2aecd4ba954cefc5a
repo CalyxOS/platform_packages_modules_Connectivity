@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f348f0f_01960ebf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-05-01T14:06:43Z",
+      "side": 1,
+      "message": "This was useful for testing in the preparation of https://review.calyxos.org/q/topic:firewall-bypassable-vpn-fix",
+      "revId": "bb28cba6567886f7c9668dd2aecd4ba954cefc5a",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
