@@ -16,6 +16,24 @@
       "message": "Bad fixup? This is unrelated to this change and should rather be squashed in the original.\n\nOh well, can fix next time.",
       "revId": "716ce177016e9237d66f17341265e43850676dbe",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e32f0d2_bb91a4d7",
+        "filename": "Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-05-10T13:15:04Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "b985a218_a8dd07a3",
+      "revId": "716ce177016e9237d66f17341265e43850676dbe",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
