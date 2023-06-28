@@ -33,6 +33,23 @@
       "message": "Is this patch still required if we get this https://review.calyxos.org/c/CalyxOS/platform_packages_modules_Connectivity/+/15561 functional?",
       "revId": "ee65bb6abf9637d6a917794faf57526f2f1d08b4",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4b41e24_48171e17",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-06-28T17:52:10Z",
+      "side": 1,
+      "message": "Revisit after 14",
+      "revId": "ee65bb6abf9637d6a917794faf57526f2f1d08b4",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
