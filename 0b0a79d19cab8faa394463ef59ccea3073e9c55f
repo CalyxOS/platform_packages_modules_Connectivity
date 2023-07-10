@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f56e5902_96d2d458",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-07-10T19:52:45Z",
+      "side": 1,
+      "message": "https://android-review.googlesource.com/c/platform/packages/modules/Connectivity/+/2634910/comment/afceade2_8982c129/",
+      "revId": "0b0a79d19cab8faa394463ef59ccea3073e9c55f",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
