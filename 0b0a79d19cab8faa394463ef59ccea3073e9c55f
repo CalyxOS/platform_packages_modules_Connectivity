@@ -16,6 +16,23 @@
       "message": "https://android-review.googlesource.com/c/platform/packages/modules/Connectivity/+/2634910/comment/afceade2_8982c129/",
       "revId": "0b0a79d19cab8faa394463ef59ccea3073e9c55f",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23f36779_be2f9d36",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-08-29T19:18:04Z",
+      "side": 1,
+      "message": "The prior logic is not right. I\u0027m surprised this hasn\u0027t demonstrated any problems (that we\u0027ve noticed). I didn\u0027t realize this wasn\u0027t already merged or marked as Works.",
+      "revId": "0b0a79d19cab8faa394463ef59ccea3073e9c55f",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
