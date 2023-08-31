@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1711b72_c61165f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-08-31T20:51:30Z",
+      "side": 1,
+      "message": "This change was squashed in, didn\u0027t change commit message because it was a minor logic fix: https://review.calyxos.org/c/CalyxOS/platform_packages_modules_Connectivity/+/19247",
+      "revId": "9c30d1bf823137915d1f130d100a5af59916ece4",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
