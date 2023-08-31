@@ -16,6 +16,23 @@
       "message": "This change was squashed in, didn\u0027t change commit message because it was a minor logic fix: https://review.calyxos.org/c/CalyxOS/platform_packages_modules_Connectivity/+/19247",
       "revId": "9c30d1bf823137915d1f130d100a5af59916ece4",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "778a0fc3_97188c04",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-08-31T20:53:02Z",
+      "side": 1,
+      "message": "This was merged in AOSP under a change with a different name (but same Change-Id) that also includes a test.\n\nMight be nice to replace this with the upstream version.",
+      "revId": "9c30d1bf823137915d1f130d100a5af59916ece4",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
