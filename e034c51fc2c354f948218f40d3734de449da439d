@@ -16,6 +16,24 @@
       "message": "I don\u0027t think this is needed anymore (rebase aside).",
       "revId": "e034c51fc2c354f948218f40d3734de449da439d",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8b918af_532d5ef9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-09-01T22:34:52Z",
+      "side": 1,
+      "message": "That\u0027ll make the Firewall app easier, we can get rid of the uid from everywhere. Worth a quick try.",
+      "parentUuid": "06a8871e_e824d892",
+      "revId": "e034c51fc2c354f948218f40d3734de449da439d",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
