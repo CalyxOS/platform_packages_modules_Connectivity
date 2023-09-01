@@ -33,6 +33,24 @@
       "message": "This was merged in AOSP under a change with a different name (but same Change-Id) that also includes a test.\n\nMight be nice to replace this with the upstream version.",
       "revId": "9c30d1bf823137915d1f130d100a5af59916ece4",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4968eb2_6912eec3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-09-01T22:34:22Z",
+      "side": 1,
+      "message": "It _may_ already be in 14. Replacing during rebasing will cause confusion unless you also push a fixup to android13, to avoid a diff.",
+      "parentUuid": "778a0fc3_97188c04",
+      "revId": "9c30d1bf823137915d1f130d100a5af59916ece4",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
