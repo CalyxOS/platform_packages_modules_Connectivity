@@ -16,6 +16,24 @@
       "message": "This might not be needed anymore either (rebase aside) but need to verify...",
       "revId": "3dd766592803c6f6b00141d6b518fea50252bc4b",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "787127f5_25e3f633",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-09-01T14:18:12Z",
+      "side": 1,
+      "message": "We have to be careful about skipping commits this way though, since then the diff for the rebase won\u0027t be empty, making it harder to figure out if we missed something, rebased incorrectly, or didn\u0027t want it intentionally. \n\nCan revert in android13 to make up for it, though.",
+      "parentUuid": "4d3dcc79_1a7b2c3d",
+      "revId": "3dd766592803c6f6b00141d6b518fea50252bc4b",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
