@@ -16,6 +16,24 @@
       "message": "Need to fix this / look at it more",
       "revId": "ef2b9930841770da9ffabd0be20ec9d3f579d3c1",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a323ce1f_886bdd72",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-09-01T16:56:22Z",
+      "side": 1,
+      "message": "https://review.calyxos.org/c/CalyxOS/platform_packages_apps_Firewall/+/16221/3/app/src/main/java/org/calyxos/datura/settings/SettingsManager.java\n\nCouldn\u0027t we even potentially get rid of the firewall uid entirely?",
+      "parentUuid": "7e5f6b03_a51b1c40",
+      "revId": "ef2b9930841770da9ffabd0be20ec9d3f579d3c1",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
