@@ -51,6 +51,24 @@
       "parentUuid": "778a0fc3_97188c04",
       "revId": "9c30d1bf823137915d1f130d100a5af59916ece4",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7910c2e3_3e2c8e14",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-09-05T14:50:58Z",
+      "side": 1,
+      "message": "Ack, and besides, the test doesn\u0027t apply cleanly because things are so much different in AOSP\u0027s lagging module variants.",
+      "parentUuid": "f4968eb2_6912eec3",
+      "revId": "9c30d1bf823137915d1f130d100a5af59916ece4",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
