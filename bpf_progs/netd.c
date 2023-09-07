@@ -217,20 +217,22 @@ static __always_inline BpfConfig getConfig(uint32_t configKey) {
     return *config;
 }
 
+#define FIREWALL_DROP_IF_SET (OEM_DENY_1_MATCH)
+#define FIREWALL_DROP_IF_UNSET (RESTRICTED_MATCH)
+
 // Must be __always_inline or the call from inet_socket_create will crash-reboot the system
-static __always_inline inline int bpf_owner_restricted_match(uint32_t uid) {
+static __always_inline inline int bpf_owner_firewall_match(uint32_t uid) {
     if (is_system_uid(uid)) return BPF_PASS;
 
     const BpfConfig enabledRules = getConfig(UID_RULES_CONFIGURATION_KEY);
+    const UidOwnerValue* uidEntry = bpf_uid_owner_map_lookup_elem(&uid);
+    const uint32_t uidRules = uidEntry ? uidEntry->rule : 0;
 
-    if (enabledRules & RESTRICTED_MATCH) {
-        const UidOwnerValue* uidEntry = bpf_uid_owner_map_lookup_elem(&uid);
-        const uint32_t uidRules = uidEntry ? uidEntry->rule : 0;
-
-        if (!(uidRules & RESTRICTED_MATCH)) {
-            return BPF_DROP;
-        }
+    if (enabledRules & (FIREWALL_DROP_IF_SET | FIREWALL_DROP_IF_UNSET)
+            & (uidRules ^ FIREWALL_DROP_IF_UNSET)) {
+        return BPF_DROP;
     }
+
     return BPF_PASS;
 }
 
@@ -458,8 +460,8 @@ DEFINE_BPF_PROG_EXT("cgroupsock/inet/create", AID_ROOT, AID_ROOT, inet_socket_cr
     if (permissions && ((*permissions & BPF_PERMISSION_INTERNET) != BPF_PERMISSION_INTERNET)) {
         return BPF_DROP;
     }
-    // Only allow if uid is not restricted.
-    return bpf_owner_restricted_match(uid);
+    // Only allow if uid is not blocked by the user firewall.
+    return bpf_owner_firewall_match(uid);
 }
 
 LICENSE("Apache 2.0");
