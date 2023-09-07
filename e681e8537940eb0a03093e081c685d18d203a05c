@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69967d98_e1f284a8",
+        "filename": "bpf_progs/netd.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-09-07T17:49:50Z",
+      "side": 1,
+      "message": "This logic is wrong.",
+      "revId": "e681e8537940eb0a03093e081c685d18d203a05c",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
