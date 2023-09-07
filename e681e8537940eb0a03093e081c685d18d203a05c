@@ -16,6 +16,24 @@
       "message": "This logic is wrong.",
       "revId": "e681e8537940eb0a03093e081c685d18d203a05c",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77e8ec76_f96be863",
+        "filename": "bpf_progs/netd.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-09-07T18:19:55Z",
+      "side": 1,
+      "message": "Switched to doing this check the way it is done in Connectivity mainline / main now (see the top and bottom of this [range of lines](https://cs.android.com/android/_/android/platform/packages/modules/Connectivity/+/6109d94ec5d864af10274457d097852e09f18ee9:bpf_progs/netd.c;l\u003d377-399)), but limiting the check to RESTRICTED_MATCH and OEM_DENY_1_MATCH because these are the only ones relevant for our user firewall.\n\nIt makes sense now how the logic was wrong: RESTRICTED_MATCH allows, OEM_DENY_1_MATCH of course denies.",
+      "parentUuid": "69967d98_e1f284a8",
+      "revId": "e681e8537940eb0a03093e081c685d18d203a05c",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
