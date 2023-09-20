@@ -541,6 +541,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
             replaceFirewallChain(ConnectivityManager.FIREWALL_CHAIN_OEM_DENY_1,
                     newDenylist.stream().mapToInt(Integer::intValue).toArray());
         }
+        // Tell NPMS about the changes, primarily so the firewall icon can reflect them.
+        mPolicyManager.notifyDenylistChanged(toAdd.stream().mapToInt(Integer::intValue).toArray(),
+                toRemove.stream().mapToInt(Integer::intValue).toArray());
         if (DDBG) Log.d(TAG, ourTag + "end");
     }
 
@@ -2224,8 +2227,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     /** Check if UID is currently disallowed general network access based on policies. */
-    @Override
-    public boolean isUidCurrentlyDisallowedByPolicy(int uid) {
+    private boolean isUidCurrentlyDisallowedByPolicy(int uid) {
         return mLastDisallowedUidsDenylist.contains(uid);
     }
 
