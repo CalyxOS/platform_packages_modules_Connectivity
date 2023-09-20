@@ -1408,36 +1408,6 @@ public class ConnectivityManager {
     }
 
     /**
-     * Update ConnectivityService's map of UIDs to the transports they are allowed to use.
-     * If a network has a transport type that is not an allowed type for the UID, the UID will
-     * not be allowed to access that network.
-     *
-     * @param uids UIDs to update.
-     * @param allowedTransportsPacked Corresponding bit-packed allowed transports to update.
-     *
-     * @hide
-     */
-    @RequiresPermission(anyOf = {
-            NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK,
-            android.Manifest.permission.NETWORK_STACK,
-            android.Manifest.permission.NETWORK_SETTINGS})
-    @SystemApi(client = MODULE_LIBRARIES)
-    public void setUidsAllowedTransports(@NonNull final int[] uids,
-            @NonNull final long[] allowedTransportsPacked) {
-        Objects.requireNonNull(uids);
-        Objects.requireNonNull(allowedTransportsPacked);
-        if (uids.length != allowedTransportsPacked.length) {
-            throw new IllegalArgumentException(
-                    "uids and allowedTransportsPacked must be equal length");
-        }
-        try {
-            mService.setUidsAllowedTransports(uids, allowedTransportsPacked);
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
-    }
-
-    /**
      * Returns whether the specified UID is blocked due to disallowed transports.
      *
      * @hide
