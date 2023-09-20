@@ -414,15 +414,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @GuardedBy("mNetworkForNetId")
     private Map<Integer, List<Integer>> mNetIdToDisallowedUids = new HashMap<>();
 
-    /** {@see ConnectivityManager#setUidsAllowedTransports} */
-    @Override
-    public void setUidsAllowedTransports(@NonNull final int[] uids,
+    private void setUidsAllowedTransports(@NonNull final int[] uids,
             @NonNull final long[] allowedTransportsPacked) {
         mHandler.post(() -> handleSetUidsAllowedTransports(uids, allowedTransportsPacked));
     }
 
     private void handleSetUidsAllowedTransports(@NonNull final int[] uids,
             @NonNull final long[] allowedTransportsPacked) {
+        log("uids(" + (uids != null ? uids.length : "null") + "): " + uids);
+        log("transports(" + (transports != null ? transports.length : "null") + "): " + transports);
         for (int i = 0; i < uids.length; i++) {
             final int uid = uids[i];
             final long transportsPacked = allowedTransportsPacked[i];
@@ -1975,6 +1975,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 mContext);
     }
 
+    private void updateUidsAllowedTransports() {
+        final Bundle allowedTransportsBundle = mPolicyManager.getUidsAllowedTransportsPacked();
+        final int[] uids = allowedTransportsBundle.getIntArray("uids");
+        final long[] transports = allowedTransportsBundle.getLongArray("transports");
+        setUidsAllowedTransports(uids, transports);
+    }
+
     /**
      * Check whether or not the device supports Ethernet transport.
      */
@@ -3144,6 +3151,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
         public void onUidBlockedReasonChanged(int uid, @BlockedReason int blockedReasons) {
             mHandler.sendMessage(mHandler.obtainMessage(EVENT_UID_BLOCKED_REASON_CHANGED,
                     uid, blockedReasons));
+        }
+
+        @Override
+        public void onUidsAllowedTransportsChanged(int[] uids, long[] allowedTransports) {
+            setUidsAllowedTransports(uids, allowedTransports);
         }
     };
 
