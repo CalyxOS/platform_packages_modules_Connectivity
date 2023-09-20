@@ -414,9 +414,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @GuardedBy("mNetworkForNetId")
     private Map<Integer, List<Integer>> mNetIdToDisallowedUids = new HashMap<>();
 
-    /** {@see ConnectivityManager#setUidsAllowedTransports} */
-    @Override
-    public void setUidsAllowedTransports(@NonNull final int[] uids,
+    private void setUidsAllowedTransports(@NonNull final int[] uids,
             @NonNull final long[] allowedTransportsPacked) {
         mHandler.post(() -> handleSetUidsAllowedTransports(uids, allowedTransportsPacked));
     }
@@ -3144,6 +3142,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
         public void onUidBlockedReasonChanged(int uid, @BlockedReason int blockedReasons) {
             mHandler.sendMessage(mHandler.obtainMessage(EVENT_UID_BLOCKED_REASON_CHANGED,
                     uid, blockedReasons));
+        }
+
+        @Override
+        public void onUidsAllowedTransportsChanged(int[] uids, long[] allowedTransports) {
+            setUidsAllowedTransports(uids, allowedTransports);
         }
     };
 
