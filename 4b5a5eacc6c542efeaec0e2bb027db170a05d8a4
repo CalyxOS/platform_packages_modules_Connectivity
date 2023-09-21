@@ -18,6 +18,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab0a7497_a68f82eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-09-21T22:43:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8825bd5_7d5e9d3f",
+      "revId": "4b5a5eacc6c542efeaec0e2bb027db170a05d8a4",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6b9d43a5_a0aa83d8",
@@ -35,6 +53,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "61a21b26_ad097dc8",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-09-21T22:43:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b9d43a5_a0aa83d8",
+      "revId": "4b5a5eacc6c542efeaec0e2bb027db170a05d8a4",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "15631ee9_a7eab2c3",
@@ -48,6 +84,24 @@
       "writtenOn": "2023-09-20T21:56:25Z",
       "side": 1,
       "message": "This isn\u0027t referenced anywhere at the moment, and may not be.",
+      "revId": "4b5a5eacc6c542efeaec0e2bb027db170a05d8a4",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32228db6_d3aae260",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-09-21T22:43:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15631ee9_a7eab2c3",
       "revId": "4b5a5eacc6c542efeaec0e2bb027db170a05d8a4",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
