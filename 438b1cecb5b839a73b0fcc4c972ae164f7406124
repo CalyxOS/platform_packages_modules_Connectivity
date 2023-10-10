@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b43c612c_45ca3c21",
+        "filename": "Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-10-10T16:45:13Z",
+      "side": 1,
+      "message": "This is the only change this file should have. All the other changes are mistakenly squashed from https://review.calyxos.org/c/CalyxOS/platform_packages_modules_Connectivity/+/19226 \"Remove DUN requirement\"",
+      "revId": "438b1cecb5b839a73b0fcc4c972ae164f7406124",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
