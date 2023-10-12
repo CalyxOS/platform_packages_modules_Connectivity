@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16c25236_8c072d82",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-10-12T18:24:51Z",
+      "side": 1,
+      "message": "Works, with a pre-existing quirk: if you enable \"Block connections without VPN\" for a disconnected VPN while the hotspot is already doing, hotspot clients will still be able to get online even though the VPN is disconnected. That setting will not take effect until the state is refreshed via the VPN being disconnected/reconnected, or the hotspot being turned off and on. This appears to be the case for 13, too. It\u0027s minor, but worth knowing about for testing. It makes sense because we do not have an observer for that setting.",
+      "revId": "28dfd46f78fee064e4eb16c8d411fe2967bc041f",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
