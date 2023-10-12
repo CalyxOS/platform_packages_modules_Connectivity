@@ -60,6 +60,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5c3df8a0_49495629",
+        "filename": "Tethering/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-10-12T19:11:04Z",
+      "side": 1,
+      "message": "I maintained the structure of the changes from before, where \"Disallow non-VPN tethering upstreams on always-on VPN lockdown mode\" (https://review.calyxos.org/c/CalyxOS/platform_packages_modules_Connectivity/+/21478) undoes the LineageSettings usage.\n\nIt\u0027s an awkward placement and is something that probably could have been squashed, except for the fact that LineageOS hasn\u0027t been using the aforementioned change, and they would need a migration. I don\u0027t know that we need to solve this right now, but if not now, we should during the next rebase.",
+      "parentUuid": "28491040_ebcadd6a",
+      "range": {
+        "startLine": 78,
+        "startChar": 9,
+        "endLine": 78,
+        "endChar": 47
+      },
+      "revId": "a6df3226fa49fa8e268665aa537190cda2e82e68",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "59f4e8f0_6fbf6b7f",
         "filename": "Tethering/src/com/android/networkstack/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 3
