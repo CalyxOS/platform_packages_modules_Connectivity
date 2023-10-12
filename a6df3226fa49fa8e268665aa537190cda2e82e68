@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "337a1a38_1d9b7ae9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-10-12T18:15:22Z",
+      "side": 1,
+      "message": "See commit message for details about changes for 14",
+      "revId": "a6df3226fa49fa8e268665aa537190cda2e82e68",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
