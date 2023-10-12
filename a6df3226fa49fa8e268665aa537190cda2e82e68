@@ -82,6 +82,30 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "60f6e2f3_2d5d34d5",
+        "filename": "Tethering/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-10-12T19:19:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5c3df8a0_49495629",
+      "range": {
+        "startLine": 78,
+        "startChar": 9,
+        "endLine": 78,
+        "endChar": 47
+      },
+      "revId": "a6df3226fa49fa8e268665aa537190cda2e82e68",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59f4e8f0_6fbf6b7f",
@@ -119,6 +143,30 @@
       "side": 1,
       "message": "Ack lol, I do want to make it easily differentiable from the AOSP method of that same name (`registerDefaultNetworkCallback`) but would be open to changing it to something else. I just don\u0027t have any better ideas.",
       "parentUuid": "59f4e8f0_6fbf6b7f",
+      "range": {
+        "startLine": 211,
+        "startChar": 25,
+        "endLine": 211,
+        "endChar": 36
+      },
+      "revId": "a6df3226fa49fa8e268665aa537190cda2e82e68",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04f2be19_31c352f3",
+        "filename": "Tethering/src/com/android/networkstack/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-10-12T19:19:06Z",
+      "side": 1,
+      "message": "There\u0027s a bunch of other methods in here which are a mouthful anyways so I think it\u0027s fine",
+      "parentUuid": "fb25644f_201b8d56",
       "range": {
         "startLine": 211,
         "startChar": 25,
