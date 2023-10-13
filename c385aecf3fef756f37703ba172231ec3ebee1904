@@ -16,6 +16,24 @@
       "message": "I noticed that this wasn\u0027t picked to Lineage. Intentional?",
       "revId": "c385aecf3fef756f37703ba172231ec3ebee1904",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9606f5fa_1ede6d05",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2023-10-13T20:25:50Z",
+      "side": 1,
+      "message": "I don\u0027t know how this will affect all devices shipping on lineage so I intentionally left it out.",
+      "parentUuid": "0659d65d_2f389997",
+      "revId": "c385aecf3fef756f37703ba172231ec3ebee1904",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ],
   "submitRequirementResults": [
