@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbefb07f_a0c0a32b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-10-13T17:12:13Z",
+      "side": 1,
+      "message": "Works with mobile data and wifi\n\nWorks with CalyxVPN and Orbot\n\nWorks if order is Hotspot on -\u003e VPN on, or vice versa.",
+      "revId": "f442d20f92bd5c56e612a12a02b758858d6f0195",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
