@@ -130,6 +130,30 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "47ba3c86_20a49b21",
+        "filename": "Tethering/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-10-13T17:48:39Z",
+      "side": 1,
+      "message": "https://review.calyxos.org/c/CalyxOS/platform_packages_modules_Connectivity/+/12620/3/Tethering/src/com/android/networkstack/tethering/Tethering.java#b165\n\nFixed now",
+      "parentUuid": "acff2148_6ba13896",
+      "range": {
+        "startLine": 78,
+        "startChar": 9,
+        "endLine": 78,
+        "endChar": 47
+      },
+      "revId": "a6df3226fa49fa8e268665aa537190cda2e82e68",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59f4e8f0_6fbf6b7f",
