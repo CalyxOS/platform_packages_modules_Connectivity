@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0659d65d_2f389997",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-10-13T18:46:17Z",
+      "side": 1,
+      "message": "I noticed that this wasn\u0027t picked to Lineage. Intentional?",
+      "revId": "c385aecf3fef756f37703ba172231ec3ebee1904",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
