@@ -106,6 +106,30 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "acff2148_6ba13896",
+        "filename": "Tethering/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-10-13T17:15:34Z",
+      "side": 1,
+      "message": "Oh I see what happened here, I\u0027ll fix.",
+      "parentUuid": "60f6e2f3_2d5d34d5",
+      "range": {
+        "startLine": 78,
+        "startChar": 9,
+        "endLine": 78,
+        "endChar": 47
+      },
+      "revId": "a6df3226fa49fa8e268665aa537190cda2e82e68",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59f4e8f0_6fbf6b7f",
