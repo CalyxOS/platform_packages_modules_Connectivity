@@ -68,6 +68,24 @@
       "message": "This change fully depends on restricted networking mode being active. If restricted networking mode is not active, SDK sandbox UIDs would likely still be allowed to create sockets even without the INTERNET permission. That is because [this segment of netd.c](https://cs.android.com/android/platform/superproject/+/android-14.0.0_r11:packages/modules/Connectivity/bpf_progs/netd.c;l\u003d581-585;bpv\u003d0), for optimization purposes, treats not-found UIDs as having INTERNET permission.\n\nEven though we don\u0027t support disabling restricted networking mode, which means this shouldn\u0027t cause any issues, we may still not want this behavior to be possible.",
       "revId": "9febaff3468ed49b39270822a2f73dfb0ad0f756",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96ec0119_7caaa07a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-10-31T21:44:47Z",
+      "side": 1,
+      "message": "Alternative, more-careful approach here: I58705c4f",
+      "parentUuid": "5c6fe067_84b57f34",
+      "revId": "9febaff3468ed49b39270822a2f73dfb0ad0f756",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
