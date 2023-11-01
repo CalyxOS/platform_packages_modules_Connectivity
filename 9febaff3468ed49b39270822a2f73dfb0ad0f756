@@ -86,6 +86,24 @@
       "parentUuid": "5c6fe067_84b57f34",
       "revId": "9febaff3468ed49b39270822a2f73dfb0ad0f756",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c6ed6f9_4aeb6d5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-11-01T11:11:38Z",
+      "side": 1,
+      "message": "\u003e Even though we don\u0027t support disabling restricted networking mode\n\nExactly, so I wouldn\u0027t worry about it. This is all theoretical anyway, and not actually used on AOSP / CalyxOS yet, right?",
+      "parentUuid": "96ec0119_7caaa07a",
+      "revId": "9febaff3468ed49b39270822a2f73dfb0ad0f756",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
