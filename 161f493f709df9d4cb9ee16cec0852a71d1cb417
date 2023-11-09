@@ -16,6 +16,24 @@
       "message": "I\u0027ve tested on bramble in the past (see issue) but still needs at least a smoke test on older kernels.",
       "revId": "161f493f709df9d4cb9ee16cec0852a71d1cb417",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "567a3324_8f87b828",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-11-09T22:16:34Z",
+      "side": 1,
+      "message": "bramble is 4.19, and we don\u0027t have anything older fully running / shipping as of yet.",
+      "parentUuid": "ce44ab0d_6d25e9f4",
+      "revId": "161f493f709df9d4cb9ee16cec0852a71d1cb417",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
