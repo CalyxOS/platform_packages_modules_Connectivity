@@ -52,6 +52,24 @@
       "parentUuid": "567a3324_8f87b828",
       "revId": "161f493f709df9d4cb9ee16cec0852a71d1cb417",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "648f3e8b_71bc6413",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-11-15T21:01:37Z",
+      "side": 1,
+      "message": "4a 4.14 will ship soon, and likely pixel 3 / 3a with 4.9",
+      "parentUuid": "d7a9c4bd_f6e09519",
+      "revId": "161f493f709df9d4cb9ee16cec0852a71d1cb417",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
