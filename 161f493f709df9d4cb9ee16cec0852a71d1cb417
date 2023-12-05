@@ -70,6 +70,24 @@
       "parentUuid": "d7a9c4bd_f6e09519",
       "revId": "161f493f709df9d4cb9ee16cec0852a71d1cb417",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07ae57c6_11d7fbfd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-12-05T14:27:31Z",
+      "side": 1,
+      "message": "On bramble, 20000+ UIDs doesn\u0027t even reach the point of causing the memory lock limit to be increased (/proc/$$/limits); it remains at the ample 64MB default. In trying to get it to bump, I even increased the limit to 32000 instead of 20000 and got this.\n\n```\n$ adb shell dumpsys connectivity trafficcontroller | sed -n \u0027/^ *sUidOwnerMap:/,/^ *sUidPermissionMap:/{/\\(sUidOwnerMap\\|sUidPermissionMap\\)/b;/^$/b;p}\u0027 | wc -l; adb shell \u0027cat /proc/$$/limits | grep \"locked memory\"\u0027\n26879\nMax locked memory         67108864             67108864             bytes\n```\n\nOur rlimits for other devices are also 64MB: https://gitlab.com/search?group_id\u003d3642190\u0026repository_ref\u003dmain\u0026scope\u003dblobs\u0026search\u003d%22setrlimit+8+%22\n\nSo I would call this a low-/no-risk change",
+      "parentUuid": "648f3e8b_71bc6413",
+      "revId": "161f493f709df9d4cb9ee16cec0852a71d1cb417",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
