@@ -88,6 +88,23 @@
       "parentUuid": "648f3e8b_71bc6413",
       "revId": "161f493f709df9d4cb9ee16cec0852a71d1cb417",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68b51382_b9d498cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-12-06T09:34:00Z",
+      "side": 1,
+      "message": "Let\u0027s ship after QPR / Security update.",
+      "revId": "161f493f709df9d4cb9ee16cec0852a71d1cb417",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
