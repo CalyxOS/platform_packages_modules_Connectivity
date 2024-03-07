@@ -16,6 +16,24 @@
       "message": "Needs testing",
       "revId": "8eb79ccfb87a69af781245f20b2e7862a43cafa3",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a61fc51_9aa6d115",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-03-07T17:02:03Z",
+      "side": 1,
+      "message": "Basic testing is fine.",
+      "parentUuid": "81317dc0_2ca55ca5",
+      "revId": "8eb79ccfb87a69af781245f20b2e7862a43cafa3",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
