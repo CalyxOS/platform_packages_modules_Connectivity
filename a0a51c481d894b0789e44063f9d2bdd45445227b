@@ -103,6 +103,24 @@
       "message": "This whole construction is really odd. I don\u0027t even understand how it could possibly work. If onUidsAllowedTransportsChanged is not exposed, then how can we override it?\n\nBut we don\u0027t even have a way to test it right now.",
       "revId": "a0a51c481d894b0789e44063f9d2bdd45445227b",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a36b9e65_cf3832d9",
+        "filename": "service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2085,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2024-03-11T21:49:48Z",
+      "side": 1,
+      "message": "It works as it is now. It might even work to override all the time but the override wouldn\u0027t take effect, but I haven\u0027t tried it.",
+      "parentUuid": "a8badfd0_7209792a",
+      "revId": "a0a51c481d894b0789e44063f9d2bdd45445227b",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
