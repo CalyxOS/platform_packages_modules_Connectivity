@@ -1,5 +1,29 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5291dd1b_b2ec01e0",
+        "filename": "bpf_progs/firewall.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-03-13T03:47:12Z",
+      "side": 1,
+      "message": "Aside from this, this is an exact copy of netd.c",
+      "range": {
+        "startLine": 581,
+        "startChar": 0,
+        "endLine": 583,
+        "endChar": 5
+      },
+      "revId": "3b5fd5eafddd93735ccca6071bf1292a6b1e76c3",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
